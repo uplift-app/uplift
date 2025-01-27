@@ -3,11 +3,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import { Slider } from "./ui/slider";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import { DatePicker } from "./ui/datepicker";
 
 //TODO: add tooltip for times
 
 const MoodInput = () => {
   const [moodLevel, setMoodLevel] = useState<number>(5)
+  const [moodDate, setMoodDate] = useState<Date>(new Date)
 
   function moodLevelAsEmoji(moodLevel: number): string {
     if (moodLevel < 2 ) {
@@ -41,6 +43,7 @@ const MoodInput = () => {
       </CardHeader>
 
       <CardContent className="space-y-4">
+        <DatePicker date={moodDate} setDate={setMoodDate}/>
         <Select>
           <SelectTrigger>
             <SelectValue placeholder="select a time" />
@@ -48,8 +51,9 @@ const MoodInput = () => {
           <SelectContent>
             <SelectGroup>
             <SelectItem value="morning">Morning</SelectItem>
-            <SelectItem value="midday">Midday</SelectItem>
             <SelectItem value="afternoon">Afternoon</SelectItem>
+            <SelectItem value="evening">Evening</SelectItem>
+            <SelectItem value="all-day">All Day</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>

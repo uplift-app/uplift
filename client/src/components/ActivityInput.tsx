@@ -4,6 +4,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectGroup,
 } from "@/components/ui/select";
 import { Input } from "./ui/input";
 import {
@@ -14,10 +15,10 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { Label } from "./ui/label";
 import { Slider } from "./ui/slider";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { DatePicker } from "./ui/datepicker";
 //TODO: button functionality
 const activitiesArray = [
   "Reading",
@@ -30,9 +31,12 @@ const activitiesArray = [
   "Cycling",
   "Add a Custom Activity",
 ];
+
 const ActivityInput = () => {
   const [activityDuration, setActivityDuration] = useState<number>(33);
   const [activity, setActivity] = useState<string>("");
+  const [activityTime, setActivityTime] = useState<string>("");
+  const [activityDate, setActivityDate] = useState<Date>(new Date());
 
   function convertToTimeString(activityDuration: number): string {
     if (activityDuration < 60) {
@@ -44,6 +48,8 @@ const ActivityInput = () => {
     }
   }
 
+  function uploadActivity() {}
+
   return (
     <Card className="w-[300px]">
       <CardHeader>
@@ -53,7 +59,25 @@ const ActivityInput = () => {
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4" onSubmit={uploadActivity}>
+        <DatePicker date={activityDate} setDate={setActivityDate} />
+        <Select
+          onValueChange={(value) => {
+            setActivityTime(value);
+          }}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="select a time" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="morning">Morning</SelectItem>
+              <SelectItem value="afternoon">Afternoon</SelectItem>
+              <SelectItem value="evening">Evening</SelectItem>
+              <SelectItem value="all-day">All Day</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
         <Select
           onValueChange={(value) => {
             setActivity(value);
@@ -64,7 +88,9 @@ const ActivityInput = () => {
           </SelectTrigger>
           <SelectContent>
             {activitiesArray.map((activity) => (
-              <SelectItem value={activity}>{activity}</SelectItem>
+              <SelectItem value={activity} key={activity}>
+                {activity}
+              </SelectItem>
             ))}
           </SelectContent>
         </Select>
@@ -81,18 +107,16 @@ const ActivityInput = () => {
         <h1>Activity duration</h1>
         <Slider
           defaultValue={[33]}
-          max={300}
+          max={240}
           step={1}
           onValueChange={(value) => {
             setActivityDuration(value[0]);
           }}
         />
         <h1>{convertToTimeString(activityDuration)}</h1>
+        <Button type="submit">Submit</Button>
       </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button>Cancel</Button>
-        <Button>Submit</Button>
-      </CardFooter>
+      <CardFooter className="flex justify-between"></CardFooter>
     </Card>
   );
 };
