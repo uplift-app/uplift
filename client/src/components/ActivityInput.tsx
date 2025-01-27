@@ -48,7 +48,27 @@ const ActivityInput = () => {
     }
   }
 
-  function uploadActivity() {}
+  //TODO: finish fetch function after back end connected
+  //TODO: function resets state but doesn't reset slider or select boxes etc
+
+  function uploadActivity() {
+    const activityForm = {
+      activity: activity,
+      activityDuration: activityDuration,
+      activityTime: activityTime,
+      activityDate: activityDate
+    }
+    console.log(activityForm)
+    setActivityDuration(33)
+    setActivity("")
+    setActivityTime("")
+    setActivityDate(new Date())
+    // try {
+    //   const response = await fetch()
+    // } catch (error) {
+      
+    // }
+  }
 
   return (
     <Card className="w-[300px]">
@@ -59,7 +79,7 @@ const ActivityInput = () => {
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="space-y-4" onSubmit={uploadActivity}>
+      <CardContent className="space-y-4">
         <DatePicker date={activityDate} setDate={setActivityDate} />
         <Select
           onValueChange={(value) => {
@@ -114,7 +134,7 @@ const ActivityInput = () => {
           }}
         />
         <h1>{convertToTimeString(activityDuration)}</h1>
-        <Button type="submit">Submit</Button>
+        <Button onClick={uploadActivity}>Submit</Button>
       </CardContent>
       <CardFooter className="flex justify-between"></CardFooter>
     </Card>
