@@ -1,16 +1,17 @@
 import { Request, Response } from "express";
 import Mood from "../models/mood";
+import { QueryFilter } from "../interfaces";
 
 export const getMoodsByUserId = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.user.id;
+    const { userId } = req.user;
     const { startDate, endDate } = req.query;
-    const query: any = { userId };
+    const query: QueryFilter = { userId };
 
     if (startDate || endDate) {
       query.date = {};
-      if (startDate) query.createdAt.$gte = new Date(startDate as string);
-      if (endDate) query.createdAt.$lte = new Date(endDate as string);
+      if (startDate) query.date.$gte = new Date(startDate as string);
+      if (endDate) query.date.$lte = new Date(endDate as string);
     }
 
     const moods = await Mood.find(query);
@@ -23,7 +24,7 @@ export const getMoodsByUserId = async (req: Request, res: Response) => {
 export const addMood = async (req: Request, res: Response) => {
   try {
     const { moodType, intensity, moodTime, date } = req.body;
-    const { userId } = req.user.id;
+    const { userId } = req.user;
     const newMood = new Mood({ moodType, intensity, userId, moodTime, date });
     await newMood.save();
     res.status(201).json(newMood);

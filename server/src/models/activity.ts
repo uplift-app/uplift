@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { IActivity } from "../interfaces";
 
 const ActivitySchema: Schema = new Schema(

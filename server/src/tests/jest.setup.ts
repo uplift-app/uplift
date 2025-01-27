@@ -1,8 +1,5 @@
 import mongoose from "mongoose";
-import { MongoMemoryServer } from "mongodb-memory-server";
 import { connectDB, disconnectDB } from "../models";
-
-let mongoServer: MongoMemoryServer;
 
 beforeAll(async () => {
   await connectDB();
