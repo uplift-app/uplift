@@ -1,13 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-
-export interface Activity extends Document {
-  duration: number;
-  activityType: string;
-  userId: string;
-  activityTime: string;
-  isHabit: boolean;
-  date: Date;
-}
+import { Activity } from "../interfaces";
 
 const ActivitySchema: Schema = new Schema({
   duration: { type: Number, required: true },

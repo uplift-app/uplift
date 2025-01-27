@@ -1,12 +1,5 @@
-import mongoose, { Schema, Document } from "mongoose";
-
-export interface Mood extends Document {
-  moodType: string;
-  intensity: number;
-  userId: string;
-  moodTime: string;
-  date: Date;
-}
+import mongoose, { Schema } from "mongoose";
+import { Mood } from "../interfaces";
 
 const MoodSchema: Schema = new Schema({
   moodType: { type: String, required: true },
