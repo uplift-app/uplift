@@ -31,4 +31,12 @@ export interface IActivity {
   date: Date;
 }
 
+export interface QueryFilter {
+  userId: string;
+  date?: {
+    $gte?: Date;
+    $lte?: Date;
+  };
+}
+
 export type Time = "morning" | "afternoon" | "evening" | "night" | "all day";

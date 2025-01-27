@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import Activity from "../models/activity";
+import { QueryFilter } from "../interfaces";
 
 export const getActivitiesByUserId = async (req: Request, res: Response) => {
   try {
     const { startDate, endDate } = req.query;
-    const { userId } = req.user.id;
-    const query: any = { userId };
+    const { userId } = req.user;
+    const query: QueryFilter = { userId };
 
     if (startDate || endDate) {
       query.date = {};
@@ -23,7 +24,7 @@ export const getActivitiesByUserId = async (req: Request, res: Response) => {
 export const addActivity = async (req: Request, res: Response) => {
   try {
     const { duration, activityType, activityTime, isHabit, date } = req.body;
-    const { userId } = req.user.id;
+    const { userId } = req.user;
     const newActivity = new Activity({
       duration,
       activityType,

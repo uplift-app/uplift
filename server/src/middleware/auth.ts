@@ -19,12 +19,18 @@ const authMiddleware = async (
   const token = authHeaders.split(" ")[1];
 
   try {
-    const { id } = jwt.verify(token, SECRET_KEY) as JwtProps;
+    /* Commented out until front end can authenticate. To replace hard coded user below once authentication implemented
+    const { id } = jwt.verify(token, SECRET_KEY) as JwtProps; 
 
     const user = await User.findOne({ where: { id: id } });
     if (!user) return res.sendStatus(401);
     req.user = user;
-
+*/
+    req.user = {
+      email: "test@mood.com",
+      username: "moodman",
+      password: "$2b$10$Kq3keyn/73cxdMsCXg3iC.FKDVR9rq.imYcjycVaiKZ8ObFkYp12y",
+    };
     next();
   } catch (error) {
     res.sendStatus(401);
