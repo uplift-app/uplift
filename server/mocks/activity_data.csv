@@ -1,281 +1,281 @@
 duration,activityType,userId,activityTime,isHabit,date
-146,overtime,1,evening,False,2024-11-17
-170,party,1,evening,False,2024-12-10
-171,gaming,1,evening,False,2024-11-10
-145,cooking,1,morning,False,2024-11-24
-117,overtime,1,all day,True,2024-12-30
-132,overtime,1,afternoon,False,2025-01-01
-49,cleaning,1,all day,False,2025-01-05
-130,gaming,1,morning,False,2025-01-10
-145,fast food,1,afternoon,True,2024-12-24
-113,smoking,1,morning,False,2025-01-10
-103,meditation,1,all day,True,2024-11-17
-20,friends,1,all day,True,2025-01-03
-45,fast food,1,all day,False,2024-11-03
-124,cooking,1,evening,False,2025-01-25
-40,party,1,morning,True,2024-12-29
-178,cleaning,1,all day,True,2025-01-01
-48,shopping,1,evening,False,2025-01-06
-44,fast food,1,evening,True,2024-12-13
-146,smoking,1,morning,False,2024-12-06
-169,fast food,1,evening,False,2024-11-21
-45,reading,1,evening,False,2025-01-10
-14,reading,1,all day,True,2024-12-13
-158,exercise,1,afternoon,True,2025-01-13
-141,smoking,1,evening,False,2024-12-20
-173,meditation,1,all day,True,2024-12-12
-163,exercise,1,afternoon,False,2025-01-12
-135,friends,1,afternoon,False,2024-11-27
-106,screen time,1,all day,True,2025-01-26
-52,reading,1,all day,False,2024-12-03
-89,cleaning,1,all day,True,2025-01-25
-39,party,1,evening,False,2024-11-23
-128,meditation,1,all day,False,2024-11-18
-159,party,1,morning,False,2025-01-27
-22,smoking,1,evening,False,2024-12-24
-155,friends,1,all day,True,2024-12-18
-121,cooking,1,afternoon,False,2024-11-11
-165,cleaning,1,morning,True,2025-01-25
-86,cooking,1,morning,True,2024-12-30
-153,smoking,1,all day,True,2024-11-27
-51,shopping,1,evening,False,2025-01-27
-54,cleaning,1,afternoon,False,2025-01-21
-146,exercise,1,morning,False,2024-11-22
-159,fast food,1,morning,True,2024-10-29
-138,meditation,1,evening,False,2024-12-15
-36,smoking,1,all day,True,2024-12-08
-57,cleaning,1,evening,True,2024-11-17
-113,gaming,1,afternoon,True,2024-12-14
-148,meditation,1,evening,True,2024-11-16
-163,smoking,1,evening,True,2024-11-12
-144,exercise,1,afternoon,True,2025-01-04
-166,friends,1,afternoon,True,2025-01-08
-172,cooking,1,evening,True,2025-01-03
-173,cooking,1,all day,False,2024-10-31
-14,cooking,1,evening,False,2024-12-07
-32,party,1,morning,True,2024-11-01
-133,cleaning,1,evening,True,2025-01-12
-61,gaming,1,all day,False,2024-12-31
-48,friends,1,morning,True,2024-11-05
-27,overtime,1,all day,False,2024-11-30
-11,gaming,1,morning,False,2024-11-19
-58,exercise,1,afternoon,False,2024-11-11
-159,fast food,1,morning,False,2024-12-10
-140,shopping,1,evening,True,2025-01-11
-69,reading,1,all day,False,2025-01-25
-71,friends,1,afternoon,False,2024-12-12
-180,party,1,afternoon,True,2025-01-21
-95,fast food,1,evening,False,2025-01-26
-77,friends,1,afternoon,True,2024-11-16
-113,exercise,1,morning,True,2025-01-11
-122,meditation,1,morning,True,2024-12-07
-65,meditation,1,morning,True,2025-01-05
-59,gaming,1,all day,False,2024-11-09
-11,screen time,1,evening,True,2025-01-24
-151,party,1,morning,False,2025-01-22
-13,cooking,1,morning,False,2024-12-23
-172,cooking,1,morning,False,2024-11-19
-66,exercise,1,all day,True,2024-10-29
-85,friends,1,afternoon,True,2024-12-28
-21,reading,1,afternoon,True,2024-11-26
-86,meditation,1,afternoon,False,2025-01-12
-123,exercise,1,afternoon,True,2024-12-12
-147,reading,1,evening,False,2024-11-07
-98,meditation,1,evening,False,2024-11-09
-20,cleaning,1,morning,True,2025-01-07
-107,meditation,1,all day,False,2025-01-10
-24,exercise,1,morning,False,2024-12-17
-22,friends,1,all day,False,2025-01-21
-64,fast food,1,evening,False,2024-11-12
-133,cooking,1,evening,False,2024-12-20
-120,cooking,1,evening,False,2024-11-03
-122,shopping,1,morning,False,2025-01-18
-94,friends,1,evening,False,2025-01-12
-147,shopping,1,all day,True,2024-12-28
-113,fast food,1,all day,True,2024-12-23
-153,cooking,1,all day,False,2025-01-07
-68,cleaning,1,evening,True,2024-12-25
-91,party,1,morning,True,2025-01-23
-61,shopping,1,afternoon,False,2025-01-01
-167,cooking,1,morning,True,2024-12-31
-28,party,1,all day,True,2024-12-02
-101,reading,1,evening,False,2024-11-16
-18,screen time,1,morning,False,2024-11-27
-70,exercise,1,all day,True,2024-11-16
-81,screen time,1,all day,True,2024-11-16
-120,cooking,1,evening,True,2024-11-10
-133,shopping,1,morning,False,2024-12-15
-46,smoking,1,evening,False,2024-12-03
-131,screen time,1,all day,True,2024-11-18
-156,smoking,1,all day,True,2024-12-17
-98,gaming,1,morning,False,2024-11-26
-99,shopping,1,evening,False,2024-12-02
-82,fast food,1,all day,False,2025-01-11
-39,friends,1,evening,False,2024-12-26
-70,overtime,1,morning,True,2024-12-29
-35,party,1,morning,False,2024-11-08
-73,fast food,1,evening,True,2024-12-25
-119,shopping,1,evening,False,2024-12-25
-56,smoking,1,evening,False,2024-12-15
-19,overtime,1,morning,True,2025-01-19
-32,shopping,1,morning,False,2024-12-07
-175,smoking,1,afternoon,False,2024-12-08
-47,exercise,1,afternoon,False,2024-11-29
-158,smoking,1,afternoon,False,2025-01-11
-55,overtime,1,morning,True,2024-11-01
-150,cleaning,1,all day,False,2024-12-08
-119,screen time,1,evening,False,2025-01-15
-107,exercise,1,all day,False,2024-12-09
-180,cleaning,1,evening,False,2024-12-11
-32,friends,1,morning,True,2024-12-04
-108,friends,1,all day,False,2024-12-27
-93,party,1,all day,False,2024-12-31
-156,shopping,1,evening,True,2025-01-19
-137,party,1,evening,False,2024-11-19
-90,overtime,1,all day,False,2024-11-10
-145,smoking,1,all day,False,2025-01-04
-115,smoking,1,morning,False,2025-01-25
-178,smoking,1,morning,True,2024-11-20
-107,cleaning,1,morning,True,2024-11-28
-163,gaming,1,evening,True,2024-12-17
-142,exercise,1,evening,False,2024-11-29
-81,cooking,1,morning,False,2024-11-24
-23,screen time,1,morning,True,2025-01-19
-127,meditation,1,afternoon,False,2025-01-03
-60,fast food,1,all day,True,2024-12-20
-35,reading,1,morning,False,2024-12-06
-132,party,1,all day,False,2025-01-05
-77,friends,1,evening,True,2025-01-07
-134,meditation,1,evening,True,2025-01-02
-49,exercise,1,all day,False,2024-12-02
-108,friends,1,afternoon,False,2024-11-02
-54,screen time,1,morning,True,2024-12-03
-140,cleaning,1,morning,True,2024-12-24
-142,gaming,1,evening,True,2024-12-10
-139,shopping,1,afternoon,False,2024-11-15
-152,smoking,1,evening,True,2024-12-16
-130,meditation,1,evening,False,2024-12-30
-19,reading,1,evening,False,2025-01-04
-103,exercise,1,morning,False,2024-11-20
-88,smoking,1,afternoon,True,2024-11-24
-118,fast food,1,all day,False,2024-12-19
-138,smoking,1,all day,True,2025-01-08
-77,gaming,1,afternoon,True,2024-11-16
-107,cooking,1,morning,True,2025-01-04
-125,cooking,1,afternoon,True,2024-11-12
-145,meditation,1,afternoon,True,2025-01-11
-75,cleaning,1,evening,False,2024-12-26
-12,shopping,1,afternoon,True,2024-11-15
-179,party,1,evening,False,2024-11-29
-94,friends,1,evening,False,2024-12-26
-110,friends,1,all day,True,2024-12-19
-151,screen time,1,afternoon,False,2024-11-04
-178,party,1,afternoon,False,2024-12-05
-175,fast food,1,evening,True,2024-12-16
-46,smoking,1,all day,False,2024-12-14
-179,meditation,1,morning,False,2025-01-01
-90,cooking,1,afternoon,False,2025-01-21
-133,cleaning,1,afternoon,True,2024-12-01
-69,gaming,1,all day,False,2025-01-05
-41,cleaning,1,all day,True,2024-11-11
-15,exercise,1,morning,True,2024-11-28
-176,friends,1,morning,False,2025-01-19
-40,fast food,1,all day,True,2025-01-21
-142,party,1,morning,False,2024-12-20
-152,exercise,1,all day,False,2024-12-10
-147,shopping,1,afternoon,True,2025-01-23
-30,reading,1,morning,False,2024-11-18
-74,cleaning,1,all day,False,2025-01-26
-28,party,1,evening,False,2024-12-23
-71,shopping,1,afternoon,False,2024-12-26
-91,cooking,1,evening,True,2024-12-14
-41,shopping,1,all day,False,2024-10-30
-46,exercise,1,morning,False,2024-11-07
-145,shopping,1,afternoon,True,2024-12-24
-36,gaming,1,morning,False,2024-12-12
-147,friends,1,evening,True,2024-12-05
-49,overtime,1,all day,False,2025-01-10
-168,reading,1,morning,True,2024-12-01
-133,smoking,1,morning,False,2024-12-27
-12,cleaning,1,evening,False,2024-12-05
-158,cleaning,1,morning,False,2024-12-30
-22,party,1,morning,False,2025-01-19
-159,overtime,1,morning,False,2024-11-27
-65,friends,1,evening,True,2024-11-24
-53,overtime,1,afternoon,True,2024-11-21
-54,exercise,1,evening,False,2025-01-04
-31,cooking,1,all day,False,2025-01-24
-83,gaming,1,evening,True,2024-12-05
-165,screen time,1,afternoon,True,2024-11-17
-93,shopping,1,morning,True,2025-01-13
-143,party,1,afternoon,True,2025-01-24
-122,cooking,2,evening,True,2025-01-03
-155,fast food,2,afternoon,True,2025-01-24
-50,meditation,2,all day,False,2025-01-16
-36,party,2,all day,False,2025-01-19
-51,shopping,2,morning,False,2025-01-16
-160,party,2,afternoon,True,2025-01-11
-13,reading,2,evening,False,2024-12-29
-133,smoking,2,all day,False,2025-01-01
-129,screen time,2,morning,False,2024-12-30
-176,smoking,2,morning,False,2024-12-28
-40,smoking,2,afternoon,False,2025-01-06
-108,gaming,2,afternoon,False,2025-01-22
-162,gaming,2,afternoon,False,2025-01-08
-73,screen time,2,all day,True,2025-01-22
-94,friends,2,all day,False,2025-01-14
-53,overtime,2,morning,False,2025-01-23
-104,overtime,2,afternoon,False,2025-01-26
-69,cooking,2,morning,True,2025-01-14
-108,friends,2,afternoon,False,2025-01-07
-179,cooking,2,morning,False,2025-01-25
-165,shopping,2,morning,False,2025-01-10
-165,screen time,2,morning,False,2025-01-17
-105,screen time,2,morning,True,2025-01-22
-28,cooking,2,afternoon,True,2025-01-12
-119,friends,2,all day,True,2025-01-19
-164,fast food,2,morning,False,2025-01-14
-70,reading,2,all day,True,2025-01-08
-78,exercise,2,afternoon,False,2025-01-01
-25,fast food,2,morning,True,2025-01-26
-20,cooking,2,evening,True,2025-01-19
-79,shopping,2,afternoon,False,2025-01-19
-139,reading,2,morning,False,2025-01-17
-160,cooking,2,evening,False,2025-01-23
-62,screen time,2,all day,False,2025-01-10
-123,gaming,2,afternoon,False,2024-12-29
-94,party,2,morning,True,2024-12-30
-131,overtime,2,afternoon,True,2025-01-22
-52,overtime,2,evening,True,2024-12-29
-55,friends,2,afternoon,True,2025-01-24
-138,party,2,evening,False,2025-01-24
-104,party,2,morning,True,2025-01-25
-42,friends,2,afternoon,False,2025-01-27
-151,cooking,2,afternoon,True,2025-01-02
-127,friends,2,all day,False,2025-01-04
-11,party,2,all day,False,2025-01-09
-89,gaming,2,all day,True,2025-01-02
-34,reading,2,all day,False,2025-01-12
-108,cooking,2,evening,False,2025-01-26
-160,screen time,2,afternoon,False,2025-01-14
-132,meditation,2,all day,True,2025-01-16
-133,smoking,2,all day,False,2024-12-28
-30,cleaning,2,afternoon,True,2025-01-01
-122,meditation,2,evening,False,2025-01-08
-58,gaming,2,morning,True,2025-01-07
-139,screen time,2,all day,True,2024-12-30
-97,reading,2,all day,False,2025-01-20
-48,exercise,2,all day,False,2025-01-05
-177,gaming,2,morning,False,2025-01-08
-52,meditation,2,evening,False,2024-12-31
-36,exercise,2,all day,False,2025-01-20
-164,shopping,2,afternoon,False,2024-12-30
-147,friends,2,morning,False,2025-01-07
-121,friends,2,evening,True,2025-01-27
-20,friends,2,all day,False,2024-12-28
-51,cleaning,2,evening,True,2025-01-06
-160,meditation,2,afternoon,True,2025-01-09
-121,cooking,2,morning,False,2024-12-30
-67,party,2,all day,True,2025-01-09
-49,fast food,2,morning,True,2025-01-21
-40,cooking,2,morning,False,2025-01-25
+42,gaming,1,all day,False,2025-01-25
+145,screen time,1,all day,False,2024-12-28
+68,friends,1,all day,True,2024-12-28
+176,meditation,1,all day,True,2024-11-25
+157,overtime,1,all day,True,2024-12-02
+153,smoking,1,morning,True,2025-01-07
+141,smoking,1,morning,False,2024-12-17
+34,fast food,1,afternoon,True,2024-11-14
+106,meditation,1,all day,False,2024-12-31
+14,overtime,1,all day,True,2024-12-13
+38,party,1,evening,True,2025-01-23
+134,cooking,1,morning,False,2025-01-10
+45,cooking,1,all day,False,2024-11-30
+16,meditation,1,afternoon,False,2024-12-10
+67,fast food,1,evening,False,2025-01-07
+73,overtime,1,afternoon,True,2024-12-16
+118,cooking,1,afternoon,True,2025-01-11
+29,exercise,1,evening,True,2024-12-11
+131,cooking,1,morning,True,2024-11-11
+73,cooking,1,all day,True,2024-11-19
+88,meditation,1,morning,False,2024-12-25
+66,fast food,1,morning,False,2024-12-19
+55,fast food,1,morning,True,2024-12-12
+22,party,1,all day,True,2024-10-29
+133,exercise,1,morning,True,2025-01-23
+73,cleaning,1,evening,False,2024-12-24
+152,shopping,1,afternoon,False,2024-12-03
+83,gaming,1,all day,False,2024-11-03
+118,exercise,1,afternoon,False,2024-10-31
+14,friends,1,morning,True,2024-12-08
+73,shopping,1,morning,True,2024-11-04
+142,party,1,morning,False,2024-11-27
+105,smoking,1,all day,False,2024-11-16
+140,cleaning,1,all day,False,2024-11-25
+121,overtime,1,morning,True,2024-12-02
+45,screen time,1,all day,True,2024-11-27
+73,shopping,1,all day,True,2025-01-18
+171,shopping,1,evening,False,2025-01-14
+82,exercise,1,morning,False,2024-11-24
+142,shopping,1,all day,False,2024-12-16
+73,cooking,1,evening,True,2024-11-29
+171,screen time,1,morning,False,2024-12-02
+104,overtime,1,evening,False,2024-11-08
+24,screen time,1,morning,False,2024-12-21
+83,exercise,1,morning,False,2024-10-29
+118,reading,1,morning,False,2025-01-12
+133,fast food,1,morning,False,2025-01-11
+130,meditation,1,all day,False,2024-11-12
+39,smoking,1,morning,True,2025-01-22
+166,party,1,evening,True,2024-12-02
+55,cleaning,1,all day,True,2024-11-29
+121,screen time,1,all day,False,2024-12-14
+41,party,1,afternoon,False,2024-11-10
+145,cooking,1,evening,False,2024-12-20
+102,screen time,1,evening,True,2024-11-19
+140,friends,1,afternoon,True,2025-01-03
+108,shopping,1,evening,False,2024-12-14
+160,cooking,1,morning,False,2025-01-21
+52,reading,1,morning,True,2024-12-26
+150,meditation,1,all day,True,2024-11-27
+39,cleaning,1,all day,True,2024-12-24
+22,screen time,1,evening,True,2025-01-06
+125,shopping,1,morning,False,2024-12-09
+99,overtime,1,afternoon,False,2024-11-09
+174,exercise,1,evening,False,2025-01-26
+56,cooking,1,afternoon,True,2024-11-10
+15,gaming,1,morning,True,2025-01-11
+60,friends,1,afternoon,False,2024-11-08
+78,reading,1,morning,True,2024-12-31
+38,cleaning,1,evening,True,2025-01-15
+45,reading,1,all day,True,2025-01-10
+28,exercise,1,evening,False,2024-11-12
+118,friends,1,afternoon,True,2025-01-04
+51,exercise,1,afternoon,True,2025-01-11
+54,overtime,1,morning,True,2025-01-16
+118,cleaning,1,afternoon,False,2025-01-15
+43,exercise,1,afternoon,True,2024-11-28
+168,party,1,evening,False,2024-11-15
+79,smoking,1,morning,True,2025-01-03
+133,reading,1,morning,False,2024-12-06
+52,screen time,1,morning,False,2025-01-12
+61,screen time,1,morning,True,2025-01-21
+135,smoking,1,afternoon,False,2024-12-03
+177,friends,1,afternoon,False,2025-01-18
+177,friends,1,afternoon,True,2024-11-19
+161,friends,1,afternoon,True,2025-01-14
+172,reading,1,afternoon,False,2025-01-13
+13,party,1,morning,True,2024-12-31
+78,smoking,1,all day,True,2024-12-09
+53,gaming,1,afternoon,True,2024-12-09
+108,fast food,1,afternoon,True,2025-01-27
+68,friends,1,afternoon,True,2024-11-07
+21,reading,1,evening,False,2024-12-07
+154,party,1,evening,False,2024-12-02
+123,cleaning,1,morning,True,2024-12-28
+122,gaming,1,afternoon,False,2024-11-27
+150,cleaning,1,evening,False,2024-11-15
+77,exercise,1,evening,False,2024-12-05
+171,smoking,1,afternoon,False,2024-11-25
+141,exercise,1,morning,False,2024-11-21
+31,cleaning,1,afternoon,True,2024-11-27
+132,smoking,1,evening,True,2025-01-09
+157,overtime,1,all day,False,2024-12-16
+105,exercise,1,morning,False,2025-01-04
+88,reading,1,morning,True,2024-12-05
+89,reading,1,evening,False,2024-12-25
+180,cooking,1,all day,True,2025-01-21
+154,friends,1,evening,True,2025-01-04
+67,cooking,1,afternoon,True,2025-01-01
+42,reading,1,all day,True,2024-12-19
+49,smoking,1,afternoon,False,2025-01-07
+103,party,1,all day,True,2024-11-04
+73,cooking,1,all day,False,2024-12-26
+23,smoking,1,all day,True,2024-11-17
+59,smoking,1,afternoon,True,2024-11-23
+47,meditation,1,all day,False,2024-12-13
+178,friends,1,morning,False,2024-11-16
+141,fast food,1,all day,False,2025-01-07
+62,meditation,1,morning,False,2025-01-13
+41,meditation,1,evening,False,2024-12-21
+163,exercise,1,afternoon,True,2024-12-20
+59,cleaning,1,morning,True,2025-01-09
+173,cleaning,1,morning,True,2024-12-20
+100,shopping,1,afternoon,True,2024-12-14
+67,gaming,1,afternoon,True,2024-12-02
+140,exercise,1,evening,True,2024-12-10
+69,gaming,1,evening,True,2024-12-16
+78,fast food,1,evening,False,2024-12-04
+72,gaming,1,morning,True,2024-12-04
+11,meditation,1,evening,False,2024-12-26
+21,party,1,afternoon,False,2024-11-18
+96,meditation,1,all day,False,2024-12-18
+11,cooking,1,evening,False,2025-01-22
+56,gaming,1,all day,True,2025-01-01
+159,exercise,1,morning,False,2025-01-14
+103,meditation,1,evening,False,2024-12-20
+89,screen time,1,evening,False,2024-12-18
+56,friends,1,all day,False,2025-01-13
+139,gaming,1,morning,False,2024-12-26
+64,smoking,1,afternoon,False,2024-12-29
+164,gaming,1,evening,False,2025-01-18
+107,meditation,1,morning,False,2024-12-21
+48,shopping,1,all day,False,2025-01-14
+36,meditation,1,all day,True,2024-12-31
+147,screen time,1,all day,False,2024-11-03
+134,shopping,1,all day,True,2024-11-17
+111,shopping,1,morning,True,2024-11-23
+144,gaming,1,evening,True,2024-10-30
+141,cooking,1,morning,True,2024-11-02
+136,meditation,1,evening,False,2024-11-16
+138,shopping,1,evening,True,2025-01-07
+90,reading,1,all day,True,2024-12-31
+98,friends,1,all day,True,2024-11-02
+103,smoking,1,afternoon,False,2025-01-13
+81,exercise,1,afternoon,True,2024-11-12
+40,friends,1,morning,False,2024-11-05
+175,meditation,1,morning,False,2024-12-17
+85,smoking,1,morning,True,2024-12-27
+63,meditation,1,morning,False,2025-01-11
+109,screen time,1,all day,True,2024-11-05
+54,party,1,morning,False,2025-01-08
+62,cooking,1,morning,True,2024-12-15
+62,cleaning,1,afternoon,False,2025-01-10
+136,fast food,1,morning,False,2025-01-25
+16,screen time,1,morning,True,2024-12-19
+60,gaming,1,all day,False,2024-12-13
+142,exercise,1,all day,True,2025-01-13
+70,meditation,1,all day,False,2024-12-20
+132,cleaning,1,all day,True,2024-10-31
+172,gaming,1,all day,True,2024-11-19
+26,cooking,1,evening,True,2024-12-13
+45,overtime,1,morning,True,2024-11-15
+120,gaming,1,morning,True,2024-11-19
+108,reading,1,evening,True,2024-11-14
+61,cleaning,1,morning,False,2025-01-26
+151,smoking,1,morning,False,2024-12-02
+52,friends,1,afternoon,True,2024-12-18
+92,fast food,1,all day,True,2024-11-01
+51,exercise,1,morning,False,2024-12-20
+62,party,1,all day,True,2025-01-01
+44,overtime,1,evening,False,2024-12-30
+39,shopping,1,morning,False,2024-12-19
+65,screen time,1,all day,False,2024-12-21
+69,exercise,1,evening,True,2024-11-28
+86,gaming,1,afternoon,True,2024-11-10
+155,party,1,afternoon,True,2024-12-01
+143,meditation,1,evening,False,2024-12-28
+53,cleaning,1,morning,False,2024-12-17
+133,overtime,1,morning,False,2025-01-07
+111,screen time,1,afternoon,False,2025-01-15
+173,cleaning,1,evening,False,2024-11-14
+65,friends,1,afternoon,False,2025-01-25
+72,gaming,1,morning,False,2024-12-29
+65,gaming,1,morning,True,2025-01-22
+59,shopping,1,all day,True,2024-11-06
+160,reading,1,all day,False,2024-11-06
+20,reading,1,evening,False,2024-11-10
+102,meditation,1,afternoon,True,2024-12-03
+38,smoking,1,morning,True,2024-11-02
+27,overtime,1,evening,False,2025-01-08
+108,shopping,1,afternoon,True,2024-12-06
+150,friends,1,all day,False,2025-01-02
+26,shopping,1,all day,True,2024-12-08
+93,party,1,all day,True,2024-11-07
+144,friends,1,morning,True,2025-01-09
+97,reading,1,morning,True,2024-11-21
+65,party,1,all day,False,2024-11-23
+114,smoking,1,evening,False,2024-11-21
+115,smoking,1,evening,True,2024-12-24
+23,reading,1,evening,False,2024-12-26
+176,friends,2,afternoon,True,2025-01-06
+126,cooking,2,afternoon,False,2025-01-20
+159,fast food,2,morning,True,2025-01-19
+126,cleaning,2,evening,False,2025-01-27
+140,screen time,2,morning,True,2024-12-28
+14,cleaning,2,all day,False,2025-01-26
+43,cleaning,2,morning,True,2025-01-09
+136,cooking,2,evening,True,2025-01-19
+99,smoking,2,afternoon,True,2025-01-08
+103,reading,2,morning,False,2025-01-21
+118,reading,2,morning,True,2025-01-23
+125,reading,2,morning,True,2025-01-25
+142,gaming,2,all day,False,2025-01-09
+117,reading,2,morning,False,2025-01-15
+179,party,2,all day,False,2025-01-01
+108,gaming,2,evening,True,2025-01-21
+64,friends,2,afternoon,True,2025-01-14
+59,shopping,2,morning,True,2025-01-10
+178,screen time,2,morning,False,2025-01-12
+174,gaming,2,morning,True,2025-01-23
+110,gaming,2,evening,True,2025-01-09
+118,exercise,2,morning,True,2025-01-07
+162,screen time,2,morning,True,2025-01-08
+164,party,2,morning,True,2025-01-09
+80,reading,2,all day,False,2025-01-05
+65,fast food,2,evening,True,2025-01-20
+90,shopping,2,all day,True,2025-01-23
+76,gaming,2,morning,True,2025-01-11
+66,fast food,2,morning,True,2025-01-03
+93,overtime,2,all day,True,2025-01-03
+88,party,2,evening,False,2025-01-19
+50,fast food,2,morning,False,2025-01-05
+149,party,2,all day,True,2025-01-18
+36,friends,2,morning,True,2025-01-07
+55,reading,2,evening,True,2025-01-02
+15,friends,2,morning,False,2025-01-15
+29,gaming,2,all day,True,2024-12-29
+35,party,2,morning,False,2025-01-26
+146,gaming,2,evening,True,2025-01-23
+140,fast food,2,morning,True,2025-01-03
+25,meditation,2,morning,True,2025-01-12
+28,party,2,morning,False,2024-12-31
+100,exercise,2,evening,False,2025-01-09
+61,reading,2,all day,False,2025-01-24
+120,meditation,2,afternoon,True,2025-01-01
+142,cleaning,2,all day,False,2025-01-14
+21,cooking,2,afternoon,True,2025-01-20
+107,reading,2,evening,True,2025-01-12
+121,fast food,2,morning,True,2025-01-08
+20,screen time,2,morning,True,2025-01-27
+104,screen time,2,afternoon,False,2025-01-17
+85,smoking,2,evening,False,2025-01-27
+154,cleaning,2,all day,False,2025-01-10
+15,exercise,2,evening,False,2025-01-24
+103,friends,2,evening,False,2024-12-30
+113,cleaning,2,evening,True,2025-01-04
+127,screen time,2,morning,True,2025-01-02
+44,cleaning,2,evening,True,2025-01-20
+155,cleaning,2,evening,False,2025-01-08
+116,overtime,2,evening,True,2025-01-16
+135,screen time,2,all day,True,2025-01-21
+113,screen time,2,all day,False,2024-12-28
+31,party,2,morning,True,2025-01-17
+109,smoking,2,afternoon,True,2025-01-04
+132,smoking,2,afternoon,True,2025-01-11
+63,gaming,2,afternoon,True,2025-01-13
+29,reading,2,morning,False,2025-01-21
+138,cleaning,2,afternoon,True,2025-01-25
+75,party,2,all day,True,2025-01-21
+55,fast food,2,all day,False,2025-01-27

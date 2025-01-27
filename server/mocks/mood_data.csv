@@ -1,123 +1,123 @@
 moodType,userId,intensity,moodTime,date
-stressed,1,1,all day,2024-10-29
-happy,1,8,all day,2024-10-30
-stressed,1,9,afternoon,2024-10-31
-unhappy,1,4,evening,2024-11-01
-stressed,1,6,afternoon,2024-11-02
-energetic,1,10,afternoon,2024-11-03
-unhappy,1,9,evening,2024-11-04
-relaxed,1,0,morning,2024-11-05
-unhappy,1,10,afternoon,2024-11-06
-happy,1,8,all day,2024-11-07
-tired,1,10,morning,2024-11-08
-energetic,1,10,afternoon,2024-11-09
-energetic,1,0,all day,2024-11-10
-stressed,1,5,all day,2024-11-11
-energetic,1,5,morning,2024-11-12
-tired,1,8,morning,2024-11-13
-energetic,1,1,all day,2024-11-14
-energetic,1,7,evening,2024-11-15
-unhappy,1,3,morning,2024-11-16
-tired,1,5,afternoon,2024-11-17
-happy,1,2,evening,2024-11-18
-relaxed,1,3,afternoon,2024-11-19
-relaxed,1,4,morning,2024-11-20
-relaxed,1,7,morning,2024-11-21
-stressed,1,4,evening,2024-11-22
-relaxed,1,4,morning,2024-11-23
-unhappy,1,4,all day,2024-11-24
-happy,1,2,morning,2024-11-25
-happy,1,0,morning,2024-11-26
-relaxed,1,6,morning,2024-11-27
-unhappy,1,7,evening,2024-11-28
-energetic,1,10,afternoon,2024-11-29
-stressed,1,4,evening,2024-11-30
-happy,1,6,evening,2024-12-01
-stressed,1,10,afternoon,2024-12-02
-tired,1,7,morning,2024-12-03
-stressed,1,0,evening,2024-12-04
-relaxed,1,6,evening,2024-12-05
-relaxed,1,3,morning,2024-12-06
-happy,1,9,afternoon,2024-12-07
-energetic,1,8,morning,2024-12-08
-unhappy,1,8,morning,2024-12-09
-energetic,1,7,evening,2024-12-10
-stressed,1,1,afternoon,2024-12-11
-happy,1,10,afternoon,2024-12-12
-happy,1,4,all day,2024-12-13
-unhappy,1,9,afternoon,2024-12-14
-stressed,1,1,all day,2024-12-15
-energetic,1,6,afternoon,2024-12-16
-energetic,1,9,morning,2024-12-17
-happy,1,0,afternoon,2024-12-18
-energetic,1,3,afternoon,2024-12-19
-unhappy,1,9,morning,2024-12-20
-energetic,1,4,morning,2024-12-21
-stressed,1,8,evening,2024-12-22
-happy,1,5,afternoon,2024-12-23
-happy,1,3,afternoon,2024-12-24
-relaxed,1,2,all day,2024-12-25
-energetic,1,9,evening,2024-12-26
-happy,1,3,evening,2024-12-27
-relaxed,1,0,morning,2024-12-28
-relaxed,1,9,all day,2024-12-29
-tired,1,7,morning,2024-12-30
-stressed,1,8,afternoon,2024-12-31
-happy,1,5,all day,2025-01-01
-energetic,1,9,afternoon,2025-01-02
-relaxed,1,4,evening,2025-01-03
-energetic,1,9,all day,2025-01-04
-stressed,1,9,morning,2025-01-05
-stressed,1,2,all day,2025-01-06
-happy,1,4,afternoon,2025-01-07
-tired,1,2,all day,2025-01-08
-energetic,1,6,afternoon,2025-01-09
-relaxed,1,6,morning,2025-01-10
-tired,1,9,all day,2025-01-11
-unhappy,1,5,all day,2025-01-12
-stressed,1,0,morning,2025-01-13
-happy,1,5,evening,2025-01-14
-stressed,1,6,afternoon,2025-01-15
-relaxed,1,10,morning,2025-01-16
-tired,1,2,morning,2025-01-17
-happy,1,5,morning,2025-01-18
-happy,1,10,morning,2025-01-19
-tired,1,7,morning,2025-01-20
-tired,1,7,afternoon,2025-01-21
-stressed,1,4,morning,2025-01-22
-tired,1,10,evening,2025-01-23
-unhappy,1,5,morning,2025-01-24
-tired,1,3,all day,2025-01-25
-happy,1,4,all day,2025-01-26
-stressed,1,8,afternoon,2025-01-27
-tired,2,3,evening,2024-12-28
-tired,2,7,morning,2024-12-29
-stressed,2,3,morning,2024-12-30
-energetic,2,1,afternoon,2024-12-31
-tired,2,4,afternoon,2025-01-01
-unhappy,2,3,evening,2025-01-02
-unhappy,2,2,morning,2025-01-03
-happy,2,7,afternoon,2025-01-04
-unhappy,2,6,morning,2025-01-05
-unhappy,2,4,morning,2025-01-06
-happy,2,0,evening,2025-01-07
-energetic,2,8,afternoon,2025-01-08
-unhappy,2,8,afternoon,2025-01-09
-stressed,2,9,evening,2025-01-10
-happy,2,8,all day,2025-01-11
-relaxed,2,4,afternoon,2025-01-12
-tired,2,5,morning,2025-01-13
-energetic,2,8,evening,2025-01-14
-relaxed,2,10,evening,2025-01-15
-relaxed,2,6,morning,2025-01-16
-energetic,2,2,afternoon,2025-01-17
-energetic,2,1,all day,2025-01-18
-tired,2,3,morning,2025-01-19
-tired,2,2,all day,2025-01-20
-happy,2,0,all day,2025-01-21
-stressed,2,2,morning,2025-01-22
-tired,2,3,evening,2025-01-23
-happy,2,2,all day,2025-01-24
-tired,2,1,morning,2025-01-25
-relaxed,2,10,all day,2025-01-26
-stressed,2,7,all day,2025-01-27
+happy,1,3,all day,2024-10-29
+happy,1,2,morning,2024-10-30
+energetic,1,6,afternoon,2024-10-31
+relaxed,1,2,afternoon,2024-11-01
+happy,1,4,evening,2024-11-02
+energetic,1,0,evening,2024-11-03
+happy,1,10,all day,2024-11-04
+happy,1,10,all day,2024-11-05
+energetic,1,8,afternoon,2024-11-06
+relaxed,1,9,morning,2024-11-07
+happy,1,0,all day,2024-11-08
+relaxed,1,3,all day,2024-11-09
+happy,1,8,all day,2024-11-10
+relaxed,1,4,all day,2024-11-11
+energetic,1,4,afternoon,2024-11-12
+energetic,1,2,evening,2024-11-13
+relaxed,1,2,evening,2024-11-14
+happy,1,9,afternoon,2024-11-15
+happy,1,3,morning,2024-11-16
+happy,1,7,all day,2024-11-17
+relaxed,1,10,evening,2024-11-18
+relaxed,1,7,afternoon,2024-11-19
+happy,1,10,all day,2024-11-20
+relaxed,1,3,evening,2024-11-21
+relaxed,1,9,morning,2024-11-22
+happy,1,1,all day,2024-11-23
+happy,1,4,evening,2024-11-24
+energetic,1,9,afternoon,2024-11-25
+happy,1,10,evening,2024-11-26
+relaxed,1,9,afternoon,2024-11-27
+energetic,1,8,evening,2024-11-28
+relaxed,1,5,evening,2024-11-29
+energetic,1,3,afternoon,2024-11-30
+happy,1,2,evening,2024-12-01
+energetic,1,4,evening,2024-12-02
+happy,1,2,morning,2024-12-03
+happy,1,1,evening,2024-12-04
+relaxed,1,7,morning,2024-12-05
+energetic,1,2,afternoon,2024-12-06
+energetic,1,2,all day,2024-12-07
+energetic,1,2,evening,2024-12-08
+relaxed,1,6,afternoon,2024-12-09
+relaxed,1,7,morning,2024-12-10
+happy,1,3,morning,2024-12-11
+energetic,1,8,all day,2024-12-12
+energetic,1,1,evening,2024-12-13
+energetic,1,10,evening,2024-12-14
+energetic,1,4,morning,2024-12-15
+happy,1,9,evening,2024-12-16
+energetic,1,8,evening,2024-12-17
+relaxed,1,9,afternoon,2024-12-18
+relaxed,1,3,morning,2024-12-19
+happy,1,2,afternoon,2024-12-20
+energetic,1,6,all day,2024-12-21
+relaxed,1,4,morning,2024-12-22
+happy,1,2,all day,2024-12-23
+happy,1,2,afternoon,2024-12-24
+happy,1,0,all day,2024-12-25
+relaxed,1,2,afternoon,2024-12-26
+energetic,1,3,morning,2024-12-27
+energetic,1,4,evening,2024-12-28
+happy,1,6,morning,2024-12-29
+energetic,1,5,all day,2024-12-30
+energetic,1,7,afternoon,2024-12-31
+happy,1,1,all day,2025-01-01
+energetic,1,2,evening,2025-01-02
+energetic,1,4,morning,2025-01-03
+relaxed,1,10,evening,2025-01-04
+energetic,1,9,all day,2025-01-05
+relaxed,1,0,all day,2025-01-06
+energetic,1,8,morning,2025-01-07
+happy,1,10,afternoon,2025-01-08
+happy,1,9,evening,2025-01-09
+happy,1,8,afternoon,2025-01-10
+relaxed,1,3,evening,2025-01-11
+energetic,1,8,evening,2025-01-12
+happy,1,1,morning,2025-01-13
+relaxed,1,7,morning,2025-01-14
+energetic,1,3,evening,2025-01-15
+relaxed,1,9,morning,2025-01-16
+happy,1,0,morning,2025-01-17
+energetic,1,6,morning,2025-01-18
+relaxed,1,5,morning,2025-01-19
+happy,1,5,evening,2025-01-20
+energetic,1,8,afternoon,2025-01-21
+happy,1,2,afternoon,2025-01-22
+energetic,1,8,morning,2025-01-23
+happy,1,5,evening,2025-01-24
+happy,1,9,all day,2025-01-25
+happy,1,0,all day,2025-01-26
+happy,1,8,all day,2025-01-27
+happy,2,0,morning,2024-12-28
+happy,2,1,evening,2024-12-29
+energetic,2,7,afternoon,2024-12-30
+relaxed,2,5,all day,2024-12-31
+relaxed,2,9,morning,2025-01-01
+happy,2,3,morning,2025-01-02
+relaxed,2,5,all day,2025-01-03
+happy,2,1,afternoon,2025-01-04
+happy,2,5,morning,2025-01-05
+energetic,2,3,evening,2025-01-06
+energetic,2,0,all day,2025-01-07
+energetic,2,3,all day,2025-01-08
+happy,2,1,all day,2025-01-09
+happy,2,0,morning,2025-01-10
+relaxed,2,10,evening,2025-01-11
+happy,2,9,afternoon,2025-01-12
+energetic,2,8,morning,2025-01-13
+energetic,2,10,all day,2025-01-14
+relaxed,2,10,afternoon,2025-01-15
+happy,2,8,morning,2025-01-16
+relaxed,2,8,afternoon,2025-01-17
+happy,2,5,all day,2025-01-18
+happy,2,8,evening,2025-01-19
+energetic,2,5,all day,2025-01-20
+happy,2,4,all day,2025-01-21
+relaxed,2,6,morning,2025-01-22
+energetic,2,7,morning,2025-01-23
+relaxed,2,1,afternoon,2025-01-24
+happy,2,10,all day,2025-01-25
+happy,2,8,all day,2025-01-26
+happy,2,2,morning,2025-01-27
