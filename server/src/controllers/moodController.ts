@@ -2,10 +2,9 @@ import { Request, Response } from "express";
 import Mood from "../models/mood";
 
 export const getMoodsByUserId = async (req: Request, res: Response) => {
-  const { userId } = req.params;
-  const { startDate, endDate } = req.query;
-
   try {
+    const { userId } = req.user.id;
+    const { startDate, endDate } = req.query;
     const query: any = { userId };
 
     if (startDate || endDate) {
@@ -22,8 +21,9 @@ export const getMoodsByUserId = async (req: Request, res: Response) => {
 };
 
 export const addMood = async (req: Request, res: Response) => {
-  const { moodType, intensity, userId, moodTime, date } = req.body;
   try {
+    const { moodType, intensity, moodTime, date } = req.body;
+    const { userId } = req.user.id;
     const newMood = new Mood({ moodType, intensity, userId, moodTime, date });
     await newMood.save();
     res.status(201).json(newMood);

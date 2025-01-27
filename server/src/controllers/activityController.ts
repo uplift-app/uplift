@@ -2,10 +2,9 @@ import { Request, Response } from "express";
 import Activity from "../models/activity";
 
 export const getActivitiesByUserId = async (req: Request, res: Response) => {
-  const { userId } = req.params;
-  const { startDate, endDate } = req.query;
-
   try {
+    const { startDate, endDate } = req.query;
+    const { userId } = req.user.id;
     const query: any = { userId };
 
     if (startDate || endDate) {
@@ -22,9 +21,9 @@ export const getActivitiesByUserId = async (req: Request, res: Response) => {
 };
 
 export const addActivity = async (req: Request, res: Response) => {
-  const { duration, activityType, userId, activityTime, isHabit, date } =
-    req.body;
   try {
+    const { duration, activityType, activityTime, isHabit, date } = req.body;
+    const { userId } = req.user.id;
     const newActivity = new Activity({
       duration,
       activityType,
