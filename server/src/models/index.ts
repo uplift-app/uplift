@@ -1,7 +1,7 @@
 "use strict";
 import mongoose from "mongoose";
 
-(async () => {
+const connectDB = async () => {
   try {
     await mongoose.connect(
       `${process.env.DATABASE_URL}/${process.env.DATABASE_NAME}`
@@ -10,6 +10,6 @@ import mongoose from "mongoose";
   } catch (e) {
     console.log(`MongoDB connection error: ${e}`);
   }
-})();
+};
 
-export default mongoose;
+export default connectDB;
