@@ -1,12 +1,16 @@
 "use strict";
 
 import { Router } from "express";
-import { getActivitiesByUserId } from "../controllers/activityController";
-import { addMood, deleteMood, editMood } from "../controllers/moodController";
+import {
+  addMood,
+  deleteMood,
+  editMood,
+  getMoodsByUserId,
+} from "../controllers/moodController";
 
 const moodRouter = Router();
 
-moodRouter.get("/:userId", getActivitiesByUserId);
+moodRouter.get("/:userId", getMoodsByUserId);
 moodRouter.post("/", addMood);
 moodRouter.put("/:id", editMood);
 moodRouter.delete("/:id", deleteMood);
