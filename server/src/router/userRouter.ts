@@ -1,10 +1,10 @@
 "use strict";
 
 import { Router } from "express";
-import { addUser, getUserById } from "../controllers/userController";
+import { addUser, login } from "../controllers/userController";
 
 const userRouter = Router();
-userRouter.get("/:id", getUserById);
-userRouter.post("/", addUser);
+userRouter.post("/login", login);
+userRouter.post("/register", addUser);
 
 export default userRouter;
