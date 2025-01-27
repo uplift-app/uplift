@@ -16,7 +16,7 @@ const authMiddleware = async (
 ) => {
   const authHeaders = req.headers["authorization"];
   if (!authHeaders) return res.sendStatus(403);
-  const token = authHeaders.split(" ")[1];
+  // const token = authHeaders.split(" ")[1];
 
   try {
     /* Commented out until front end can authenticate. To replace hard coded user below once authentication implemented
@@ -30,6 +30,7 @@ const authMiddleware = async (
       email: "test@mood.com",
       username: "moodman",
       password: "$2b$10$Kq3keyn/73cxdMsCXg3iC.FKDVR9rq.imYcjycVaiKZ8ObFkYp12y",
+      id: "6797a6b0e59bd4edb67534d2",
     };
     next();
   } catch (error) {
