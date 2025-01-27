@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { Mood } from "../interfaces";
+import { IMood } from "../interfaces";
 
 const MoodSchema: Schema = new Schema({
   moodType: { type: String, required: true },
@@ -9,5 +9,5 @@ const MoodSchema: Schema = new Schema({
   date: { type: Date, required: true },
 });
 
-const Mood = mongoose.model<Mood>("Mood", MoodSchema);
+const Mood = mongoose.model<IMood>("Mood", MoodSchema);
 export default Mood;

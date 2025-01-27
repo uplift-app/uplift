@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { Activity } from "../interfaces";
+import { IActivity } from "../interfaces";
 
 const ActivitySchema: Schema = new Schema({
   duration: { type: Number, required: true },
@@ -10,5 +10,5 @@ const ActivitySchema: Schema = new Schema({
   date: { type: Date, required: true },
 });
 
-const Activity = mongoose.model<Activity>("Activity", ActivitySchema);
+const Activity = mongoose.model<IActivity>("Activity", ActivitySchema);
 export default Activity;

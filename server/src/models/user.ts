@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { User } from "../interfaces";
+import { IUser } from "../interfaces";
 
 const UserSchema: Schema = new Schema({
   email: { type: String, required: true, unique: true },
@@ -7,5 +7,5 @@ const UserSchema: Schema = new Schema({
   password: { type: String, required: true },
 });
 
-const User = mongoose.model<User>("User", UserSchema);
+const User = mongoose.model<IUser>("User", UserSchema);
 export default User;

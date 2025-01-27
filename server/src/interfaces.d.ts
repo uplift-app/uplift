@@ -1,23 +1,22 @@
-export interface User {
+export interface IUser {
   email: string;
   username: string;
   password: string;
-  _id: string;
 }
 
-export interface Mood {
+export interface IMood {
   moodType: string;
   intensity: number;
   userId: string;
-  moodTime: string;
-  date: Date;
+  moodTime: Time;
 }
 
-export interface Activity {
+export interface IActivity {
   duration: number;
   activityType: string;
   userId: string;
-  activityTime: string;
+  activityTime: Time;
   isHabit: boolean;
-  date: Date;
 }
+
+export type Time = "morning" | "afternoon" | "evening" | "all day";
