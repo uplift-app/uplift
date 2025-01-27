@@ -21,4 +21,4 @@ export interface IActivity {
   date: Date;
 }
 
-export type Time = "morning" | "afternoon" | "evening" | "all day";
+export type Time = "morning" | "afternoon" | "evening" | "night" | "all day";
