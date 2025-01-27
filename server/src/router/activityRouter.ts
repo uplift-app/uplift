@@ -1,23 +1,18 @@
 "use strict";
 
-import { Request, Response, Router } from "express";
+import { Router } from "express";
+import {
+  addActivity,
+  deleteActivity,
+  editActivity,
+  getActivitiesByUserId,
+} from "../controllers/activityController";
 
 const activityRouter = Router();
 
-activityRouter.get("/", (req: Request, res: Response) => {
-  res.send("/GET activity");
-});
-
-activityRouter.post("/", (req: Request, res: Response) => {
-  res.send("/POST activity");
-});
-
-activityRouter.put("/", (req: Request, res: Response) => {
-  res.send("/PUT activity");
-});
-
-activityRouter.delete("/", (req: Request, res: Response) => {
-  res.send("/DELETE activity");
-});
+activityRouter.get("/:userId", getActivitiesByUserId);
+activityRouter.post("/", addActivity);
+activityRouter.put("/:id", editActivity);
+activityRouter.delete("/:id", deleteActivity);
 
 export default activityRouter;

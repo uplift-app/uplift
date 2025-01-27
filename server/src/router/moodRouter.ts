@@ -1,23 +1,14 @@
 "use strict";
 
-import { Request, Response, Router } from "express";
+import { Router } from "express";
+import { getActivitiesByUserId } from "../controllers/activityController";
+import { addMood, deleteMood, editMood } from "../controllers/moodController";
 
 const moodRouter = Router();
 
-moodRouter.get("/", (req: Request, res: Response) => {
-  res.send("/GET mood");
-});
-
-moodRouter.post("/", (req: Request, res: Response) => {
-  res.send("/POST mood");
-});
-
-moodRouter.put("/", (req: Request, res: Response) => {
-  res.send("/PUT mood");
-});
-
-moodRouter.delete("/", (req: Request, res: Response) => {
-  res.send("/DELETE mood");
-});
+moodRouter.get("/:userId", getActivitiesByUserId);
+moodRouter.post("/", addMood);
+moodRouter.put("/:id", editMood);
+moodRouter.delete("/:id", deleteMood);
 
 export default moodRouter;

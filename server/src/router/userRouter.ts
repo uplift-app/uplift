@@ -1,15 +1,10 @@
 "use strict";
 
-import { Request, Response, Router } from "express";
+import { Router } from "express";
+import { addUser, getUserById } from "../controllers/userController";
 
 const userRouter = Router();
-
-userRouter.get("/", (req: Request, res: Response) => {
-  res.send("/GET user");
-});
-
-userRouter.post("/", (req: Request, res: Response) => {
-  res.send("/POST user");
-});
+userRouter.get("/:id", getUserById);
+userRouter.post("/", addUser);
 
 export default userRouter;
