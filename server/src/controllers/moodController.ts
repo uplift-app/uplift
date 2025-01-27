@@ -3,8 +3,18 @@ import Mood from "../models/mood";
 
 export const getMoodsByUserId = async (req: Request, res: Response) => {
   const { userId } = req.params;
+  const { startDate, endDate } = req.query;
+
   try {
-    const moods = await Mood.find({ userId });
+    const query: any = { userId };
+
+    if (startDate || endDate) {
+      query.date = {};
+      if (startDate) query.createdAt.$gte = new Date(startDate as string);
+      if (endDate) query.createdAt.$lte = new Date(endDate as string);
+    }
+
+    const moods = await Mood.find(query);
     res.status(200).json(moods);
   } catch (error) {
     res.status(500).json({ message: "Error retrieving moods", error });

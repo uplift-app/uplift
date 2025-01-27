@@ -9,6 +9,7 @@ export interface IMood {
   intensity: number;
   userId: string;
   moodTime: Time;
+  date: Date;
 }
 
 export interface IActivity {
@@ -17,6 +18,7 @@ export interface IActivity {
   userId: string;
   activityTime: Time;
   isHabit: boolean;
+  date: Date;
 }
 
 export type Time = "morning" | "afternoon" | "evening" | "all day";

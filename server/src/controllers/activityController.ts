@@ -3,8 +3,18 @@ import Activity from "../models/activity";
 
 export const getActivitiesByUserId = async (req: Request, res: Response) => {
   const { userId } = req.params;
+  const { startDate, endDate } = req.query;
+
   try {
-    const activities = await Activity.find({ userId });
+    const query: any = { userId };
+
+    if (startDate || endDate) {
+      query.date = {};
+      if (startDate) query.date.$gte = new Date(startDate as string);
+      if (endDate) query.date.$lte = new Date(endDate as string);
+    }
+
+    const activities = await Activity.find(query);
     res.status(200).json(activities);
   } catch (error) {
     res.status(500).json({ message: "Error retrieving activities", error });
