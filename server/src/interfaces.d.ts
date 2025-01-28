@@ -15,7 +15,7 @@ export interface IUser {
 }
 
 export interface IMood {
-  moodType: string;
+  moodType: "happiness" | "stress" | "energy";
   intensity: number;
   userId: string;
   moodTime: Time;
