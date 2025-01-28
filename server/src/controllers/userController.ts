@@ -9,7 +9,7 @@ const SECRET_KEY = process.env.SECRET_KEY || "default";
 export const login = async (req: Request, res: Response): Promise<void> => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ where: { email: email } });
+    const user = await User.findOne({ email: email });
     if (user) {
       const validPass = await bcrypt.compare(password, user.password);
       if (validPass) {
@@ -29,7 +29,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 export const addUser = async (req: Request, res: Response) => {
   try {
     const { email, username, password } = req.body;
-    const user = await User.findOne({ where: { email: email } });
+    const user = await User.findOne({ email: email });
     if (user) {
       res.status(409).send({ message: "User already exists!" });
     }
