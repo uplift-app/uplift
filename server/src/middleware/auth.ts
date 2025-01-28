@@ -30,7 +30,7 @@ const authMiddleware = async (
       email: "test@mood.com",
       username: "moodman",
       password: "$2b$10$Kq3keyn/73cxdMsCXg3iC.FKDVR9rq.imYcjycVaiKZ8ObFkYp12y",
-      id: "1",
+      userId: "1",
     };
     next();
   } catch (error) {
