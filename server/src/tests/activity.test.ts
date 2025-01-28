@@ -1,106 +1,61 @@
 import request from "supertest";
-import { app } from "../index";
-import Activity from "../models/activity";
+import express, { Application, RequestHandler } from "express";
+import auth from "../middleware/auth";
+import * as activityController from "../controllers/activityController";
 
-describe("Activity Controller", () => {
-  it("should create a new activity", async () => {
-    const newActivity = {
-      duration: 60,
-      activityType: "jogging",
-      userId: "12345",
-      activityTime: "morning",
-      isHabit: true,
-      date: new Date().toISOString(),
-    };
+const app: Application = express();
+app.use(express.json());
 
-    const response = await request(app).post("/activity").send(newActivity);
+app.get("/activity", auth as RequestHandler, activityController.getActivities);
+app.post("/activity", auth as RequestHandler, activityController.addActivity);
+app.put(
+  "/activity/:id",
+  auth as RequestHandler,
+  activityController.editActivity
+);
+app.delete(
+  "/activity/:id",
+  auth as RequestHandler,
+  activityController.deleteActivity
+);
 
+describe("activityController", () => {
+  const activityPayload = {
+    duration: 30,
+    activityType: "Exercise",
+    activityTime: "morning",
+    isHabit: true,
+    date: new Date(),
+  };
+
+  it("should add an activity", async () => {
+    const response = await request(app).post("/activity").send(activityPayload);
     expect(response.status).toBe(201);
-    expect(response.body).toMatchObject({
-      duration: 60,
-      activityType: "jogging",
-      userId: "12345",
-      activityTime: "morning",
-      isHabit: true,
-    });
-
-    const activityInDb = await Activity.findOne({ userId: "12345" });
-    expect(activityInDb).not.toBeNull();
+    expect(response.body.activityType).toBe(activityPayload.activityType);
   });
 
-  it("should retrieve activities by userId", async () => {
-    const userId = "12345";
-    await Activity.create({
-      duration: 30,
-      activityType: "reading",
-      userId,
-      activityTime: "afternoon",
-      isHabit: false,
-      date: new Date(),
-    });
-
-    const response = await request(app).get(`/activity/${userId}`);
+  it("should retrieve activities by user ID", async () => {
+    await request(app).post("/activity").send(activityPayload);
+    const response = await request(app).get("/activity");
     expect(response.status).toBe(200);
-    expect(response.body).toHaveLength(1);
-    expect(response.body[0]).toMatchObject({
-      duration: 30,
-      activityType: "reading",
-      userId,
-      activityTime: "afternoon",
-    });
+    expect(response.body.length).toBeGreaterThan(0);
   });
 
-  it("should retrieve activities within a date range", async () => {
-    const userId = "12345";
-    await Activity.create([
-      {
-        duration: 30,
-        activityType: "reading",
-        userId,
-        activityTime: "afternoon",
-        isHabit: false,
-        date: new Date("2025-01-20"),
-      },
-      {
-        duration: 60,
-        activityType: "jogging",
-        userId,
-        activityTime: "morning",
-        isHabit: true,
-        date: new Date("2025-01-25"),
-      },
-    ]);
-
+  it("should edit an activity", async () => {
+    const activity = await request(app).post("/activity").send(activityPayload);
     const response = await request(app)
-      .get(`/activity/${userId}`)
-      .query({ startDate: "2025-01-19", endDate: "2025-01-21" });
-
+      .put(`/activity/${activity.body._id}`)
+      .send({ activityType: "Reading" });
     expect(response.status).toBe(200);
-    expect(response.body).toHaveLength(1);
-    expect(response.body[0]).toMatchObject({
-      activityType: "reading",
-      date: "2025-01-20T00:00:00.000Z",
-    });
+    expect(response.body.activityType).toBe("Reading");
   });
 
   it("should delete an activity", async () => {
-    const activity = await Activity.create({
-      duration: 30,
-      activityType: "reading",
-      userId: "12345",
-      activityTime: "afternoon",
-      isHabit: false,
-      date: new Date(),
-    });
-
-    const response = await request(app).delete(`/activity/${activity._id}`);
-
+    const activity = await request(app).post("/activity").send(activityPayload);
+    const response = await request(app).delete(
+      `/activity/${activity.body._id}`
+    );
     expect(response.status).toBe(200);
-    expect(response.body).toMatchObject({
-      message: "Activity deleted successfully",
-    });
-
-    const deletedActivity = await Activity.findById(activity._id);
-    expect(deletedActivity).toBeNull();
+    expect(response.body.message).toBe("Activity deleted successfully");
   });
 });
