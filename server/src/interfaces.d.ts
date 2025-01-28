@@ -1,5 +1,7 @@
 import { User } from "./models/user";
 
+export type Time = "morning" | "afternoon" | "evening" | "night" | "all day";
+
 declare global {
   namespace Express {
     export interface Request {
@@ -39,4 +41,6 @@ export interface QueryFilter {
   };
 }
 
-export type Time = "morning" | "afternoon" | "evening" | "night" | "all day";
+interface JwtProps {
+  id: string;
+}

@@ -1,78 +1,64 @@
-import { NextFunction, Request, Response } from "express";
-import auth from "../middleware/auth";
+import { Request, Response, NextFunction } from "express";
+import authMiddleware from "../middleware/auth";
 import jwt from "jsonwebtoken";
 import User from "../models/user";
 
-jest.mock("../models");
-jest.mock("jsonwebtoken");
+jest.mock("jsonwebtoken", () => ({
+  verify: jest.fn(),
+}));
+
+jest.mock("../models/user", () => ({
+  findOne: jest.fn(),
+}));
 
 describe("Auth Middleware", () => {
-  const mockNext = jest.fn() as NextFunction;
+  let req: Partial<Request>;
+  let res: Partial<Response>;
+  let next: NextFunction;
 
-  afterEach(() => {
-    jest.clearAllMocks();
+  beforeEach(() => {
+    req = {
+      headers: {},
+    };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    next = jest.fn();
   });
 
-  it("should return 403 if authorization header is missing", async () => {
-    const req = { headers: {} } as unknown as Request;
-    const res = {
-      sendStatus: jest.fn(),
-    } as unknown as Response;
-
-    await auth(req, res, mockNext);
-
+  it("should return 403 if no authorization header is provided", async () => {
+    await authMiddleware(req as Request, res as Response, next);
     expect(res.status).toHaveBeenCalledWith(403);
-    expect(mockNext).not.toHaveBeenCalled();
+    expect(next).not.toHaveBeenCalled();
   });
 
   it("should return 401 if token is invalid", async () => {
-    const req = {
-      headers: { authorization: "Bearer invalid_token" },
-    } as unknown as Request;
-    const res = {
-      sendStatus: jest.fn(),
-    } as unknown as Response;
-
-    (jwt.verify as jest.Mock).mockImplementation(() => {
+    req.headers = { authorization: "Bearer testtoken" };
+    (jwt.verify as jest.Mock).mockImplementationOnce(() => {
       throw new Error("Invalid token");
     });
-
-    await auth(req, res, mockNext);
-
+    await authMiddleware(req as Request, res as Response, next);
     expect(res.status).toHaveBeenCalledWith(401);
-    expect(mockNext).not.toHaveBeenCalled();
+    expect(next).not.toHaveBeenCalled();
   });
 
-  it("should return 401 if user does not exist", async () => {
-    const req = {
-      headers: { authorization: "Bearer valid_token" },
-    } as unknown as Request;
-    const res = {
-      sendStatus: jest.fn(),
-    } as unknown as Response;
-
-    (jwt.verify as jest.Mock).mockReturnValue({ id: 1 });
+  it("should return 401 if user is not found", async () => {
+    req.headers = { authorization: "Bearer testtoken" };
+    (jwt.verify as jest.Mock).mockImplementationOnce(() => ({ id: "1" }));
     (User.findOne as jest.Mock).mockResolvedValue(null);
-
-    await auth(req, res, mockNext);
-
+    await authMiddleware(req as Request, res as Response, next);
     expect(res.status).toHaveBeenCalledWith(401);
-    expect(mockNext).not.toHaveBeenCalled();
+    expect(next).not.toHaveBeenCalled();
   });
 
-  it("should call next() if token is valid and user exists", async () => {
-    const req = {
-      headers: { authorization: "Bearer valid_token" },
-    } as unknown as Request;
-    const res = {} as unknown as Response;
-
-    const mockUser = { id: 1, email: "test@example.com" };
-    (jwt.verify as jest.Mock).mockReturnValue({ id: 1 });
+  it("should attach user to req and call next if token is valid and user is found", async () => {
+    req.headers = { authorization: "Bearer testtoken" };
+    const mockUser = { id: "1", email: "test@mood.com", username: "moodman" };
+    (jwt.verify as jest.Mock).mockImplementationOnce(() => ({ id: "1" }));
     (User.findOne as jest.Mock).mockResolvedValue(mockUser);
-
-    await auth(req, res, mockNext);
-
+    await authMiddleware(req as Request, res as Response, next);
     expect(req.user).toEqual(mockUser);
-    expect(mockNext).toHaveBeenCalled();
+    expect(next).toHaveBeenCalled();
   });
 });
