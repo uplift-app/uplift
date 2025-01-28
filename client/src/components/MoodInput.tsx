@@ -28,6 +28,7 @@ import { Time } from "@/lib/interfaces";
 import { postMood } from "@/lib/ApiService";
 
 //TODO: add tooltip for times
+//TODO: validation and reseting of card
 
 const MoodInput = () => {
   const [moodLevel, setMoodLevel] = useState<number>(5);
