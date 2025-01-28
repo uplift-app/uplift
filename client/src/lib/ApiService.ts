@@ -32,18 +32,19 @@ export const getMoods = async (): Promise<PostMoodProps[]> => {
 
 // Get all activities
 
-const getActivityTypes = async (): Promise<any> => {
+export const getActivityTypes = async (): Promise<any> => {
     try {
         return await makeServerRequest("activity/types");
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
+        throw new Error(errorMessage)
     }
 }
 
 // Post a new activity
 // Post an activity -> activity type, activity duration, activity time
 
-const postActivity = async (activity: PostActivityProps): Promise<any> => {
+export const postActivity = async (activity: PostActivityProps): Promise<any> => {
   try {
     const options = {
       method: "POST",
@@ -64,7 +65,7 @@ const postActivity = async (activity: PostActivityProps): Promise<any> => {
 // Post a new mood
 
 
-const postMood = async ( moodData: PostMoodProps): Promise<any> => {
+export const postMood = async ( moodData: PostMoodProps): Promise<any> => {
     try {
         const options =  { method: "POST", 
         body: JSON.stringify(moodData),
@@ -72,6 +73,7 @@ const postMood = async ( moodData: PostMoodProps): Promise<any> => {
             "Content-Type": "application/json"
         },
     }
+    return await makeServerRequest("moods", options);
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
         throw new Error(errorMessage)
