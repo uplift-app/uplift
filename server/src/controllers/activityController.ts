@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import Activity from "../models/activity";
 import { QueryFilter } from "../interfaces";
 
-export const getActivitiesByUserId = async (req: Request, res: Response) => {
+export const getActivities = async (req: Request, res: Response) => {
   try {
     const { startDate, endDate } = req.query;
     const { userId } = req.user;
@@ -72,5 +72,15 @@ export const deleteActivity = async (
     res.status(200).json({ message: "Activity deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting activity", error });
+  }
+};
+
+export const getActivityTypes = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.user;
+    const activityTypes = await Activity.distinct("activityType", { userId });
+    res.status(200).json(activityTypes);
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving activity types", error });
   }
 };
