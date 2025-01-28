@@ -12,7 +12,6 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-  CardFooter,
 } from "./ui/card";
 import { Slider } from "./ui/slider";
 import { Button } from "./ui/button";
