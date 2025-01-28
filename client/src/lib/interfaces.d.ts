@@ -1,7 +1,6 @@
 export interface PostMoodProps {
     moodType: string;
     intensity: number;
-    userId: string;
     moodTime: Time;
     date: Date;
 }

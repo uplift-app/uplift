@@ -77,7 +77,7 @@ export const postMood = async ( moodData: PostMoodProps): Promise<any> => {
             "Content-Type": "application/json"
         },
     }
-    return await makeServerRequest("moods", options);
+    return await makeServerRequest("mood", options);
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
         throw new Error(errorMessage)

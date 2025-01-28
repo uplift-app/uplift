@@ -55,9 +55,9 @@ const ActivityInput = () => {
     }
   }
 
-  //TODO: finish fetch function after back end connected
-  //TODO: function resets state but doesn't reset slider or select boxes etc
 
+  //TODO: function resets state but doesn't reset slider or select boxes etc
+  //TODO: validation for upload function
   async function uploadActivity() {
     const activityForm = {
       activityType: activity,
