@@ -42,5 +42,5 @@ export interface QueryFilter {
 }
 
 interface JwtProps {
-  id: string;
+  userId: string;
 }

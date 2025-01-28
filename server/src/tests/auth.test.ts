@@ -54,7 +54,12 @@ describe("Auth Middleware", () => {
 
   it("should attach user to req and call next if token is valid and user is found", async () => {
     req.headers = { authorization: "Bearer testtoken" };
-    const mockUser = { id: "1", email: "test@mood.com", username: "moodman" };
+    const mockUser = {
+      userId: "1",
+      email: "test@mood.com",
+      username: "moodman",
+      password: "$2b$10$Kq3keyn/73cxdMsCXg3iC.FKDVR9rq.imYcjycVaiKZ8ObFkYp12y",
+    };
     (jwt.verify as jest.Mock).mockImplementationOnce(() => ({ id: "1" }));
     (User.findOne as jest.Mock).mockResolvedValue(mockUser);
     await authMiddleware(req as Request, res as Response, next);
