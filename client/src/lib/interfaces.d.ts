@@ -10,7 +10,6 @@ export interface PostActivityProps {
     duration: number;
     activityType: string;
     activityTime: Time;
-    isHabit: boolean;
     date: Date;
   }
 
