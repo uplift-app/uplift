@@ -1,25 +1,51 @@
 import request from "supertest";
-import { app } from "../index";
-import User from "../models/user";
+import express, { Application } from "express";
+import * as userController from "../controllers/userController";
 
-describe("User Controller", () => {
+const app: Application = express();
+app.use(express.json());
+
+app.post("/user/login", userController.login);
+app.post("/user/register", userController.addUser);
+
+describe("userController", () => {
+  const userPayload = {
+    email: "testuser@example.com",
+    username: "testuser",
+    password: "password123",
+  };
+
   it("should create a new user", async () => {
-    const newUser = {
-      email: "test@user.com",
-      username: "Test Johnson",
-      password: "Test123",
-    };
-
-    const response = await request(app).post("/user").send(newUser);
-
+    const response = await request(app)
+      .post("/user/register")
+      .send(userPayload);
     expect(response.status).toBe(201);
-    expect(response.body).toMatchObject({
-      email: "test@user.com",
-      username: "Test Johnson",
-      password: "Test123",
-    });
+    expect(response.body).toHaveProperty("token");
+  });
 
-    const userInDb = await User.findOne({ email: "test@user.com" });
-    expect(userInDb).not.toBeNull();
+  it("should not allow duplicate users", async () => {
+    await request(app).post("/user/register").send(userPayload);
+    const response = await request(app)
+      .post("/user/register")
+      .send(userPayload);
+    expect(response.status).toBe(409);
+  });
+
+  it("should allow valid login", async () => {
+    await request(app).post("/user/register").send(userPayload);
+    const response = await request(app).post("/user/login").send({
+      email: userPayload.email,
+      password: userPayload.password,
+    });
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("accessToken");
+  });
+
+  it("should reject invalid login", async () => {
+    const response = await request(app).post("/user/login").send({
+      email: "wrong@example.com",
+      password: "wrongpassword",
+    });
+    expect(response.status).toBe(404);
   });
 });

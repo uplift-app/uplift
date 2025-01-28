@@ -5,4 +5,5 @@ module.exports = {
     "^.+.tsx?$": ["ts-jest", {}],
   },
   setupFilesAfterEnv: ["<rootDir>/src/tests/jest.setup.ts"],
+  testPathIgnorePatterns: ["/node_modules/", "/dist/"],
 };

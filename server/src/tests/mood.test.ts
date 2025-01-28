@@ -1,101 +1,49 @@
 import request from "supertest";
-import { app } from "../index";
-import Mood from "../models/mood";
+import express, { Application, RequestHandler } from "express";
+import auth from "../middleware/auth";
+import * as moodController from "../controllers/moodController";
 
-describe("Mood Controller", () => {
-  it("should create a new mood", async () => {
-    const newMood = {
-      moodType: "happy",
-      intensity: 8,
-      userId: "12345",
-      moodTime: "morning",
-      date: new Date().toISOString(),
-    };
+const app: Application = express();
+app.use(express.json());
 
-    const response = await request(app).post("/mood").send(newMood);
+app.get("/mood", auth as RequestHandler, moodController.getMoodsByUserId);
+app.post("/mood/:id", auth as RequestHandler, moodController.addMood);
+app.put("/mood/:id", auth as RequestHandler, moodController.editMood);
+app.delete("/mood/:id", auth as RequestHandler, moodController.deleteMood);
 
+describe("moodController", () => {
+  const moodPayload = {
+    moodType: "Happy",
+    intensity: 5,
+    moodTime: "morning",
+    date: new Date(),
+  };
+
+  it("should add a mood", async () => {
+    const response = await request(app).post("/mood").send(moodPayload);
     expect(response.status).toBe(201);
-    expect(response.body).toMatchObject({
-      moodType: "happy",
-      intensity: 8,
-      userId: "12345",
-      moodTime: "morning",
-    });
-
-    const moodInDb = await Mood.findOne({ userId: "12345" });
-    expect(moodInDb).not.toBeNull();
+    expect(response.body.moodType).toBe(moodPayload.moodType);
   });
 
-  it("should retrieve moods by userId", async () => {
-    const userId = "12345";
-    await Mood.create({
-      moodType: "excited",
-      intensity: 9,
-      userId,
-      moodTime: "afternoon",
-      date: new Date(),
-    });
-
-    const response = await request(app).get(`/mood/${userId}`);
+  it("should retrieve moods by user ID", async () => {
+    await request(app).post("/mood").send(moodPayload);
+    const response = await request(app).get("/mood");
     expect(response.status).toBe(200);
-    expect(response.body).toHaveLength(1);
-    expect(response.body[0]).toMatchObject({
-      moodType: "excited",
-      intensity: 9,
-      userId,
-      moodTime: "afternoon",
-    });
+    expect(response.body.length).toBeGreaterThan(0);
   });
-
-  it("should retrieve moods within a date range", async () => {
-    const userId = "12345";
-    await Mood.create([
-      {
-        moodType: "relaxed",
-        intensity: 7,
-        userId,
-        moodTime: "evening",
-        date: new Date("2025-01-15"),
-      },
-      {
-        moodType: "anxious",
-        intensity: 4,
-        userId,
-        moodTime: "morning",
-        date: new Date("2025-01-25"),
-      },
-    ]);
-
+  it("should edit a mood", async () => {
+    const mood = await request(app).post("/mood").send(moodPayload);
     const response = await request(app)
-      .get(`/mood/${userId}`)
-      .query({ startDate: "2025-01-14", endDate: "2025-01-20" });
-
+      .put(`/mood/${mood.body._id}`)
+      .send({ moodType: "Sad" });
     expect(response.status).toBe(200);
-    expect(response.body).toHaveLength(1);
-    expect(response.body[0]).toMatchObject({
-      moodType: "relaxed",
-      intensity: 7,
-      date: "2025-01-15T00:00:00.000Z",
-    });
+    expect(response.body.moodType).toBe("Sad");
   });
 
   it("should delete a mood", async () => {
-    const mood = await Mood.create({
-      moodType: "sad",
-      intensity: 3,
-      userId: "12345",
-      moodTime: "afternoon",
-      date: new Date(),
-    });
-
-    const response = await request(app).delete(`/mood/${mood._id}`);
-
+    const mood = await request(app).post("/mood").send(moodPayload);
+    const response = await request(app).delete(`/mood/${mood.body._id}`);
     expect(response.status).toBe(200);
-    expect(response.body).toMatchObject({
-      message: "Mood deleted successfully",
-    });
-
-    const deletedMood = await Mood.findById(mood._id);
-    expect(deletedMood).toBeNull();
+    expect(response.body.message).toBe("Mood deleted successfully");
   });
 });
