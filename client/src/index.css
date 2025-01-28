@@ -29,6 +29,9 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --energy: 12 76% 61%;
+    --happiness: 173 58% 39%;
+    --stress: 197 37% 24%;
   }
   .dark {
     --background: 20 14.3% 4.1%;

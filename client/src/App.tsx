@@ -1,9 +1,9 @@
-import ActivityInput from "./components/ActivityInput";
+import ChartViewer from "./components/ChartViewer";
 
 function App() {
   return (
-    <div className="  flex items-center justify-center">
-      <ActivityInput />
+    <div className="flex items-center justify-center">
+      <ChartViewer />
     </div>
   );
 }

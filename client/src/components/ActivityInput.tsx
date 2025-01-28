@@ -13,7 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { Label } from "./ui/label";
+import { Slider } from "./ui/slider";
 
 const activitiesArray = [
   "Reading",
@@ -53,6 +53,7 @@ const ActivityInput = () => {
           id="custom-activity"
           placeholder="Bowling with John"
         />
+        <Slider defaultValue={[33]} max={100} step={1} />
       </CardContent>
     </Card>
   );
