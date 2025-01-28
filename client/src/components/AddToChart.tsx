@@ -30,7 +30,7 @@ const AddToChart = () => {
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Moods">
             {moods.map((mood) => (
-              <CommandItem>
+              <CommandItem key={mood}>
                 <span>{mood}</span>
               </CommandItem>
             ))}
@@ -38,7 +38,7 @@ const AddToChart = () => {
           <CommandSeparator />
           <CommandGroup heading="Activities">
             {activities.map((activity) => (
-              <CommandItem>
+              <CommandItem key={activity}>
                 <span>{activity}</span>
               </CommandItem>
             ))}
