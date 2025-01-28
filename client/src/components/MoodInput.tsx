@@ -6,6 +6,7 @@ import {
   SelectItem,
   SelectGroup,
 } from "@/components/ui/select";
+
 import {
   Card,
   CardContent,
@@ -25,6 +26,8 @@ import {
 } from "@/components/ui/tooltip";
 
 //TODO: add tooltip for times
+import { getMoods } from '@/lib/ApiService'
+import { useEffect } from "react";
 
 const MoodInput = () => {
   const [moodLevel, setMoodLevel] = useState<number>(5);
@@ -54,6 +57,18 @@ const MoodInput = () => {
     }
   }
 
+
+  useEffect(() => {
+     const fetchMoods = async () => {
+      try {
+        const data = await getMoods();
+        console.log(data);
+      } catch (error) {
+        console.error(error instanceof Error ? error.message : "An error occurred");
+      }
+     }
+     fetchMoods();
+  }, []);
   return (
     <Card className="w-[300px]">
       <CardHeader>
@@ -111,7 +126,7 @@ const MoodInput = () => {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <div className="flex ">
+        <div className="flex">
           <Slider
             defaultValue={[5]}
             max={10}

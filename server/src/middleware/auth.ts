@@ -14,8 +14,8 @@ const authMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
-  const authHeaders = req.headers["authorization"];
-  if (!authHeaders) return res.sendStatus(403);
+  // const authHeaders = req.headers["authorization"];
+  // if (!authHeaders) return res.sendStatus(403);
   // const token = authHeaders.split(" ")[1];
 
   try {
@@ -30,7 +30,7 @@ const authMiddleware = async (
       email: "test@mood.com",
       username: "moodman",
       password: "$2b$10$Kq3keyn/73cxdMsCXg3iC.FKDVR9rq.imYcjycVaiKZ8ObFkYp12y",
-      id: "6797a6b0e59bd4edb67534d2",
+      userId: "1",
     };
     next();
   } catch (error) {

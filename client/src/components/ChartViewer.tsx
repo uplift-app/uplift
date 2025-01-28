@@ -7,9 +7,7 @@ import {
   CardTitle,
 } from "./ui/card";
 
-import { Button } from "./ui/button";
 
-import { Plus } from "lucide-react";
 import { Checkbox } from "./ui/checkbox";
 import { cn } from "@/lib/utils";
 import { InteractiveChart } from "./InteractiveChart";
@@ -49,7 +47,7 @@ const ChartViewer = () => {
     });
   };
 
-  const showDialog = true;
+  
   return (
     <Card>
       <CardHeader>
