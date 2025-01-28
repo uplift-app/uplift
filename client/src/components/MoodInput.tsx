@@ -1,11 +1,12 @@
-import {
-  Select,
+import * as React from "react";
+import 
+  { Select,
   SelectContent,
   SelectTrigger,
   SelectValue,
   SelectItem,
   SelectGroup,
-} from "@/components/ui/select";
+  } from "./ui/select";
 
 import {
   Card,
@@ -23,10 +24,10 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "./ui/tooltip";
 
 //TODO: add tooltip for times
-import { getMoods } from '@/lib/ApiService'
+import { getMoods } from '.././lib/ApiService'
 import { useEffect } from "react";
 
 const MoodInput = () => {

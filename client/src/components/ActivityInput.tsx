@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   Select,
   SelectContent,
@@ -5,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
   SelectGroup,
-} from "@/components/ui/select";
+} from "./ui/select";
 import { Input } from "./ui/input";
 import {
   Card,
