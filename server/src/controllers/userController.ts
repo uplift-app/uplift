@@ -41,7 +41,7 @@ export const addUser = async (req: Request, res: Response) => {
       });
       await newUser.save();
       const accessToken = jwt.sign({ id: newUser.id }, SECRET_KEY);
-      res.status(201).json(accessToken);
+      res.status(201).send({ accessToken });
     }
   } catch (error) {
     res.status(500).json({ message: "Error adding user", error });
