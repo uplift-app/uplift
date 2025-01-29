@@ -11,13 +11,15 @@ const authMiddleware = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const authHeaders = req.headers["authorization"];
+  // const authHeaders = req.headers["authorization"];
   // if (authHeaders) {
   // const token = authHeaders.split(" ")[1];
   try {
     /* Commented out until front end can authenticate. To replace hard coded user below once authentication implemented
       const { userId } = jwt.verify(token, SECRET_KEY) as JwtProps;
 
+      const user = await User.findOne({ id: userId });
+      if (!user) res.status(401);
       const user = await User.findOne({ id: userId });
       if (!user) res.status(401);
       req.user = user;
