@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import Activity from "../models/activity";
 import { QueryFilter } from "../interfaces";
 
-export const getActivitiesByUserId = async (req: Request, res: Response) => {
+export const getActivities = async (req: Request, res: Response) => {
   try {
     const { startDate, endDate } = req.query;
     const { userId } = req.user;
@@ -46,14 +46,16 @@ export const editActivity = async (
 ): Promise<void> => {
   const { id } = req.params;
   const updates = req.body;
+  const { userId } = req.user;
+
   try {
-    const updatedActivity = await Activity.findByIdAndUpdate(id, updates, {
-      new: true,
-    });
-    if (!updatedActivity) {
-      res.status(404).json({ message: "Activity not found" });
-    }
-    res.status(200).json(updatedActivity);
+    const activity = await Activity.findById(id);
+    if (activity && activity.userId === userId) {
+      const updatedActivity = await Activity.findByIdAndUpdate(id, updates, {
+        new: true,
+      });
+      res.status(200).json(updatedActivity);
+    } else res.status(404).json({ message: "Activity not found" });
   } catch (error) {
     res.status(500).json({ message: "Error updating activity", error });
   }
@@ -64,13 +66,24 @@ export const deleteActivity = async (
   res: Response
 ): Promise<void> => {
   const { id } = req.params;
+  const { userId } = req.user;
   try {
-    const deletedActivity = await Activity.findByIdAndDelete(id);
-    if (!deletedActivity) {
-      res.status(404).json({ message: "Activity not found" });
-    }
-    res.status(200).json({ message: "Activity deleted successfully" });
+    const activity = await Activity.findById(id);
+    if (activity && activity.userId === userId) {
+      await Activity.findByIdAndDelete(id);
+      res.status(200).json({ message: "Activity deleted successfully" });
+    } else res.status(404).json({ message: "Activity not found" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting activity", error });
+  }
+};
+
+export const getActivityTypes = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.user;
+    const activityTypes = await Activity.distinct("activityType", { userId });
+    res.status(200).json(activityTypes);
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving activity types", error });
   }
 };
