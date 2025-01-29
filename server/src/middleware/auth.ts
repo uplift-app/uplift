@@ -32,7 +32,7 @@ const authMiddleware = async (
           "$2b$10$Kq3keyn/73cxdMsCXg3iC.FKDVR9rq.imYcjycVaiKZ8ObFkYp12y",
         userId: "1",
       };
-  //     next();
+      next();
     } catch (error) {
       res.status(401);
   } 
