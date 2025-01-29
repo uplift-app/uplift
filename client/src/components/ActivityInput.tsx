@@ -21,6 +21,8 @@ import { Button } from "./ui/button";
 import { DatePicker } from "./ui/datepicker";
 import { getActivityTypes, postActivity } from "@/lib/ApiService";
 import { Time } from "@/lib/interfaces";
+import { useAnalysisDataContext } from "@/contexts/AnalysisDataContext";
+
 
 const ActivityInput = () => {
   const [activityDuration, setActivityDuration] = useState<number>(33);
@@ -29,6 +31,8 @@ const ActivityInput = () => {
   const [activityDate, setActivityDate] = useState<Date>(new Date());
   const [activityTypes, setActivityTypes] = useState<string[]>(["Add a Custom Activity"]);
 
+  const {analysisData, setAnalysisData} = useAnalysisDataContext(); 
+  console.log(analysisData);
   useEffect(() => {
     fetchActivityTypes();
   }, [])
