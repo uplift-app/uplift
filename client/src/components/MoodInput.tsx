@@ -28,8 +28,10 @@ import {
 //TODO: add tooltip for times
 import { getMoods } from "@/lib/ApiService";
 import { useEffect } from "react";
+import { useAuth } from "@clerk/clerk-react";
 
 const MoodInput = () => {
+  const { getToken } = useAuth();
   const [moodLevel, setMoodLevel] = useState<number>(5);
   const [moodDate, setMoodDate] = useState<Date>(new Date());
 
@@ -57,18 +59,27 @@ const MoodInput = () => {
     }
   }
 
+  const fetchMoods = async (token: string | undefined) => {
+    try {
+      const data = await getMoods(token);
+      console.log(data);
+    } catch (error) {
+      error instanceof Error ? error.message : "An error occurred";
+    }
+  };
+
   useEffect(() => {
-    const fetchMoods = async () => {
+    const fetchMoodsData = async () => {
       try {
-        const data = await getMoods();
-        console.log(data);
+        const token = await getToken({ template: "default" });
+        if (token) {
+          fetchMoods(token);
+        }
       } catch (error) {
-        console.error(
-          error instanceof Error ? error.message : "An error occurred"
-        );
+        error instanceof Error ? error.message : "An error occurred";
       }
     };
-    fetchMoods();
+    fetchMoodsData();
   }, []);
   return (
     <Card className='w-[300px] m-1'>
