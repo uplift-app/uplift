@@ -20,6 +20,8 @@ const authMiddleware = async (
 
       const user = await User.findOne({ id: userId });
       if (!user) res.status(401);
+      const user = await User.findOne({ id: userId });
+      if (!user) res.status(401);
       req.user = user;
       */
     req.user = {
