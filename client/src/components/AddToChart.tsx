@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   CommandDialog,
   CommandEmpty,
@@ -7,7 +7,6 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command";
 import { Button } from "./ui/button";
 import { Plus } from "lucide-react";

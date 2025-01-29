@@ -1,4 +1,4 @@
-import { PostMoodProps, PostActivityProps } from "./interfaces";
+import { PostMoodProps, PostActivityProps, MoodFromBackend } from "./interfaces";
 //TODO: remove any types
 
 
@@ -6,9 +6,9 @@ const BASE_URL = "http://localhost:3000"
 
 async function makeServerRequest<T>(endpoint: string, options?: RequestInit): Promise<T> {
   try {
-    console.log("inside makeServerRequest" + endpoint, options)
+    
     const response = await fetch(`${BASE_URL}/${endpoint}`, options);
-    console.log(response)
+    
     if (!response.ok) {
       throw new Error("Error fetching data");
     }
@@ -22,7 +22,7 @@ async function makeServerRequest<T>(endpoint: string, options?: RequestInit): Pr
 
 
 // Get all moods
-export const getMoods = async (): Promise<PostMoodProps[]> => {
+export const getMoods = async (): Promise<MoodFromBackend[]> => {
   try {
     return await makeServerRequest("mood");
   } catch (error) {

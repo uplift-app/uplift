@@ -14,6 +14,26 @@ export interface PostActivityProps {
 
   export type Time = "morning" | "afternoon" | "evening" | "night" | "all day";
 
-  duration, activityType, activityTime, isHabit, date
+
+  export type MoodFromBackend = {
+      _id: string;
+      moodType: "happy" | "relaxed" | "energetic"; // Add other mood types if needed
+      intensity: number;
+      userId: string;
+      moodTime: string;
+      date: string;
+      __v: number;
+      createdAt: string;
+      updatedAt: string;
+    };
+  
+    export type MoodSortedByDate = {
+      date: string;
+      happy?: number;
+      energetic?: number;
+      relaxed?: number;
+    };
+  
+    
 
   
