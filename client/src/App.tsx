@@ -9,18 +9,20 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route
-          path='/login'
-          element={
-            <SignedOut>
-              <LoginPage />
-            </SignedOut>
-          }
-        />
-        <Route path='/dashboard' element={<Dashboard />} />
-      </Routes>
+      <div className='min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 text-white'>
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route
+            path='/login'
+            element={
+              <SignedOut>
+                <LoginPage />
+              </SignedOut>
+            }
+          />
+          <Route path='/dashboard' element={<Dashboard />} />
+        </Routes>
+      </div>
     </Router>
   );
 }

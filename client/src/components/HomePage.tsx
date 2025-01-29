@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 function HomePage() {
   return (
-    <div className='min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 text-white px-6'>
-      <header className='text-4xl font-extrabold mb-6'>Uplift</header>
+    <div className='flex flex-col items-center justify-center px-6'>
+      <header className='text-4xl font-extrabold my-6'>Uplift</header>
 
       <section className='bg-white text-gray-900 p-8 rounded-2xl shadow-lg text-center max-w-lg'>
         <h1 className='text-2xl font-bold mb-4'>
