@@ -7,7 +7,7 @@ const ActivitySchema: Schema = new Schema(
     activityType: { type: String, required: true },
     userId: { type: String, required: true },
     activityTime: { type: String, required: true },
-    isHabit: { type: Boolean, required: true },
+    isHabit: { type: Boolean, required: true, default: false },
     date: { type: Date, required: true },
   },
   { timestamps: true }
