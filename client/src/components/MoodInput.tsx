@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/tooltip";
 
 //TODO: add tooltip for times
-import { getMoods } from '@/lib/ApiService'
+import { getMoods } from "@/lib/ApiService";
 import { useEffect } from "react";
 
 const MoodInput = () => {
@@ -57,47 +57,48 @@ const MoodInput = () => {
     }
   }
 
-
   useEffect(() => {
-     const fetchMoods = async () => {
+    const fetchMoods = async () => {
       try {
         const data = await getMoods();
         console.log(data);
       } catch (error) {
-        console.error(error instanceof Error ? error.message : "An error occurred");
+        console.error(
+          error instanceof Error ? error.message : "An error occurred"
+        );
       }
-     }
-     fetchMoods();
+    };
+    fetchMoods();
   }, []);
   return (
-    <Card className="w-[300px]">
+    <Card className='w-[300px] m-1'>
       <CardHeader>
         <CardTitle>Mood</CardTitle>
         <CardDescription>How are you feeling?</CardDescription>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className='space-y-4'>
         <DatePicker date={moodDate} setDate={setMoodDate} />
         <Select>
           <SelectTrigger>
-            <SelectValue placeholder="select a time" />
+            <SelectValue placeholder='select a time' />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="morning">Morning</SelectItem>
-              <SelectItem value="afternoon">Afternoon</SelectItem>
-              <SelectItem value="evening">Evening</SelectItem>
-              <SelectItem value="all-day">All Day</SelectItem>
+              <SelectItem value='morning'>Morning</SelectItem>
+              <SelectItem value='afternoon'>Afternoon</SelectItem>
+              <SelectItem value='evening'>Evening</SelectItem>
+              <SelectItem value='all-day'>All Day</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
         <Select>
           <SelectTrigger>
-            <SelectValue placeholder="select a mood" />
+            <SelectValue placeholder='select a mood' />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="happiness">
+              <SelectItem value='happiness'>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>Happiness</TooltipTrigger>
@@ -107,26 +108,30 @@ const MoodInput = () => {
                   </Tooltip>
                 </TooltipProvider>
               </SelectItem>
-              <SelectItem value="stress"><TooltipProvider>
+              <SelectItem value='stress'>
+                <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>Stress</TooltipTrigger>
                     <TooltipContent>
                       <p>0 = Stressed, 10 = Relaxed</p>
                     </TooltipContent>
                   </Tooltip>
-                </TooltipProvider></SelectItem>
-              <SelectItem value="energy"><TooltipProvider>
+                </TooltipProvider>
+              </SelectItem>
+              <SelectItem value='energy'>
+                <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>Energy</TooltipTrigger>
                     <TooltipContent>
                       <p>0 = Lazy, 10 = Energetic</p>
                     </TooltipContent>
                   </Tooltip>
-                </TooltipProvider></SelectItem>
+                </TooltipProvider>
+              </SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
-        <div className="flex">
+        <div className='flex'>
           <Slider
             defaultValue={[5]}
             max={10}

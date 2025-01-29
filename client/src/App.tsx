@@ -1,8 +1,9 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./components/NavBar";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
-import Login from "./components/Login";
-import DashBoard from "./components/DashBoard";
+import LoginPage from "./components/Login";
+import Dashboard from "./components/DashBoard";
+import Navbar from "./components/NavBar";
+import { RedirectToSignIn, SignedIn, SignedOut } from "@clerk/clerk-react";
 
 function App() {
   return (
@@ -10,8 +11,23 @@ function App() {
       <Navbar />
       <Routes>
         <Route path='/' element={<HomePage />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/dashboard' element={<DashBoard />} />
+        <Route
+          path='/login'
+          element={
+            <SignedOut>
+              <LoginPage />
+            </SignedOut>
+          }
+        />
+        <Route
+          path='/dashboard'
+          element={
+            <SignedIn>
+              <Dashboard />
+            </SignedIn>
+          }
+        />
+        <Route path='*' element={<RedirectToSignIn />} />
       </Routes>
     </Router>
   );
