@@ -24,17 +24,19 @@ const authMiddleware = async (
       if (!user) res.status(401);
       req.user = user;
       */
-    req.user = {
-      email: "test@mood.com",
-      username: "moodman",
-      password: "$2b$10$Kq3keyn/73cxdMsCXg3iC.FKDVR9rq.imYcjycVaiKZ8ObFkYp12y",
-      userId: "1",
-    };
-    next();
-  } catch (error) {
-    res.status(401);
-  }
-  // } else res.status(403);
-};
+
+      req.user = {
+        email: "test@mood.com",
+        username: "moodman",
+        password:
+          "$2b$10$Kq3keyn/73cxdMsCXg3iC.FKDVR9rq.imYcjycVaiKZ8ObFkYp12y",
+        userId: "1",
+      };
+      next();
+    } catch (error) {
+      res.status(401);
+  } 
+}
+  //else res.status(403);
 
 export default authMiddleware;

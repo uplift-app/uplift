@@ -1,11 +1,11 @@
-import {
-  Select,
+import 
+  { Select,
   SelectContent,
   SelectTrigger,
   SelectValue,
   SelectItem,
   SelectGroup,
-} from "@/components/ui/select";
+  } from "./ui/select";
 
 import {
   Card,
@@ -23,15 +23,18 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "./ui/tooltip";
+import { Time } from "@/lib/interfaces";
+import { postMood } from "@/lib/ApiService";
 
 //TODO: add tooltip for times
-import { getMoods } from '@/lib/ApiService'
-import { useEffect } from "react";
+//TODO: validation and reseting of card
 
 const MoodInput = () => {
   const [moodLevel, setMoodLevel] = useState<number>(5);
   const [moodDate, setMoodDate] = useState<Date>(new Date());
+  const [mood, setMood] = useState<string>("");
+  const [moodTime, setMoodTime] = useState<Time>("all day")
 
   function moodLevelAsEmoji(moodLevel: number): string {
     if (moodLevel < 2) {
@@ -56,19 +59,24 @@ const MoodInput = () => {
       return String.fromCodePoint(0x1f601);
     }
   }
-
-
-  useEffect(() => {
-     const fetchMoods = async () => {
-      try {
-        const data = await getMoods();
-        console.log(data);
-      } catch (error) {
-        console.error(error instanceof Error ? error.message : "An error occurred");
-      }
-     }
-     fetchMoods();
-  }, []);
+async function uploadMood() {
+  const moodForm = {
+    moodType: mood,
+    intensity: moodLevel,
+    moodTime: moodTime,
+    date: moodDate
+  }
+  try {
+    await postMood(moodForm)
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
+    throw new Error(errorMessage)
+  }
+  setMood("")
+  setMoodDate(new Date())
+  setMoodLevel(5)
+  setMoodTime("all day")
+}
   return (
     <Card className="w-[300px]">
       <CardHeader>
@@ -78,7 +86,7 @@ const MoodInput = () => {
 
       <CardContent className="space-y-4">
         <DatePicker date={moodDate} setDate={setMoodDate} />
-        <Select>
+        <Select onValueChange={(value: Time) => setMoodTime(value)}>
           <SelectTrigger>
             <SelectValue placeholder="select a time" />
           </SelectTrigger>
@@ -87,11 +95,11 @@ const MoodInput = () => {
               <SelectItem value="morning">Morning</SelectItem>
               <SelectItem value="afternoon">Afternoon</SelectItem>
               <SelectItem value="evening">Evening</SelectItem>
-              <SelectItem value="all-day">All Day</SelectItem>
+              <SelectItem value="all day">All Day</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Select>
+        <Select onValueChange={(value)=> setMood(value)}>
           <SelectTrigger>
             <SelectValue placeholder="select a mood" />
           </SelectTrigger>
@@ -137,7 +145,7 @@ const MoodInput = () => {
           />
           <h1>{moodLevelAsEmoji(moodLevel)}</h1>
         </div>
-        <Button>Submit</Button>
+        <Button onClick={uploadMood}>Submit</Button>
       </CardContent>
     </Card>
   );
