@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -12,31 +12,32 @@ import { cn } from "@/lib/utils";
 import { InteractiveChart } from "./InteractiveChart";
 import { ChartConfig } from "./ui/chart";
 import AddToChart from "./AddToChart";
+import { MoodFromBackend, transformChartData } from "@/lib/chartview-functions";
+import TimeFrameSelector from "./TimeFrameSelector";
+import { getMoods } from "@/lib/ApiService";
+import { PostMoodProps } from "@/lib/interfaces";
 const ChartViewer = () => {
-  // const chartData = [
-  //   { month: "January", happiness: 186, stress: 80, energy: 100 },
-  //   { month: "February", happiness: 305, stress: 200, energy: 0 },
-  //   { month: "March", happiness: 237, stress: 120, energy: 80 },
-  //   { month: "April", happiness: 73, stress: 190, energy: 72 },
-  //   { month: "May", happiness: 209, stress: 130, energy: 130 },
-  //   { month: "June", happiness: 214, stress: 140, energy: 150 },
-  // ];
-
-  const chartData: MoodEntry[] = [
+  // Fetch this data from the backend
+  const [chartData2, setChartData] = useState<PostMoodProps[]>();
+  const fetchMoods = async () => {
+    try {
+      const data = await getMoods();
+      setChartData(data);
+    } catch (error) {
+      console.error(
+        error instanceof Error
+          ? error.message
+          : "An error occurred fetching the moods in the chartViewer."
+      );
+    }
+  };
+  useEffect(() => {
+    fetchMoods();
+  }, []);
+  const chartData: MoodFromBackend[] = [
     {
       _id: "67979b8b652a8ac3ae9c2202",
       moodType: "happiness",
-      intensity: 3,
-      userId: "1",
-      moodTime: "all day",
-      date: "2024-10-29T00:00:00.000Z",
-      __v: 0,
-      createdAt: "2025-01-27T14:43:23.652Z",
-      updatedAt: "2025-01-27T14:43:23.652Z",
-    },
-    {
-      _id: "67979b8b652a8ac3ae9c2202",
-      moodType: "stress",
       intensity: 3,
       userId: "1",
       moodTime: "all day",
@@ -78,55 +79,112 @@ const ChartViewer = () => {
       createdAt: "2025-01-27T14:43:23.652Z",
       updatedAt: "2025-01-27T14:43:23.652Z",
     },
+    {
+      _id: "67979b8b652a8ac3ae9c2206",
+      moodType: "happiness",
+      intensity: 4,
+      userId: "1",
+      moodTime: "evening",
+      date: "2024-11-02T00:00:00.000Z",
+      __v: 0,
+      createdAt: "2025-01-27T14:43:23.652Z",
+      updatedAt: "2025-01-27T14:43:23.652Z",
+    },
+    {
+      _id: "67979b8b652a8ac3ae9c2207",
+      moodType: "energy",
+      intensity: 0,
+      userId: "1",
+      moodTime: "evening",
+      date: "2024-11-03T00:00:00.000Z",
+      __v: 0,
+      createdAt: "2025-01-27T14:43:23.652Z",
+      updatedAt: "2025-01-27T14:43:23.652Z",
+    },
+    {
+      _id: "67979b8b652a8ac3ae9c2208",
+      moodType: "happiness",
+      intensity: 10,
+      userId: "1",
+      moodTime: "all day",
+      date: "2024-11-04T00:00:00.000Z",
+      __v: 0,
+      createdAt: "2025-01-27T14:43:23.652Z",
+      updatedAt: "2025-01-27T14:43:23.652Z",
+    },
+    {
+      _id: "67979b8b652a8ac3ae9c2209",
+      moodType: "happiness",
+      intensity: 10,
+      userId: "1",
+      moodTime: "all day",
+      date: "2024-11-05T00:00:00.000Z",
+      __v: 0,
+      createdAt: "2025-01-27T14:43:23.652Z",
+      updatedAt: "2025-01-27T14:43:23.652Z",
+    },
+    {
+      _id: "67979b8b652a8ac3ae9c220a",
+      moodType: "energy",
+      intensity: 8,
+      userId: "1",
+      moodTime: "afternoon",
+      date: "2024-11-06T00:00:00.000Z",
+      __v: 0,
+      createdAt: "2025-01-27T14:43:23.652Z",
+      updatedAt: "2025-01-27T14:43:23.652Z",
+    },
+    {
+      _id: "67979b8b652a8ac3ae9c220b",
+      moodType: "stress",
+      intensity: 9,
+      userId: "1",
+      moodTime: "morning",
+      date: "2024-11-07T00:00:00.000Z",
+      __v: 0,
+      createdAt: "2025-01-27T14:43:23.652Z",
+      updatedAt: "2025-01-27T14:43:23.652Z",
+    },
+    {
+      _id: "67979b8b652a8ac3ae9c220c",
+      moodType: "happiness",
+      intensity: 0,
+      userId: "1",
+      moodTime: "all day",
+      date: "2024-11-08T00:00:00.000Z",
+      __v: 0,
+      createdAt: "2025-01-27T14:43:23.652Z",
+      updatedAt: "2025-01-27T14:43:23.652Z",
+    },
+    {
+      _id: "67979b8b652a8ac3ae9c220d",
+      moodType: "stress",
+      intensity: 3,
+      userId: "1",
+      moodTime: "all day",
+      date: "2024-11-09T00:00:00.000Z",
+      __v: 0,
+      createdAt: "2025-01-27T14:43:23.652Z",
+      updatedAt: "2025-01-27T14:43:23.652Z",
+    },
+    {
+      _id: "67979b8b652a8ac3ae9c220e",
+      moodType: "happiness",
+      intensity: 8,
+      userId: "1",
+      moodTime: "all day",
+      date: "2024-11-10T00:00:00.000Z",
+      __v: 0,
+      createdAt: "2025-01-27T14:43:23.652Z",
+      updatedAt: "2025-01-27T14:43:23.652Z",
+    },
   ];
 
   // Loop through all entries in chartData, saving
-  type MoodEntry = {
-    _id: string;
-    moodType: "happiness" | "stress" | "energy"; // Add other mood types if needed
-    intensity: number;
-    userId: string;
-    moodTime: string;
-    date: string;
-    __v: number;
-    createdAt: string;
-    updatedAt: string;
-  };
 
-  type TransformedEntry = {
-    date: string;
-    happiness?: number;
-    stress?: number;
-    energy?: number;
-  };
+  const dataSortedByDate = transformChartData(chartData);
 
-  // This was written by AI
-  const transformChartData = (data: MoodEntry[]): TransformedEntry[] => {
-    const groupedData: Record<string, TransformedEntry> = data.reduce(
-      //Reduce is used to add the entries to the accumulator
-      (acc, { date, moodType, intensity }) => {
-        // Only add an entry with a new date if it doesn't exist yet
-        if (!acc[date]) {
-          acc[date] = { date };
-        }
-        // Add the mood type and intensity to the date
-        acc[date][moodType] = intensity;
-        return acc;
-      },
-      {} as Record<string, TransformedEntry>
-    );
-
-    return Object.values(groupedData);
-  };
-
-  const transformedData = transformChartData(chartData);
-  const ogData = transformChartData(chartData);
-  console.log("ogData", ogData);
-  const moodTypes: (keyof TransformedEntry)[] = [
-    "energy",
-    "happiness",
-    "stress",
-  ];
+  // FillSpace can most certainly be more efficient, but it works.
   // Loop through each entry. Find any entries for which there isn't any mood data.
   // For each entry: check that all the moodTypes have an associated value
   // If yes, move on to next entry.
@@ -134,88 +192,8 @@ const ChartViewer = () => {
   // eg. Found happiness = 0 at n-2, happiness = 10 n+3.
   // This would mean putting happiness = 2 at n-1, happiness = 4 at n, happiness = 6 at n + 1 and happiness = 8 at n + 2;
 
-  const fillSpace = (
-    transformedData: TransformedEntry[],
-    index: number,
-    moodType: keyof TransformedEntry,
-    baseValue: string | number | undefined
-  ) => {
-    // Type resolution
-    if (typeof baseValue !== "number") {
-      baseValue = 0;
-    }
-
-    // If we're at the start of the array, set the start mood to zero.
-    if (index === 0) {
-      transformedData[0][moodType] = 0 as never;
-      return;
-    }
-    // If we're at the end of the data, set it to the last one
-    else if (index === transformedData.length - 1) {
-      transformedData[index][moodType] = transformedData[index - 1][
-        moodType
-      ] as never;
-    }
-
-    let baseIndex = index + 1;
-    // n counts the steps forwards we've taken
-    let n = 1;
-    // next value tracks when we've found a next value in the array for the mood we're concerned with
-    let nextValue: number | undefined = undefined;
-
-    while (baseIndex < transformedData.length) {
-      if (transformedData[baseIndex][moodType] === undefined) {
-        // If we don't find the values in the next entry, increase the step count and the index
-        n++;
-        baseIndex++;
-      } else {
-        // otherwise set the nextValue to the found value and exit while loop
-        nextValue = transformedData[baseIndex][moodType] as number;
-        break;
-      }
-    }
-    //
-    if (nextValue !== undefined) {
-      for (let j = 0; j < n; j++) {
-        console.log(
-          "mood",
-          moodType,
-          "base value",
-          baseValue,
-          "nextvalue",
-          nextValue,
-          "n",
-          n,
-          "index",
-          index,
-          "j",
-          j
-        );
-        transformedData[index + j][moodType] = (baseValue +
-          (nextValue - baseValue) / (n + 1 - j)) as never;
-      }
-    } else if (nextValue === undefined) {
-      transformedData[index][moodType] = transformedData[index - 1][
-        moodType
-      ] as never;
-    }
-    // Find the next one
-  };
-  for (let i = 0; i < transformedData.length; i++) {
-    for (let j = 0; j < moodTypes.length; j++) {
-      if (transformedData[i][moodTypes[j]] === undefined) {
-        let baseValue: string | number | undefined = 0;
-        if (i !== 0) {
-          baseValue = transformedData[i - 1][moodTypes[j]];
-        }
-        // Call the function to fill the space
-        fillSpace(transformedData, i, moodTypes[j], baseValue);
-      }
-    }
-  }
   // Need to extrapolate the other entries from the transformedData.
 
-  console.log("transformedData", transformedData);
   const chartConfig = {
     energy: {
       label: "Energy",
@@ -281,11 +259,13 @@ const ChartViewer = () => {
             </div>
 
             <AddToChart />
+
+            <TimeFrameSelector />
           </div>
 
           <InteractiveChart
             chartConfig={chartConfigData}
-            chartData={transformedData}
+            chartData={dataSortedByDate}
           />
         </div>
       </CardContent>
