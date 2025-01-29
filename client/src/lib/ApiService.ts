@@ -6,9 +6,7 @@ const BASE_URL = "http://localhost:3000"
 
 async function makeServerRequest<T>(endpoint: string, options?: RequestInit): Promise<T> {
   try {
-    console.log("inside makeServerRequest" + endpoint, options)
     const response = await fetch(`${BASE_URL}/${endpoint}`, options);
-    console.log(response)
     if (!response.ok) {
       throw new Error("Error fetching data");
     }
@@ -36,7 +34,6 @@ export const getMoods = async (): Promise<PostMoodProps[]> => {
 
 export const getActivityTypes = async (): Promise<string[]> => {
     try {
-      console.log("inside getActivityTypes")
         return await makeServerRequest("activity/types");
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
@@ -54,7 +51,6 @@ export const postActivity = async (activity: PostActivityProps): Promise<any> =>
       body: JSON.stringify(activity),
       headers: { "content-type": "application/json"}
     }
-    console.log(options.body)
     return await makeServerRequest("activity/", options);
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";

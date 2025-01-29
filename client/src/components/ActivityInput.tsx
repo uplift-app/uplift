@@ -35,10 +35,8 @@ const ActivityInput = () => {
   
   const fetchActivityTypes = async () => {
     try {
-      console.log("inside fetchActivityTypes")
       const data = await getActivityTypes();
       data.push("Add a Custom Activity")
-      console.log(data)
       setActivityTypes(data);
     } catch (error) {
       console.error(error instanceof Error ? error.message : "An error occurred");
@@ -70,7 +68,7 @@ const ActivityInput = () => {
       await postActivity(activityForm)
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
-      throw new Error(errorMessage)
+      console.error("Failed to post activity:", errorMessage);
     }
     setActivityDuration(33)
     setActivity("")
@@ -117,7 +115,7 @@ const ActivityInput = () => {
             setActivity(value);
           }}
         >
-          <SelectTrigger>
+          <SelectTrigger data-testId="select-trigger">
             <SelectValue placeholder="Select an activity" />
           </SelectTrigger>
           <SelectContent>
