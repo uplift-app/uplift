@@ -1,4 +1,4 @@
-import { SignOutButton, useUser } from "@clerk/clerk-react";
+import { UserButton, useUser } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
 
 function Navbar() {
@@ -8,13 +8,7 @@ function Navbar() {
       <div className='flex justify-between p-4'>
         <Link to='/dashboard'>Dashboard</Link>
         <Link to='/'>Home</Link>
-        {isSignedIn ? (
-          <SignOutButton>
-            <button className='text-red-500'>Logout</button>
-          </SignOutButton>
-        ) : (
-          <Link to='/login'>Login</Link>
-        )}
+        {isSignedIn ? <UserButton showName /> : <Link to='/login'>Login</Link>}
       </div>
     </div>
   );

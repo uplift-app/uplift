@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import setRouting from "./router";
 import cors from "cors";
 import { connectDB } from "./models";
+import { clerkMiddleware } from "@clerk/express";
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ const CLIENT_PORT = process.env.CLIENT_PORT;
 
 app.use(cors({ origin: `http://localhost:${CLIENT_PORT}` }));
 app.use(express.json());
+app.use(clerkMiddleware());
 setRouting(app);
 connectDB();
 
