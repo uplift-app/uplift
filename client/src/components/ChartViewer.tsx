@@ -13,6 +13,7 @@ import { InteractiveChart } from "./InteractiveChart";
 import { ChartConfig } from "./ui/chart";
 import AddToChart from "./AddToChart";
 import { MoodFromBackend, transformChartData } from "@/lib/chartview-functions";
+import TimeFrameSelector from "./TimeFrameSelector";
 const ChartViewer = () => {
   // Fetch this data from the backend
 
@@ -20,17 +21,6 @@ const ChartViewer = () => {
     {
       _id: "67979b8b652a8ac3ae9c2202",
       moodType: "happiness",
-      intensity: 3,
-      userId: "1",
-      moodTime: "all day",
-      date: "2024-10-29T00:00:00.000Z",
-      __v: 0,
-      createdAt: "2025-01-27T14:43:23.652Z",
-      updatedAt: "2025-01-27T14:43:23.652Z",
-    },
-    {
-      _id: "67979b8b652a8ac3ae9c2202",
-      moodType: "stress",
       intensity: 3,
       userId: "1",
       moodTime: "all day",
@@ -68,6 +58,105 @@ const ChartViewer = () => {
       userId: "1",
       moodTime: "afternoon",
       date: "2024-11-01T00:00:00.000Z",
+      __v: 0,
+      createdAt: "2025-01-27T14:43:23.652Z",
+      updatedAt: "2025-01-27T14:43:23.652Z",
+    },
+    {
+      _id: "67979b8b652a8ac3ae9c2206",
+      moodType: "happiness",
+      intensity: 4,
+      userId: "1",
+      moodTime: "evening",
+      date: "2024-11-02T00:00:00.000Z",
+      __v: 0,
+      createdAt: "2025-01-27T14:43:23.652Z",
+      updatedAt: "2025-01-27T14:43:23.652Z",
+    },
+    {
+      _id: "67979b8b652a8ac3ae9c2207",
+      moodType: "energy",
+      intensity: 0,
+      userId: "1",
+      moodTime: "evening",
+      date: "2024-11-03T00:00:00.000Z",
+      __v: 0,
+      createdAt: "2025-01-27T14:43:23.652Z",
+      updatedAt: "2025-01-27T14:43:23.652Z",
+    },
+    {
+      _id: "67979b8b652a8ac3ae9c2208",
+      moodType: "happiness",
+      intensity: 10,
+      userId: "1",
+      moodTime: "all day",
+      date: "2024-11-04T00:00:00.000Z",
+      __v: 0,
+      createdAt: "2025-01-27T14:43:23.652Z",
+      updatedAt: "2025-01-27T14:43:23.652Z",
+    },
+    {
+      _id: "67979b8b652a8ac3ae9c2209",
+      moodType: "happiness",
+      intensity: 10,
+      userId: "1",
+      moodTime: "all day",
+      date: "2024-11-05T00:00:00.000Z",
+      __v: 0,
+      createdAt: "2025-01-27T14:43:23.652Z",
+      updatedAt: "2025-01-27T14:43:23.652Z",
+    },
+    {
+      _id: "67979b8b652a8ac3ae9c220a",
+      moodType: "energy",
+      intensity: 8,
+      userId: "1",
+      moodTime: "afternoon",
+      date: "2024-11-06T00:00:00.000Z",
+      __v: 0,
+      createdAt: "2025-01-27T14:43:23.652Z",
+      updatedAt: "2025-01-27T14:43:23.652Z",
+    },
+    {
+      _id: "67979b8b652a8ac3ae9c220b",
+      moodType: "stress",
+      intensity: 9,
+      userId: "1",
+      moodTime: "morning",
+      date: "2024-11-07T00:00:00.000Z",
+      __v: 0,
+      createdAt: "2025-01-27T14:43:23.652Z",
+      updatedAt: "2025-01-27T14:43:23.652Z",
+    },
+    {
+      _id: "67979b8b652a8ac3ae9c220c",
+      moodType: "happiness",
+      intensity: 0,
+      userId: "1",
+      moodTime: "all day",
+      date: "2024-11-08T00:00:00.000Z",
+      __v: 0,
+      createdAt: "2025-01-27T14:43:23.652Z",
+      updatedAt: "2025-01-27T14:43:23.652Z",
+    },
+    {
+      _id: "67979b8b652a8ac3ae9c220d",
+      moodType: "stress",
+      intensity: 3,
+      userId: "1",
+      moodTime: "all day",
+      date: "2024-11-09T00:00:00.000Z",
+      __v: 0,
+      createdAt: "2025-01-27T14:43:23.652Z",
+      updatedAt: "2025-01-27T14:43:23.652Z",
+    },
+    {
+      _id: "67979b8b652a8ac3ae9c220e",
+      moodType: "happiness",
+      intensity: 8,
+      userId: "1",
+      moodTime: "all day",
+      date: "2024-11-10T00:00:00.000Z",
       __v: 0,
       createdAt: "2025-01-27T14:43:23.652Z",
       updatedAt: "2025-01-27T14:43:23.652Z",
@@ -153,6 +242,8 @@ const ChartViewer = () => {
             </div>
 
             <AddToChart />
+
+            <TimeFrameSelector />
           </div>
 
           <InteractiveChart
