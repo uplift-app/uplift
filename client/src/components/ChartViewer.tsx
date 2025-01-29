@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -14,9 +14,26 @@ import { ChartConfig } from "./ui/chart";
 import AddToChart from "./AddToChart";
 import { MoodFromBackend, transformChartData } from "@/lib/chartview-functions";
 import TimeFrameSelector from "./TimeFrameSelector";
+import { getMoods } from "@/lib/ApiService";
+import { PostMoodProps } from "@/lib/interfaces";
 const ChartViewer = () => {
   // Fetch this data from the backend
-
+  const [chartData2, setChartData] = useState<PostMoodProps[]>();
+  const fetchMoods = async () => {
+    try {
+      const data = await getMoods();
+      setChartData(data);
+    } catch (error) {
+      console.error(
+        error instanceof Error
+          ? error.message
+          : "An error occurred fetching the moods in the chartViewer."
+      );
+    }
+  };
+  useEffect(() => {
+    fetchMoods();
+  }, []);
   const chartData: MoodFromBackend[] = [
     {
       _id: "67979b8b652a8ac3ae9c2202",
