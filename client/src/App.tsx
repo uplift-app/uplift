@@ -3,7 +3,7 @@ import HomePage from "./components/HomePage";
 import LoginPage from "./components/Login";
 import Dashboard from "./components/DashBoard";
 import Navbar from "./components/NavBar";
-import { RedirectToSignIn, SignedIn, SignedOut } from "@clerk/clerk-react";
+import { SignedOut } from "@clerk/clerk-react";
 
 function App() {
   return (
@@ -19,15 +19,7 @@ function App() {
             </SignedOut>
           }
         />
-        <Route
-          path='/dashboard'
-          element={
-            <SignedIn>
-              <Dashboard />
-            </SignedIn>
-          }
-        />
-        <Route path='*' element={<RedirectToSignIn />} />
+        <Route path='/dashboard' element={<Dashboard />} />
       </Routes>
     </Router>
   );
