@@ -3,7 +3,7 @@ import MoodInput from "./MoodInput";
 
 function DashBoard() {
   return (
-    <div className='  flex items-center justify-center'>
+    <div className='flex items-center justify-center pt-2'>
       <ActivityInput />
       <MoodInput />
     </div>

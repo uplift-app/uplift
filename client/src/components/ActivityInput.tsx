@@ -56,22 +56,22 @@ const ActivityInput = () => {
       activity: activity,
       activityDuration: activityDuration,
       activityTime: activityTime,
-      activityDate: activityDate
-    }
-    console.log(activityForm)
-    setActivityDuration(33)
-    setActivity("")
-    setActivityTime("")
-    setActivityDate(new Date())
+      activityDate: activityDate,
+    };
+    console.log(activityForm);
+    setActivityDuration(33);
+    setActivity("");
+    setActivityTime("");
+    setActivityDate(new Date());
     // try {
     //   const response = await fetch()
     // } catch (error) {
-      
+
     // }
   }
 
   return (
-    <Card className="w-[300px]">
+    <Card className='w-[300px] m-1'>
       <CardHeader>
         <CardTitle>Activity</CardTitle>
         <CardDescription>
@@ -79,7 +79,7 @@ const ActivityInput = () => {
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className='space-y-4'>
         <DatePicker date={activityDate} setDate={setActivityDate} />
         <Select
           onValueChange={(value) => {
@@ -87,14 +87,14 @@ const ActivityInput = () => {
           }}
         >
           <SelectTrigger>
-            <SelectValue placeholder="select a time" />
+            <SelectValue placeholder='select a time' />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="morning">Morning</SelectItem>
-              <SelectItem value="afternoon">Afternoon</SelectItem>
-              <SelectItem value="evening">Evening</SelectItem>
-              <SelectItem value="all-day">All Day</SelectItem>
+              <SelectItem value='morning'>Morning</SelectItem>
+              <SelectItem value='afternoon'>Afternoon</SelectItem>
+              <SelectItem value='evening'>Evening</SelectItem>
+              <SelectItem value='all-day'>All Day</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -104,7 +104,7 @@ const ActivityInput = () => {
           }}
         >
           <SelectTrigger>
-            <SelectValue placeholder="Select an activity" />
+            <SelectValue placeholder='Select an activity' />
           </SelectTrigger>
           <SelectContent>
             {activitiesArray.map((activity) => (
@@ -118,9 +118,9 @@ const ActivityInput = () => {
           <>
             <h1>Add a custom activity</h1>
             <Input
-              type="text"
-              id="custom-activity"
-              placeholder="Bowling with John"
+              type='text'
+              id='custom-activity'
+              placeholder='Bowling with John'
             />
           </>
         ) : null}
@@ -136,7 +136,7 @@ const ActivityInput = () => {
         <h1>{convertToTimeString(activityDuration)}</h1>
         <Button onClick={uploadActivity}>Submit</Button>
       </CardContent>
-      <CardFooter className="flex justify-between"></CardFooter>
+      <CardFooter className='flex justify-between'></CardFooter>
     </Card>
   );
 };
