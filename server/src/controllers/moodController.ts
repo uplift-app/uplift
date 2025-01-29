@@ -36,14 +36,15 @@ export const addMood = async (req: Request, res: Response) => {
 export const editMood = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   const updates = req.body;
+  const { userId } = req.user;
   try {
-    const updatedMood = await Mood.findByIdAndUpdate(id, updates, {
-      new: true,
-    });
-    if (!updatedMood) {
-      res.status(404).json({ message: "Mood not found" });
-    }
-    res.status(200).json(updatedMood);
+    const mood = await Mood.findById(id);
+    if (mood && mood.userId === userId) {
+      const updatedmood = await Mood.findByIdAndUpdate(id, updates, {
+        new: true,
+      });
+      res.status(200).json(updatedmood);
+    } else res.status(404).json({ message: "Mood not found" });
   } catch (error) {
     res.status(500).json({ message: "Error updating mood", error });
   }
@@ -54,12 +55,13 @@ export const deleteMood = async (
   res: Response
 ): Promise<void> => {
   const { id } = req.params;
+  const { userId } = req.user;
   try {
-    const deletedMood = await Mood.findByIdAndDelete(id);
-    if (!deletedMood) {
-      res.status(404).json({ message: "Mood not found" });
-    }
-    res.status(200).json({ message: "Mood deleted successfully" });
+    const mood = await Mood.findById(id);
+    if (mood && mood.userId === userId) {
+      await Mood.findByIdAndDelete(id);
+      res.status(200).json({ message: "mood deleted successfully" });
+    } else res.status(404).json({ message: "Mood not found" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting mood", error });
   }
