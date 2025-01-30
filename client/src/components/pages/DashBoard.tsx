@@ -1,6 +1,6 @@
 import { RedirectToSignIn, useUser } from "@clerk/clerk-react";
-import ActivityInput from "./ActivityInput";
-import MoodInput from "./MoodInput";
+import ActivityInput from "../ActivityInput";
+import MoodInput from "../MoodInput";
 function DashBoard() {
   const { user, isSignedIn } = useUser();
   if (user && isSignedIn) {

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./components/HomePage";
-import LoginPage from "./components/Login";
-import Dashboard from "./components/DashBoard";
+import HomePage from "./components/pages/HomePage";
+import LoginPage from "./components/pages/Login";
+import Dashboard from "./components/pages/DashBoard";
 import Navbar from "./components/NavBar";
 import { SignedOut } from "@clerk/clerk-react";
 
