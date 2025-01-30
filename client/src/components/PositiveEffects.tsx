@@ -8,8 +8,8 @@ import { Select,  SelectContent,
 import { useEffect, useState } from "react";
 
 const PositiveEffects = () => {
-  const [mood, setMood] = useState<string>(null);
-  const [time, setTime] = useState<string>(null);
+  const [mood, setMood] = useState<string>("show all");
+  const [time, setTime] = useState<string>("show all");
   const [filteredEffects, setFilteredEffects] = useState<string[]>([]);
   const {analysisData} = useAnalysisDataContext();
 
@@ -18,12 +18,18 @@ const PositiveEffects = () => {
       return;
     }
     setFilteredEffects(filterPositiveEffects(mood, time));
-  }, [mood, time]);
+  }, [mood, time, analysisData]);
 
   const {positiveEffects} = analysisData;
 
   const filterPositiveEffects = (mood?: string, time?: string) => {
-    return positiveEffects.filter(effect => (!mood || effect.moodType === mood) && (!time || effect.moodTime === time));
+    if (mood === "show all" && time === "show all") {
+      return positiveEffects;
+    }
+    return positiveEffects.filter(effect =>
+      (mood === "show all" || effect.moodType === mood) &&
+      (time === "show all" || effect.moodTime === time)
+    );
   }
 
   const formatFilteredEffects = (filteredEffects) => {
@@ -36,9 +42,15 @@ const PositiveEffects = () => {
     return filteredEffects.map((effect) => {
       const formattedMood = moodMapping[effect.moodType];
       return (
-      <>
-      <p>Your {formattedMood} {effect.moodTime === "all day" ? effect.moodTime : 'in the '+ effect.moodTime} has an average intensity of {effect.avg_intensity.toFixed(1)}.</p>
-      {effect.activities.length > 1 ? (
+        <Card className="w-[200px]">
+        <CardHeader>
+          <CardTitle>{formattedMood} {effect.moodTime === "all day" ? effect.moodTime : 'in the '+ effect.moodTime}</CardTitle>
+          <CardDescription>
+            The average intensity of your mood during this time is {effect.avg_intensity.toFixed(1)}.
+            </CardDescription>
+        </CardHeader>
+        <CardContent>
+        {effect.activities.length > 1 ? (
         <>
         <p>The activites that positively affected this are:</p>
         <ul>
@@ -50,8 +62,9 @@ const PositiveEffects = () => {
         </ul>
         </>
       ):(<p>The activity that positively affected this is: {effect.activities[0]}</p>)}
+        </CardContent>
+        </Card>
       
-      </>
     );
     })
   }
@@ -74,6 +87,7 @@ const PositiveEffects = () => {
               <SelectItem value="energetic">Energy</SelectItem>
               <SelectItem value="happy">Happiness</SelectItem>
               <SelectItem value="relaxed">Relaxation</SelectItem>
+              <SelectItem value="show all">Show All</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -87,10 +101,13 @@ const PositiveEffects = () => {
               <SelectItem value="afternoon">Afternoon</SelectItem>
               <SelectItem value="evening">Evening</SelectItem>
               <SelectItem value="all day">All Day</SelectItem>
+              <SelectItem value="show all">Show All</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
+        <div className="flex flex-wrap ">
         {filteredEffects.length > 0 ? formatFilteredEffects(filteredEffects) : <p>No positive effects found for the selected mood and time.</p>}
+        </div>
       </CardContent>
     </Card>
   )
