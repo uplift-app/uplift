@@ -29,7 +29,11 @@ export const analyseData = async (req: Request, res: Response) => {
 };
 
 function runPython(scriptPath: string, callback: Function) {
-  const pythonProcess = spawn("python", [scriptPath]);
+  const pythonExecutable = path.join(
+    __dirname,
+    "../../venv/Scripts/python.exe"
+  ); // Adjust path to match the project structure
+  const pythonProcess = spawn(pythonExecutable, [scriptPath]);
 
   let data = "";
   pythonProcess.stdout.on("data", (chunk) => {
