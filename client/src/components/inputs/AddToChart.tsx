@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   CommandDialog,
   CommandEmpty,
@@ -7,11 +7,10 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { DialogTitle } from "./ui/dialog";
+import { DialogTitle } from "@/components/ui/dialog";
 const AddToChart = () => {
   const [open, setOpen] = useState(false);
   const moods = ["Happy", "Angry", "Chirpy"];

@@ -1,11 +1,11 @@
-import 
-  { Select,
+import {
+  Select,
   SelectContent,
   SelectTrigger,
   SelectValue,
   SelectItem,
   SelectGroup,
-  } from "./ui/select";
+} from "@/components/ui/select";
 
 import {
   Card,
@@ -13,28 +13,32 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Slider } from "./ui/slider";
-import { Button } from "./ui/button";
+} from "@/components/ui/card";
+import { Slider } from "@/components/ui/slider";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { DatePicker } from "./ui/datepicker";
+import { DatePicker } from "@/components/ui/datepicker";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./ui/tooltip";
-import { Time } from "@/lib/interfaces";
+} from "@/components/ui/tooltip";
+import { Mood, Time } from "@/lib/interfaces";
 import { postMood } from "@/lib/ApiService";
+import { useAuth } from "@clerk/clerk-react";
 
 //TODO: add tooltip for times
-//TODO: validation and reseting of card
 
 const MoodInput = () => {
-  const [moodLevel, setMoodLevel] = useState<number>(5);
-  const [moodDate, setMoodDate] = useState<Date>(new Date());
-  const [mood, setMood] = useState<string>("");
-  const [moodTime, setMoodTime] = useState<Time>("all day")
+  const { getToken } = useAuth();
+  const initialFormState: Mood = {
+    moodType: "",
+    intensity: 5,
+    moodTime: "",
+    date: new Date(),
+  };
+  const [formState, setFormState] = useState<Mood>(initialFormState);
 
   function moodLevelAsEmoji(moodLevel: number): string {
     if (moodLevel < 2) {
@@ -59,34 +63,57 @@ const MoodInput = () => {
       return String.fromCodePoint(0x1f601);
     }
   }
-async function uploadMood() {
-  const moodForm = {
-    moodType: mood,
-    intensity: moodLevel,
-    moodTime: moodTime,
-    date: moodDate
+
+  async function uploadMood() {
+    try {
+      const token = await getToken();
+      if (token) await postMood(formState, token);
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error occurred";
+      throw new Error(errorMessage);
+    }
+    setFormState(initialFormState);
   }
-  try {
-    await postMood(moodForm)
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
-    throw new Error(errorMessage)
+
+  const timeValues = [
+    "morning",
+    "afternoon",
+    "evening",
+    "night",
+    "all day",
+    "",
+  ];
+
+  function handleChange(newValue: any) {
+    if (newValue instanceof Date) {
+      setFormState((prevState) => ({ ...prevState, date: newValue }));
+    } else if (typeof newValue === "string" && timeValues.includes(newValue)) {
+      setFormState((prevState) => ({
+        ...prevState,
+        moodTime: newValue as Time,
+      }));
+    } else if (Array.isArray(newValue)) {
+      setFormState((prevState) => ({ ...prevState, intensity: newValue[0] }));
+    } else if (typeof newValue === "string") {
+      setFormState((prevState) => ({ ...prevState, moodType: newValue }));
+    }
   }
-  setMood("")
-  setMoodDate(new Date())
-  setMoodLevel(5)
-  setMoodTime("all day")
-}
+
   return (
-    <Card className="w-[300px]">
+    <Card className="w-[300px] m-1">
       <CardHeader>
         <CardTitle>Mood</CardTitle>
         <CardDescription>How are you feeling?</CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <DatePicker date={moodDate} setDate={setMoodDate} />
-        <Select onValueChange={(value: Time) => setMoodTime(value)}>
+        <DatePicker
+          date={formState.date}
+          setDate={handleChange}
+          data-testid="datepicker"
+        />
+        <Select onValueChange={handleChange} value={formState.moodTime}>
           <SelectTrigger>
             <SelectValue placeholder="select a time" />
           </SelectTrigger>
@@ -99,7 +126,7 @@ async function uploadMood() {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Select onValueChange={(value)=> setMood(value)}>
+        <Select onValueChange={handleChange} value={formState.moodType}>
           <SelectTrigger>
             <SelectValue placeholder="select a mood" />
           </SelectTrigger>
@@ -115,22 +142,26 @@ async function uploadMood() {
                   </Tooltip>
                 </TooltipProvider>
               </SelectItem>
-              <SelectItem value="stress"><TooltipProvider>
+              <SelectItem value="stress">
+                <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>Stress</TooltipTrigger>
                     <TooltipContent>
                       <p>0 = Stressed, 10 = Relaxed</p>
                     </TooltipContent>
                   </Tooltip>
-                </TooltipProvider></SelectItem>
-              <SelectItem value="energy"><TooltipProvider>
+                </TooltipProvider>
+              </SelectItem>
+              <SelectItem value="energy">
+                <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>Energy</TooltipTrigger>
                     <TooltipContent>
                       <p>0 = Lazy, 10 = Energetic</p>
                     </TooltipContent>
                   </Tooltip>
-                </TooltipProvider></SelectItem>
+                </TooltipProvider>
+              </SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -139,13 +170,17 @@ async function uploadMood() {
             defaultValue={[5]}
             max={10}
             step={1}
-            onValueChange={(value) => {
-              setMoodLevel(value[0]);
-            }}
+            onValueChange={handleChange}
+            value={[formState.intensity]}
           />
-          <h1>{moodLevelAsEmoji(moodLevel)}</h1>
+          <h1>{moodLevelAsEmoji(formState.intensity)}</h1>
         </div>
-        <Button onClick={uploadMood}>Submit</Button>
+        <Button
+          onClick={uploadMood}
+          disabled={!formState.moodTime || !formState.moodType}
+        >
+          Submit
+        </Button>
       </CardContent>
     </Card>
   );

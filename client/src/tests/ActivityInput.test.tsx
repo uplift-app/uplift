@@ -1,14 +1,19 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import ActivityInput from "./../components/ActivityInput";
+import ActivityInput from "../components/cards/ActivityInput";
 import { getActivityTypes, postActivity } from "@/lib/ApiService";
 import { beforeEach, describe, expect, it, vi, Mock } from "vitest";
+import { format } from "date-fns";
 
 // Mock the API functions
 vi.mock("@/lib/ApiService", () => ({
   getActivityTypes: vi.fn(),
   postActivity: vi.fn(),
 }));
+
+const activitySelectLabel = "select an activity";
+const timeSelectLabel = "select a time";
+const mockActivityTypes = ["Running", "Swimming", "Add a custom activity"];
 
 describe("ActivityInput", () => {
   beforeEach(() => {
@@ -20,16 +25,14 @@ describe("ActivityInput", () => {
   it("renders correctly", () => {
     render(<ActivityInput />);
     expect(screen.getByText("Activity")).toBeInTheDocument();
-    expect(
-      screen.getByText("Select the type of activity and its duration")
-    ).toBeInTheDocument();
-    expect(screen.getByText("Select an activity")).toBeInTheDocument();
+    expect(screen.getByText("What did you do?")).toBeInTheDocument();
+    expect(screen.getByText(format(new Date(), "PPP"))).toBeInTheDocument();
+    expect(screen.getByText(activitySelectLabel)).toBeInTheDocument();
     expect(screen.getByText("33 minutes.")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Submit" })).toBeInTheDocument();
   });
 
   it("fetches activity types on mount", async () => {
-    const mockActivityTypes = ["Running", "Swimming", "Add a Custom Activity"];
     (getActivityTypes as Mock).mockResolvedValue(mockActivityTypes);
 
     render(<ActivityInput />);
@@ -39,7 +42,7 @@ describe("ActivityInput", () => {
     });
 
     // Open the select dropdown
-    fireEvent.click(screen.getByText("Select an activity"));
+    fireEvent.click(screen.getByText(activitySelectLabel));
 
     // Check if the activity types are rendered
     mockActivityTypes.forEach((activity) => {
@@ -73,7 +76,6 @@ describe("ActivityInput", () => {
   });
 
   it("updates activity type when an activity is selected", async () => {
-    const mockActivityTypes = ["Running", "Swimming", "Add a Custom Activity"];
     (getActivityTypes as Mock).mockResolvedValue(mockActivityTypes);
 
     render(<ActivityInput />);
@@ -83,7 +85,7 @@ describe("ActivityInput", () => {
     });
 
     // Open the select dropdown
-    fireEvent.click(screen.getByText("Select an activity"));
+    fireEvent.click(screen.getByText(activitySelectLabel));
 
     // Select an activity
     fireEvent.click(screen.getByText("Running"));
@@ -91,8 +93,7 @@ describe("ActivityInput", () => {
     expect(screen.getByText("Running")).toBeInTheDocument();
   });
 
-  it('shows custom activity input when "Add a Custom Activity" is selected', async () => {
-    const mockActivityTypes = ["Running", "Swimming", "Add a Custom Activity"];
+  it('shows custom activity input when "Add a custom activity" is selected', async () => {
     (getActivityTypes as Mock).mockResolvedValue(mockActivityTypes);
 
     render(<ActivityInput />);
@@ -102,11 +103,11 @@ describe("ActivityInput", () => {
     });
 
     // Open the select dropdown
-    fireEvent.click(screen.getByText("Select an activity"));
+    fireEvent.click(screen.getByText(activitySelectLabel));
 
     // Find and select "Add a Custom Activity"
     const customActivityOptions = await screen.findAllByText(
-      "Add a Custom Activity"
+      "Add a custom activity"
     );
     const customActivityOption =
       customActivityOptions[customActivityOptions.length - 1]; // Select the last one
@@ -116,14 +117,11 @@ describe("ActivityInput", () => {
     // Ensure the custom input for "Add a custom activity" is displayed
     await waitFor(() => {
       expect(screen.getByText("Add a custom activity")).toBeInTheDocument();
-      expect(
-        screen.getByPlaceholderText("Bowling with John")
-      ).toBeInTheDocument();
+      expect(screen.getByPlaceholderText("Bowling")).toBeInTheDocument();
     });
   });
 
   it("submits the activity form", async () => {
-    const mockActivityTypes = ["Running", "Swimming", "Add a Custom Activity"];
     (getActivityTypes as Mock).mockResolvedValue(mockActivityTypes);
     (postActivity as Mock).mockResolvedValue({});
 
@@ -134,8 +132,18 @@ describe("ActivityInput", () => {
       expect(getActivityTypes).toHaveBeenCalledTimes(1);
     });
 
+    // Open the time select dropdown and select "All Day"
+    fireEvent.click(screen.getByText(timeSelectLabel));
+    const allDayOption = await screen.findByText("All Day");
+    fireEvent.click(allDayOption);
+
+    // Ensure the selection has updated
+    await waitFor(() => {
+      expect(screen.getByText("All Day")).toBeInTheDocument();
+    });
+
     // Open the select dropdown and select "Running"
-    fireEvent.click(screen.getByText("Select an activity"));
+    fireEvent.click(screen.getByText(activitySelectLabel));
     const runningOption = await screen.findByText("Running");
     fireEvent.click(runningOption);
 
@@ -175,7 +183,6 @@ describe("ActivityInput", () => {
         duration: 38, // Updated from slider
         activityTime: "all day",
         date: expect.any(Date),
-        isHabit: false,
       });
     });
   });
@@ -197,7 +204,6 @@ describe("ActivityInput", () => {
   });
 
   it("handles API errors when submitting the activity form", async () => {
-    const mockActivityTypes = ["Running", "Swimming", "Add a Custom Activity"];
     const mockError = new Error("Failed to post activity");
     (getActivityTypes as Mock).mockResolvedValue(mockActivityTypes);
     (postActivity as Mock).mockRejectedValue(mockError);
@@ -212,6 +218,16 @@ describe("ActivityInput", () => {
     // Wait for activity types to be fetched
     await waitFor(() => {
       expect(getActivityTypes).toHaveBeenCalledTimes(1);
+    });
+
+    // Open the time select dropdown and select "All Day"
+    fireEvent.click(screen.getByText(timeSelectLabel));
+    const allDayOption = await screen.findByText("All Day");
+    fireEvent.click(allDayOption);
+
+    // Ensure the selection has updated
+    await waitFor(() => {
+      expect(screen.getByText("All Day")).toBeInTheDocument();
     });
 
     // Open the select dropdown and wait for options to appear
