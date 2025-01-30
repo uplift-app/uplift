@@ -15,10 +15,10 @@ import AddToChart from "./AddToChart";
 import { MoodFromBackend, transformChartData } from "@/lib/chartview-functions";
 import TimeFrameSelector from "./TimeFrameSelector";
 import { getMoods } from "@/lib/ApiService";
-import { PostMoodProps } from "@/lib/interfaces";
+import { Mood } from "@/lib/interfaces";
 const ChartViewer = () => {
   // Fetch this data from the backend
-  const [chartData2, setChartData] = useState<PostMoodProps[]>();
+  const [chartData2, setChartData] = useState<Mood[]>();
   const fetchMoods = async () => {
     try {
       const data = await getMoods();

@@ -1,5 +1,5 @@
 import { AnalysisData } from "@/contexts/interfaces";
-import { PostMoodProps, PostActivityProps } from "./interfaces";
+import { Mood, Activity } from "./interfaces";
 //TODO: remove any types
 
 const BASE_URL = "http://localhost:3000";
@@ -22,7 +22,7 @@ async function makeServerRequest<T>(
 }
 
 // Get all moods
-export const getMoods = async (): Promise<PostMoodProps[]> => {
+export const getMoods = async (): Promise<Mood[]> => {
   try {
     return await makeServerRequest("mood");
   } catch (error) {
@@ -40,19 +40,19 @@ export const getActivityTypes = async (): Promise<any> => {
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error occurred";
-      throw new Error(errorMessage);
+    throw new Error(errorMessage);
   }
 };
 
 // Post a new activity
 // Post an activity -> activity type, activity duration, activity time
 
-export const postActivity = async (activity: PostActivityProps): Promise<any> => {
+export const postActivity = async (activity: Activity): Promise<any> => {
   try {
     const options = {
       method: "POST",
       body: JSON.stringify(activity),
-      headers: { "constent-type": "application/json" },
+      headers: { "content-type": "application/json" },
     };
     return await makeServerRequest("activity", options);
   } catch (error) {
@@ -66,21 +66,22 @@ export const postActivity = async (activity: PostActivityProps): Promise<any> =>
 
 // Post a new mood
 
-
-export const postMood = async ( moodData: PostMoodProps): Promise<any> => {
-    try {
-        const options =  { method: "POST", 
-        body: JSON.stringify(moodData),
-        headers: {
-            "Content-Type": "application/json"
-        },
-    }
+export const postMood = async (moodData: Mood): Promise<any> => {
+  try {
+    const options = {
+      method: "POST",
+      body: JSON.stringify(moodData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
     return await makeServerRequest("mood", options);
-    } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
-        throw new Error(errorMessage)
-    }
-}
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error occurred";
+    throw new Error(errorMessage);
+  }
+};
 // Post a mood -> Mood type, mood intensity, mood time
 // -> Returns the updated list of moods
 
