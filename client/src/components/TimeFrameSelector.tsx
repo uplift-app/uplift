@@ -1,3 +1,4 @@
+import { Label } from "./ui/label";
 import {
   Select,
   SelectContent,
@@ -23,21 +24,24 @@ const TimeFrameSelector = ({ setTimeFrame }: TimeFrameSelectorProps) => {
 
   const defaultValue = "Last month";
   return (
-    <Select defaultValue={defaultValue} onValueChange={setTimeFrame}>
-      <SelectTrigger>
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>Time</SelectLabel>
-          {times.map((time) => (
-            <SelectItem key={time} value={time}>
-              {time}
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+    <>
+      <Label>Select the time frame</Label>
+      <Select defaultValue={defaultValue} onValueChange={setTimeFrame}>
+        <SelectTrigger>
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Time</SelectLabel>
+            {times.map((time) => (
+              <SelectItem key={time} value={time}>
+                {time}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </>
   );
 };
 

@@ -16,7 +16,6 @@ import { transformChartData } from "@/lib/chartview-functions";
 import TimeFrameSelector from "./TimeFrameSelector";
 import { getMoods } from "@/lib/ApiService";
 import { MoodFromBackend, MoodSortedByDate } from "@/lib/interfaces";
-import { set } from "date-fns";
 const ChartViewer = () => {
   // Fetch this data from the backend
   const [chartData, setChartData] = useState<MoodFromBackend[]>([]);
@@ -24,6 +23,9 @@ const ChartViewer = () => {
     try {
       const data = await getMoods();
       setChartData(data);
+
+      // Set the filtered data when getMoods returns successfully
+      setDataFilteredAndSorted(transformChartData(data, "Last month"));
     } catch (error) {
       console.error(
         error instanceof Error
@@ -32,13 +34,24 @@ const ChartViewer = () => {
       );
     }
   };
+
+  // Fetch the data from backend on first render
   useEffect(() => {
     fetchMoods();
   }, []);
 
-  // Loop through all entries in chartData, saving
+  const [timeFrame, setTimeFrame] = useState("Last month");
+  const [dataFilteredAndSorted, setDataFilteredAndSorted] = useState<
+    MoodSortedByDate[]
+  >([]);
 
-  const chartConfig = {
+  //Reset the filtered data when the timeframe changes
+  useEffect(() => {
+    setDataFilteredAndSorted(transformChartData(chartData, timeFrame));
+  }, [timeFrame]);
+
+  // Initialise the chart configuration
+  const chartConfig: ChartConfig = {
     energetic: {
       label: "Energetic",
       color: "hsl(var(--energy))",
@@ -51,29 +64,27 @@ const ChartViewer = () => {
       label: "Relaxed",
       color: "hsl(var(--stress))",
     },
-  } satisfies ChartConfig;
+  };
+
   const [chartConfigData, setChartConfigData] =
     useState<ChartConfig>(chartConfig);
+
+  // update the chart config if the user deselects any moods
   const handleCheckChange = (chartLabel: keyof ChartConfig) => {
     setChartConfigData((prev) => {
-      const newChartConfig = { ...prev } as ChartConfig;
-      delete newChartConfig[chartLabel];
+      const newChartConfig = { ...prev };
+
+      if (chartLabel in newChartConfig) {
+        // If it exists, remove it
+        delete newChartConfig[chartLabel];
+      } else {
+        // If it doesn't exist, add it back from the original chartConfig
+        newChartConfig[chartLabel] = chartConfig[chartLabel];
+      }
+
       return newChartConfig;
     });
   };
-
-  const [timeFrame, setTimeFrame] = useState("Last month");
-  const [dataFilteredAndSorted, setDataFilteredAndSorted] = useState<
-    MoodSortedByDate[]
-  >([]);
-
-  useEffect(() => {
-    setDataFilteredAndSorted(transformChartData(chartData, timeFrame));
-  }, []);
-
-  useEffect(() => {
-    setDataFilteredAndSorted(transformChartData(chartData, timeFrame));
-  }, [timeFrame]);
 
   return (
     <Card>
@@ -82,10 +93,10 @@ const ChartViewer = () => {
         <CardDescription>Plot your moods and activities</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="prose space-y-4">
-          <div className="flex flex-col gap-2">
+        <div className="flex flex-col prose space-y-4">
+          <div className="">
             <div className="flex gap-2 overflow-scroll justify-center p-2">
-              {Object.entries(chartConfigData).map(
+              {Object.entries(chartConfig).map(
                 ([chartLabel, chartValue], idx) => (
                   <div
                     className={cn(
@@ -115,8 +126,6 @@ const ChartViewer = () => {
               )}
             </div>
 
-            <AddToChart />
-
             <TimeFrameSelector
               timeFrame={timeFrame}
               setTimeFrame={setTimeFrame}
@@ -128,6 +137,7 @@ const ChartViewer = () => {
             chartConfig={chartConfigData}
             chartData={dataFilteredAndSorted}
           />
+          <AddToChart />
         </div>
       </CardContent>
     </Card>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CommandDialog,
   CommandEmpty,
@@ -11,19 +11,41 @@ import {
 import { Button } from "./ui/button";
 import { Plus } from "lucide-react";
 import { DialogTitle } from "./ui/dialog";
+import { getActivityTypes } from "@/lib/ApiService";
+import { Card } from "./ui/card";
+import ChartTypeSelector from "./ChartTypeSelector";
 const AddToChart = () => {
   const [open, setOpen] = useState(false);
-  const moods = ["Happy", "Angry", "Chirpy"];
-  const activities = ["Smoking", "Eating", "Drinking"];
+  const moods = ["Energetic", "Happy", "Relaxed"];
+  const [activityTypes, setActivityTypes] = useState<string[]>([]);
+  useEffect(() => {
+    fetchActivityTypes();
+  }, []);
+
+  const fetchActivityTypes = async () => {
+    try {
+      console.log("inside fetchActivityTypes");
+      const data = await getActivityTypes();
+      console.log(data);
+      setActivityTypes(data);
+    } catch (error) {
+      console.error(
+        error instanceof Error ? error.message : "An error occurred"
+      );
+    }
+  };
   return (
     <>
-      <Button className="mx-auto h-[100%]" onClick={() => setOpen(true)}>
-        Add to chart <Plus />
+      <Button className="justify-center h-[100%]" onClick={() => setOpen(true)}>
+        Add a chart
+        <Plus />
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <DialogTitle className="p-4">
           Select a mood or an activity to add
         </DialogTitle>
+        <ChartTypeSelector />
+
         <CommandInput placeholder="Search for something to add..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
@@ -36,7 +58,7 @@ const AddToChart = () => {
           </CommandGroup>
           <CommandSeparator />
           <CommandGroup heading="Activities">
-            {activities.map((activity) => (
+            {activityTypes.map((activity) => (
               <CommandItem key={activity}>
                 <span>{activity}</span>
               </CommandItem>
