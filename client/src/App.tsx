@@ -4,6 +4,8 @@ import ChartViewer from "./components/ChartViewer";
 import MoodInput from "./components/MoodInput";
 import { getAnalysis } from "./lib/ApiService";
 import { useAnalysisDataContext } from "./contexts/AnalysisDataContext";
+import DataInsights from "./components/DataInsights";
+import PositiveEffects from "./components/PositiveEffects";
 
 function App() {
   const { setAnalysisData } = useAnalysisDataContext();
@@ -13,9 +15,11 @@ function App() {
 
   return (
     <div className="flex items-center justify-center">
-      <ActivityInput />
+      <PositiveEffects />
+      <DataInsights />
+      {/* <ActivityInput />
       <MoodInput /> 
-      <ChartViewer />
+      <ChartViewer /> */}
     </div>
   );
 }
