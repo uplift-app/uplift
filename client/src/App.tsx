@@ -7,6 +7,7 @@ import { useAnalysisDataContext } from "./contexts/AnalysisDataContext";
 import DataInsights from "./components/DataInsights";
 import PositiveEffects from "./components/PositiveEffects";
 
+
 function App() {
   const { setAnalysisData } = useAnalysisDataContext();
   useEffect(() => {
@@ -17,6 +18,7 @@ function App() {
     <div className="flex items-center justify-center">
       <PositiveEffects />
       <DataInsights />
+
       {/* <ActivityInput />
       <MoodInput /> 
       <ChartViewer /> */}

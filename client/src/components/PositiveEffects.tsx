@@ -15,6 +15,8 @@ import {
   SelectGroup,
 } from "./ui/select";
 import { useEffect, useState } from "react";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel";
+import { cn } from "@/lib/utils";
 
 interface Ieffect {
   moodType: string;
@@ -61,7 +63,8 @@ const PositiveEffects = () => {
     return filteredEffects.map((effect) => {
       const formattedMood = moodMapping[effect.moodType];
       return (
-        <Card className='w-[200px]'>
+        <CarouselItem className={cn(filteredEffects.length > 1 && "basis-1/2")}>
+        <Card >
           <CardHeader>
             <CardTitle>
               {formattedMood}{" "}
@@ -95,6 +98,7 @@ const PositiveEffects = () => {
             )}
           </CardContent>
         </Card>
+        </CarouselItem>
       );
     });
   };
@@ -135,13 +139,18 @@ const PositiveEffects = () => {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <div className='flex flex-wrap '>
+        <Carousel className="w-full">
+          <CarouselContent>
           {filteredEffects.length > 0 ? (
             formatFilteredEffects(filteredEffects)
           ) : (
             <p>No positive effects found for the selected mood and time.</p>
           )}
-        </div>
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+        
       </CardContent>
     </Card>
   );
