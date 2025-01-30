@@ -37,10 +37,8 @@ const PositiveEffects = () => {
     }
     setFilteredEffects(filterPositiveEffects(mood, time));
   }, [mood, time, analysisData]);
-  console.log(analysisData.positiveEffects);
 
   const { positiveEffects } = analysisData;
-  console.log(positiveEffects);
 
   const filterPositiveEffects = (mood?: string, time?: string): Ieffect[] => {
     if (mood === "show all" && time === "show all") {
