@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
   SelectGroup,
-} from "@/components/ui/select";
+} from "./ui/select";
 import { Input } from "./ui/input";
 import {
   Card,
@@ -16,27 +16,36 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Slider } from "./ui/slider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { DatePicker } from "./ui/datepicker";
-//TODO: button functionality
-const activitiesArray = [
-  "Reading",
-  "Stretching",
-  "Working",
-  "Studying",
-  "Playing Guitar",
-  "Journaling",
-  "Bouldering",
-  "Cycling",
-  "Add a Custom Activity",
-];
+import { getActivityTypes, postActivity } from "@/lib/ApiService";
+import { Time } from "@/lib/interfaces";
 
 const ActivityInput = () => {
   const [activityDuration, setActivityDuration] = useState<number>(33);
   const [activity, setActivity] = useState<string>("");
-  const [activityTime, setActivityTime] = useState<string>("");
+  const [activityTime, setActivityTime] = useState<Time>("all day");
   const [activityDate, setActivityDate] = useState<Date>(new Date());
+  const [activityTypes, setActivityTypes] = useState<string[]>([
+    "Add a Custom Activity",
+  ]);
+
+  useEffect(() => {
+    fetchActivityTypes();
+  }, []);
+
+  const fetchActivityTypes = async () => {
+    try {
+      const data = await getActivityTypes();
+      data.push("Add a Custom Activity");
+      setActivityTypes(data);
+    } catch (error) {
+      console.error(
+        error instanceof Error ? error.message : "An error occurred"
+      );
+    }
+  };
 
   function convertToTimeString(activityDuration: number): string {
     if (activityDuration < 60) {
@@ -48,20 +57,26 @@ const ActivityInput = () => {
     }
   }
 
-  //TODO: finish fetch function after back end connected
   //TODO: function resets state but doesn't reset slider or select boxes etc
-
-  function uploadActivity() {
+  //TODO: validation for upload function
+  async function uploadActivity() {
     const activityForm = {
-      activity: activity,
-      activityDuration: activityDuration,
+      activityType: activity,
+      duration: activityDuration,
       activityTime: activityTime,
-      activityDate: activityDate,
+      date: activityDate,
+      isHabit: false,
     };
-    console.log(activityForm);
+    try {
+      await postActivity(activityForm);
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error occurred";
+      console.error("Failed to post activity:", errorMessage);
+    }
     setActivityDuration(33);
     setActivity("");
-    setActivityTime("");
+    setActivityTime("all day");
     setActivityDate(new Date());
     // try {
     //   const response = await fetch()
@@ -82,7 +97,7 @@ const ActivityInput = () => {
       <CardContent className='space-y-4'>
         <DatePicker date={activityDate} setDate={setActivityDate} />
         <Select
-          onValueChange={(value) => {
+          onValueChange={(value: Time) => {
             setActivityTime(value);
           }}
         >
@@ -94,7 +109,8 @@ const ActivityInput = () => {
               <SelectItem value='morning'>Morning</SelectItem>
               <SelectItem value='afternoon'>Afternoon</SelectItem>
               <SelectItem value='evening'>Evening</SelectItem>
-              <SelectItem value='all-day'>All Day</SelectItem>
+              <SelectItem value='night'>Night</SelectItem>
+              <SelectItem value='all day'>All Day</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -103,11 +119,11 @@ const ActivityInput = () => {
             setActivity(value);
           }}
         >
-          <SelectTrigger>
+          <SelectTrigger data-testId='select-trigger'>
             <SelectValue placeholder='Select an activity' />
           </SelectTrigger>
           <SelectContent>
-            {activitiesArray.map((activity) => (
+            {activityTypes.map((activity) => (
               <SelectItem value={activity} key={activity}>
                 {activity}
               </SelectItem>

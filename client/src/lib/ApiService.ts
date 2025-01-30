@@ -1,3 +1,4 @@
+import { AnalysisData } from "@/contexts/interfaces";
 import { PostMoodProps, PostActivityProps } from "./interfaces";
 //TODO: remove any types
 
@@ -26,6 +27,7 @@ export async function makeServerRequest<T>(
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error occurred";
+      error instanceof Error ? error.message : "Unknown error occurred";
     throw new Error(`API Error: ${errorMessage}`);
   }
 }
@@ -39,7 +41,11 @@ export const getMoods = async (
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error occurred";
     throw new Error(errorMessage);
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error occurred";
+    throw new Error(errorMessage);
   }
+};
 };
 
 // Get all activities
@@ -70,9 +76,14 @@ const postActivity = async (
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error occurred";
     throw new Error(errorMessage);
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error occurred";
+    throw new Error(errorMessage);
   }
 };
+};
 
+// -> Returns the updated list of activities
 // -> Returns the updated list of activities
 
 // Post a new mood
@@ -97,3 +108,13 @@ const postMood = async (
 };
 // Post a mood -> Mood type, mood intensity, mood time
 // -> Returns the updated list of moods
+
+export const getAnalysis = async (): Promise<AnalysisData> => {
+  try {
+    return await makeServerRequest("analysis", token);
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error occurred";
+    throw new Error(errorMessage);
+  }
+};

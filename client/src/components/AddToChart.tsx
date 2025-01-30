@@ -11,11 +11,8 @@ import {
 } from "@/components/ui/command";
 import { Button } from "./ui/button";
 import { Plus } from "lucide-react";
+import { DialogTitle } from "./ui/dialog";
 const AddToChart = () => {
-  const handleOpenChange = () => {
-    console.log("hello world");
-  };
-
   const [open, setOpen] = useState(false);
   const moods = ["Happy", "Angry", "Chirpy"];
   const activities = ["Smoking", "Eating", "Drinking"];
@@ -25,12 +22,15 @@ const AddToChart = () => {
         Add to chart <Plus />
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
+        <DialogTitle className="p-4">
+          Select a mood or an activity to add
+        </DialogTitle>
         <CommandInput placeholder="Search for something to add..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Moods">
             {moods.map((mood) => (
-              <CommandItem>
+              <CommandItem key={mood}>
                 <span>{mood}</span>
               </CommandItem>
             ))}
@@ -38,7 +38,7 @@ const AddToChart = () => {
           <CommandSeparator />
           <CommandGroup heading="Activities">
             {activities.map((activity) => (
-              <CommandItem>
+              <CommandItem key={activity}>
                 <span>{activity}</span>
               </CommandItem>
             ))}
