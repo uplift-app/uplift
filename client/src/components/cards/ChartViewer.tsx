@@ -16,30 +16,19 @@ import { transformChartData } from "@/lib/chartview-functions";
 import TimeFrameSelector from "../inputs/TimeFrameSelector";
 import { getMoods } from "@/lib/ApiService";
 import { MoodFromBackend, MoodSortedByDate } from "@/lib/interfaces";
-<<<<<<< HEAD:client/src/components/ChartViewer.tsx
-=======
 import { useAuth } from "@clerk/clerk-react";
 
->>>>>>> f2b04e959d6c606a93fa169fda9f223dc86a9c3a:client/src/components/cards/ChartViewer.tsx
 const ChartViewer = () => {
   const { getToken } = useAuth();
   // Fetch this data from the backend
   const [chartData, setChartData] = useState<MoodFromBackend[]>([]);
   const fetchMoods = async () => {
     try {
-<<<<<<< HEAD:client/src/components/ChartViewer.tsx
-      const data = await getMoods();
-      setChartData(data);
-
-      // Set the filtered data when getMoods returns successfully
-      setDataFilteredAndSorted(transformChartData(data, "Last month"));
-=======
       const token = await getToken();
       if (token) {
         const data = await getMoods(token);
         setChartData(data);
       }
->>>>>>> f2b04e959d6c606a93fa169fda9f223dc86a9c3a:client/src/components/cards/ChartViewer.tsx
     } catch (error) {
       console.error(
         error instanceof Error
@@ -107,17 +96,10 @@ const ChartViewer = () => {
         <CardDescription>Plot your moods and activities</CardDescription>
       </CardHeader>
       <CardContent>
-<<<<<<< HEAD:client/src/components/ChartViewer.tsx
-        <div className="flex flex-col prose space-y-4">
-          <div className="">
+        <div className="prose space-y-4">
+          <div className="flex flex-col gap-2">
             <div className="flex gap-2 overflow-scroll justify-center p-2">
-              {Object.entries(chartConfig).map(
-=======
-        <div className='prose space-y-4'>
-          <div className='flex flex-col gap-2'>
-            <div className='flex gap-2 overflow-scroll justify-center p-2'>
               {Object.entries(chartConfigData).map(
->>>>>>> f2b04e959d6c606a93fa169fda9f223dc86a9c3a:client/src/components/cards/ChartViewer.tsx
                 ([chartLabel, chartValue], idx) => (
                   <div
                     className={cn(

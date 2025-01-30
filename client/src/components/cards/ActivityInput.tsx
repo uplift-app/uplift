@@ -5,8 +5,8 @@ import {
   SelectTrigger,
   SelectValue,
   SelectGroup,
-} from "../ui/select";
-import { Input } from "../ui/input";
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 import {
   Card,
   CardContent,
@@ -14,11 +14,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../ui/card";
-import { Slider } from "../ui/slider";
+} from "@/components/ui/card";
+import { Slider } from "@/components/ui/slider";
 import { useEffect, useState } from "react";
-import { Button } from "../ui/button";
-import { DatePicker } from "../ui/datepicker";
+import { Button } from "@/components/ui/button";
+import { DatePicker } from "@/components/ui/datepicker";
 import { getActivityTypes, postActivity } from "@/lib/ApiService";
 import { Activity, Time } from "@/lib/interfaces";
 import { useAuth } from "@clerk/clerk-react";
@@ -128,31 +128,31 @@ const ActivityInput = () => {
   }
 
   return (
-    <Card className='w-[300px] m-1'>
+    <Card className="w-[300px] m-1">
       <CardHeader>
         <CardTitle>Activity</CardTitle>
         <CardDescription>What did you do?</CardDescription>
       </CardHeader>
 
-      <CardContent className='space-y-4'>
+      <CardContent className="space-y-4">
         <DatePicker date={formState.date} setDate={handleChange} />
         <Select onValueChange={handleChange} value={formState.activityTime}>
           <SelectTrigger>
-            <SelectValue placeholder='select a time' />
+            <SelectValue placeholder="select a time" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value='morning'>Morning</SelectItem>
-              <SelectItem value='afternoon'>Afternoon</SelectItem>
-              <SelectItem value='evening'>Evening</SelectItem>
-              <SelectItem value='night'>Night</SelectItem>
-              <SelectItem value='all day'>All Day</SelectItem>
+              <SelectItem value="morning">Morning</SelectItem>
+              <SelectItem value="afternoon">Afternoon</SelectItem>
+              <SelectItem value="evening">Evening</SelectItem>
+              <SelectItem value="night">Night</SelectItem>
+              <SelectItem value="all day">All Day</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
         <Select onValueChange={handleChange} value={activity}>
-          <SelectTrigger data-testid='select-trigger'>
-            <SelectValue placeholder='select an activity' />
+          <SelectTrigger data-testid="select-trigger">
+            <SelectValue placeholder="select an activity" />
           </SelectTrigger>
           <SelectContent>
             {activityTypes.map((activity) => (
@@ -166,9 +166,9 @@ const ActivityInput = () => {
           <>
             <h1>{customActivityLabel}</h1>
             <Input
-              type='text'
-              id='custom-activity'
-              placeholder='Bowling'
+              type="text"
+              id="custom-activity"
+              placeholder="Bowling"
               value={customActivity}
               onChange={handleInputChange}
             />
@@ -190,7 +190,7 @@ const ActivityInput = () => {
           Submit
         </Button>
       </CardContent>
-      <CardFooter className='flex justify-between'></CardFooter>
+      <CardFooter className="flex justify-between"></CardFooter>
     </Card>
   );
 };
