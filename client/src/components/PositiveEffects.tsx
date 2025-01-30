@@ -37,7 +37,7 @@ const PositiveEffects = () => {
       const formattedMood = moodMapping[effect.moodType];
       return (
       <>
-      <p>Your {formattedMood} {effect.moodTime === "All Day" ? effect.moodTime : 'in the '+ effect.moodTime} has an average intensity of {effect.avg_intensity.toFixed(1)}.</p>
+      <p>Your {formattedMood} {effect.moodTime === "all day" ? effect.moodTime : 'in the '+ effect.moodTime} has an average intensity of {effect.avg_intensity.toFixed(1)}.</p>
       {effect.activities.length > 1 ? (
         <>
         <p>The activites that positively affected this are:</p>
