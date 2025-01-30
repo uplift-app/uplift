@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import ActivityInput from "./../components/ActivityInput";
+import ActivityInput from "../components/cards/ActivityInput";
 import { getActivityTypes, postActivity } from "@/lib/ApiService";
 import { beforeEach, describe, expect, it, vi, Mock } from "vitest";
 import { format } from "date-fns";

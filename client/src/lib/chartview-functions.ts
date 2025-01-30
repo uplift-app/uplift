@@ -1,50 +1,65 @@
 
 //MoodFromBackend is exported for the dummydata. 
-export type MoodFromBackend = {
-    _id: string;
-    moodType: "happiness" | "stress" | "energy"; // Add other mood types if needed
-    intensity: number;
-    userId: string;
-    moodTime: string;
-    date: string;
-    __v: number;
-    createdAt: string;
-    updatedAt: string;
-  };
 
-  type MoodSortedByDate = {
-    date: string;
-    happiness?: number;
-    stress?: number;
-    energy?: number;
-  };
+import { MoodFromBackend, MoodSortedByDate } from "./interfaces";
+const moodTypes: (keyof MoodSortedByDate)[] = [
+  "happy",
+  "energetic",
+  "relaxed",
+];
 
-  const moodTypes: (keyof MoodSortedByDate)[] = [
-    "energy",
-    "happiness",
-    "stress",
-  ];
 
   // DISCLAIMER transformChartData was written with AI
-export const transformChartData = (moodDataFromBackend: MoodFromBackend[]): MoodSortedByDate[] => {
+export const transformChartData = (moodDataFromBackend: MoodFromBackend[], timeFrame: string): MoodSortedByDate[] => {
     const groupedData: Record<string, MoodSortedByDate> = moodDataFromBackend.reduce(
       //Reduce is used to add the entries to the accumulator
       (acc, { date, moodType, intensity }) => {
+        const formattedDate = new Date(date).toISOString().split("T")[0];
         // Only add an entry with a new date if it doesn't exist yet. This is flawed because users may enter several mood values for the same day. 
         // we'll need to change this average it when that is the case.
         //  Surely no user will want to see their mood change over one day.
-        if (!acc[date]) {
-          acc[date] = { date };
+        if (!acc[formattedDate]) {
+          acc[formattedDate] = { date: formattedDate };
         }
         // Add the mood type and intensity to the date
-        acc[date][moodType] = intensity;
+        acc[formattedDate][moodType] = intensity;
         return acc;
       },
       {} as Record<string, MoodSortedByDate>
     );
 
-    return interpolateMoodData(Object.values(groupedData));
+
+    let npoints = 0
+    switch (timeFrame) {
+      case "Last week": 
+        npoints = -7;
+        break;
+      case "Last month":
+        npoints = -30;
+        break;
+      case "Last 3 months": 
+        npoints = -90;
+        break;
+      case "Last 6 months": 
+        npoints = -180;
+        break;
+      default:
+        npoints = 0;
+    }
+
+    return interpolateMoodData(Object.values(groupedData)).slice(npoints);
   };
+
+  // FillSpace can most certainly be more efficient, but it works.
+  // Loop through each entry. Find any entries for which there isn't any mood data.
+  // For each entry: check that all the moodTypes have an associated value
+  // If yes, move on to next entry.
+  // If no, find the nearest point backwards and forwards.
+  // eg. Found happiness = 0 at n-2, happiness = 10 n+3.
+  // This would mean putting happiness = 2 at n-1, happiness = 4 at n, happiness = 6 at n + 1 and happiness = 8 at n + 2;
+
+  // Need to extrapolate the other entries from the transformedData.
+
 
   export const fillSpace = (
     moodDataSortedByDate: MoodSortedByDate[],
@@ -122,5 +137,6 @@ export const transformChartData = (moodDataFromBackend: MoodFromBackend[]): Mood
         }
       }
     }
+    
     return moodDataSortedByDate;
   }

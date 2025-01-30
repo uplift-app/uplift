@@ -1,14 +1,22 @@
 import { Request, Response } from "express";
 import { spawn } from "child_process";
-import Mood from "../models/mood";
-import Activity from "../models/activity";
 import * as fs from "fs";
 import path from "path";
+import {
+  buildQuery,
+  fetchActivities,
+  fetchMoods,
+} from "../middleware/databaseQuery";
 
 export const analyseData = async (req: Request, res: Response) => {
   // TODO: this is intentionally hardcoded. database queries will be modularised; and should probably add some more error checks here
-  const moods = await Mood.find({ userId: 1 });
-  const activities = await Activity.find({ userId: 1 });
+  // I have left an example of how the functionality works, startDate and endDate are both optional params to build query
+  const userId = "1";
+  // const startDate = 'some date as a string'
+  // const endDate = 'some date as a string'
+  const query = buildQuery(userId);
+  const moods = await fetchMoods(query);
+  const activities = await fetchActivities(query);
 
   const moodPath = path.resolve(__dirname, "../../mocks/mood.json");
   const activityPath = path.resolve(__dirname, "../../mocks/activity.json");
@@ -29,7 +37,11 @@ export const analyseData = async (req: Request, res: Response) => {
 };
 
 function runPython(scriptPath: string, callback: Function) {
-  const pythonProcess = spawn("python", [scriptPath]);
+  const pythonExecutable = path.join(
+    __dirname,
+    "../../venv/Scripts/python.exe"
+  ); // Adjust path to match the project structure
+  const pythonProcess = spawn(pythonExecutable, [scriptPath]);
 
   let data = "";
   pythonProcess.stdout.on("data", (chunk) => {
