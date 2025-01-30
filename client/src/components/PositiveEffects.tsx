@@ -7,10 +7,17 @@ import { Select,  SelectContent,
   SelectGroup, } from "./ui/select";
 import { useEffect, useState } from "react";
 
+interface Ieffect {
+  moodType: string;
+  moodTime: string;
+  avgIntensity: number;
+  activities: string[];
+}
+
 const PositiveEffects = () => {
   const [mood, setMood] = useState<string>("show all");
   const [time, setTime] = useState<string>("show all");
-  const [filteredEffects, setFilteredEffects] = useState<string[]>([]);
+  const [filteredEffects, setFilteredEffects] = useState<Ieffect[] | []>([]);
   const {analysisData} = useAnalysisDataContext();
 
   useEffect(() => {
@@ -21,8 +28,9 @@ const PositiveEffects = () => {
   }, [mood, time, analysisData]);
 
   const {positiveEffects} = analysisData;
+  console.log(positiveEffects)
 
-  const filterPositiveEffects = (mood?: string, time?: string) => {
+  const filterPositiveEffects = (mood?: string, time?: string): Ieffect[] => {
     if (mood === "show all" && time === "show all") {
       return positiveEffects;
     }
@@ -32,11 +40,11 @@ const PositiveEffects = () => {
     );
   }
 
-  const formatFilteredEffects = (filteredEffects) => {
+  const formatFilteredEffects = (filteredEffects: Ieffect[]) => {
     const moodMapping: { [key: string]: string } = {
-      energetic: "energy level",
-      happy: "happiness",
-      relaxed: "relaxation",
+      energetic: "Energy level",
+      happy: "Happiness",
+      relaxed: "Relaxation",
     };
 
     return filteredEffects.map((effect) => {
@@ -44,7 +52,7 @@ const PositiveEffects = () => {
       return (
         <Card className="w-[200px]">
         <CardHeader>
-          <CardTitle>{formattedMood} {effect.moodTime === "all day" ? effect.moodTime : 'in the '+ effect.moodTime}</CardTitle>
+          <CardTitle>{formattedMood} {effect.moodTime === "all day" ? effect.moodTime : 'in the '+ effect.moodTime}.</CardTitle>
           <CardDescription>
             The average intensity of your mood during this time is {effect.avg_intensity.toFixed(1)}.
             </CardDescription>
@@ -56,7 +64,7 @@ const PositiveEffects = () => {
         <ul>
         {effect.activities.map((activity) => {
           return (
-            <li>{activity}</li>
+            <li>{activity[0].toUpperCase() + activity.slice(1)}.</li>
           )
         })}
         </ul>
