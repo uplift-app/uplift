@@ -1,20 +1,13 @@
 import { Request, Response } from "express";
 import Activity from "../models/activity";
-import { QueryFilter } from "../interfaces";
+import { buildQuery, fetchActivities } from "../middleware/databaseQuery";
 
 export const getActivities = async (req: Request, res: Response) => {
   try {
     const { startDate, endDate } = req.query;
     const { userId } = req.user;
-    const query: QueryFilter = { userId };
-
-    if (startDate || endDate) {
-      query.date = {};
-      if (startDate) query.date.$gte = new Date(startDate as string);
-      if (endDate) query.date.$lte = new Date(endDate as string);
-    }
-
-    const activities = await Activity.find(query);
+    const query = buildQuery(userId, startDate as string, endDate as string);
+    const activities = await fetchActivities(query);
     res.status(200).json(activities);
   } catch (error) {
     res.status(500).json({ message: "Error retrieving activities", error });

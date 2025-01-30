@@ -1,5 +1,5 @@
 import { AnalysisData } from "@/contexts/interfaces";
-import { PostMoodProps, PostActivityProps } from "./interfaces";
+import { Mood, Activity, MoodFromBackend } from "./interfaces";
 //TODO: remove any types
 
 const BASE_URL = "http://localhost:3000";
@@ -32,9 +32,10 @@ export async function makeServerRequest<T>(
   }
 }
 
+// Get all moods
 export const getMoods = async (
   token: string | undefined
-): Promise<PostMoodProps[]> => {
+): Promise<MoodFromBackend[]> => {
   try {
     return await makeServerRequest("mood", token);
   } catch (error) {
@@ -52,7 +53,9 @@ export const getActivityTypes = async (
   try {
     return await makeServerRequest("activity/types", token);
   } catch (error) {
-    error instanceof Error ? error.message : "Unknown error occurred";
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error occurred";
+    throw new Error(errorMessage);
   }
 };
 
@@ -60,14 +63,14 @@ export const getActivityTypes = async (
 // Post an activity -> activity type, activity duration, activity time
 
 export const postActivity = async (
-  activity: PostActivityProps,
+  activity: Activity,
   token: string | undefined
 ): Promise<any> => {
   try {
     const options = {
       method: "POST",
       body: JSON.stringify(activity),
-      headers: { "constent-type": "application/json" },
+      headers: { "content-type": "application/json" },
     };
     return await makeServerRequest("activity", token, options);
   } catch (error) {
@@ -82,7 +85,7 @@ export const postActivity = async (
 // Post a new mood
 
 export const postMood = async (
-  moodData: PostMoodProps,
+  moodData: Mood,
   token: string | undefined
 ): Promise<any> => {
   try {

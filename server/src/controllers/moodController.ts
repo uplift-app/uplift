@@ -1,20 +1,13 @@
 import { Request, Response } from "express";
 import Mood from "../models/mood";
-import { QueryFilter } from "../interfaces";
+import { buildQuery, fetchMoods } from "../middleware/databaseQuery";
 
-export const getMoodsByUserId = async (req: Request, res: Response) => {
+export const getMoods = async (req: Request, res: Response) => {
   try {
     const { userId } = req.user;
     const { startDate, endDate } = req.query;
-    const query: QueryFilter = { userId };
-
-    if (startDate || endDate) {
-      query.date = {};
-      if (startDate) query.date.$gte = new Date(startDate as string);
-      if (endDate) query.date.$lte = new Date(endDate as string);
-    }
-
-    const moods = await Mood.find(query);
+    const query = buildQuery(userId, startDate as string, endDate as string);
+    const moods = await fetchMoods(query);
     res.status(200).json(moods);
   } catch (error) {
     res.status(500).json({ message: "Error retrieving moods", error });
@@ -60,9 +53,19 @@ export const deleteMood = async (
     const mood = await Mood.findById(id);
     if (mood && mood.userId === userId) {
       await Mood.findByIdAndDelete(id);
-      res.status(200).json({ message: "mood deleted successfully" });
+      res.status(200).json({ message: "Mood deleted successfully" });
     } else res.status(404).json({ message: "Mood not found" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting mood", error });
+  }
+};
+
+export const getMoodTypes = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.user;
+    const activityTypes = await Mood.distinct("moodType", { userId });
+    res.status(200).json(activityTypes);
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving mood types", error });
   }
 };

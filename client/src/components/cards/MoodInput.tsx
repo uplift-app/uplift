@@ -5,7 +5,7 @@ import {
   SelectValue,
   SelectItem,
   SelectGroup,
-} from "./ui/select";
+} from "../ui/select";
 
 import {
   Card,
@@ -13,31 +13,32 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Slider } from "./ui/slider";
-import { Button } from "./ui/button";
+} from "../ui/card";
+import { Slider } from "../ui/slider";
+import { Button } from "../ui/button";
 import { useState } from "react";
-import { DatePicker } from "./ui/datepicker";
+import { DatePicker } from "../ui/datepicker";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./ui/tooltip";
-import { Time } from "@/lib/interfaces";
+} from "../ui/tooltip";
+import { Mood, Time } from "@/lib/interfaces";
 import { postMood } from "@/lib/ApiService";
-import { getMoods } from "@/lib/ApiService";
-import { useEffect } from "react";
 import { useAuth } from "@clerk/clerk-react";
 
 //TODO: add tooltip for times
 
 const MoodInput = () => {
   const { getToken } = useAuth();
-  const [moodLevel, setMoodLevel] = useState<number>(5);
-  const [moodDate, setMoodDate] = useState<Date>(new Date());
-  const [mood, setMood] = useState<string>("");
-  const [moodTime, setMoodTime] = useState<Time>("all day");
+  const initialFormState: Mood = {
+    moodType: "",
+    intensity: 5,
+    moodTime: "",
+    date: new Date(),
+  };
+  const [formState, setFormState] = useState<Mood>(initialFormState);
 
   function moodLevelAsEmoji(moodLevel: number): string {
     if (moodLevel < 2) {
@@ -63,49 +64,42 @@ const MoodInput = () => {
     }
   }
 
-  const fetchMoods = async (token: string | undefined) => {
-    try {
-      const data = await getMoods(token);
-      console.log(data);
-    } catch (error) {
-      error instanceof Error ? error.message : "An error occurred";
-    }
-  };
-
-  useEffect(() => {
-    const fetchMoodsData = async () => {
-      try {
-        const token = await getToken({ template: "default" });
-        if (token) {
-          fetchMoods(token);
-        }
-      } catch (error) {
-        error instanceof Error ? error.message : "An error occurred";
-      }
-    };
-    fetchMoodsData();
-  }, []);
-
   async function uploadMood() {
-    const moodForm = {
-      moodType: mood,
-      intensity: moodLevel,
-      moodTime: moodTime,
-      date: moodDate,
-    };
     try {
-      const token = await getToken({ template: "default" });
-      if (token) await postMood(moodForm, token);
+      const token = await getToken();
+      if (token) await postMood(formState, token);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error occurred";
       throw new Error(errorMessage);
     }
-    setMood("");
-    setMoodDate(new Date());
-    setMoodLevel(5);
-    setMoodTime("all day");
+    setFormState(initialFormState);
   }
+
+  const timeValues = [
+    "morning",
+    "afternoon",
+    "evening",
+    "night",
+    "all day",
+    "",
+  ];
+
+  function handleChange(newValue: any) {
+    if (newValue instanceof Date) {
+      setFormState((prevState) => ({ ...prevState, date: newValue }));
+    } else if (typeof newValue === "string" && timeValues.includes(newValue)) {
+      setFormState((prevState) => ({
+        ...prevState,
+        moodTime: newValue as Time,
+      }));
+    } else if (Array.isArray(newValue)) {
+      setFormState((prevState) => ({ ...prevState, intensity: newValue[0] }));
+    } else if (typeof newValue === "string") {
+      setFormState((prevState) => ({ ...prevState, moodType: newValue }));
+    }
+  }
+
   return (
     <Card className='w-[300px] m-1'>
       <CardHeader>
@@ -114,8 +108,12 @@ const MoodInput = () => {
       </CardHeader>
 
       <CardContent className='space-y-4'>
-        <DatePicker date={moodDate} setDate={setMoodDate} />
-        <Select onValueChange={(value: Time) => setMoodTime(value)}>
+        <DatePicker
+          date={formState.date}
+          setDate={handleChange}
+          data-testid='datepicker'
+        />
+        <Select onValueChange={handleChange} value={formState.moodTime}>
           <SelectTrigger>
             <SelectValue placeholder='select a time' />
           </SelectTrigger>
@@ -128,7 +126,7 @@ const MoodInput = () => {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Select onValueChange={(value) => setMood(value)}>
+        <Select onValueChange={handleChange} value={formState.moodType}>
           <SelectTrigger>
             <SelectValue placeholder='select a mood' />
           </SelectTrigger>
@@ -172,13 +170,17 @@ const MoodInput = () => {
             defaultValue={[5]}
             max={10}
             step={1}
-            onValueChange={(value) => {
-              setMoodLevel(value[0]);
-            }}
+            onValueChange={handleChange}
+            value={[formState.intensity]}
           />
-          <h1>{moodLevelAsEmoji(moodLevel)}</h1>
+          <h1>{moodLevelAsEmoji(formState.intensity)}</h1>
         </div>
-        <Button onClick={uploadMood}>Submit</Button>
+        <Button
+          onClick={uploadMood}
+          disabled={!formState.moodTime || !formState.moodType}
+        >
+          Submit
+        </Button>
       </CardContent>
     </Card>
   );

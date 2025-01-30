@@ -6,9 +6,13 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "../ui/select";
 
-const TimeFrameSelector = () => {
+interface TimeFrameSelectorProps {
+  timeFrame: string;
+  setTimeFrame: React.Dispatch<React.SetStateAction<string>>;
+}
+const TimeFrameSelector = ({ setTimeFrame }: TimeFrameSelectorProps) => {
   const times = [
     "Last week",
     "Last month",
@@ -16,9 +20,10 @@ const TimeFrameSelector = () => {
     "Last 6 months",
     "All time",
   ];
+
   const defaultValue = "Last month";
   return (
-    <Select defaultValue={defaultValue}>
+    <Select defaultValue={defaultValue} onValueChange={setTimeFrame}>
       <SelectTrigger>
         <SelectValue />
       </SelectTrigger>
