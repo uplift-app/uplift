@@ -5,7 +5,7 @@ import {
   SelectValue,
   SelectItem,
   SelectGroup,
-} from "./ui/select";
+} from "../ui/select";
 
 import {
   Card,
@@ -13,17 +13,17 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Slider } from "./ui/slider";
-import { Button } from "./ui/button";
+} from "../ui/card";
+import { Slider } from "../ui/slider";
+import { Button } from "../ui/button";
 import { useState } from "react";
-import { DatePicker } from "./ui/datepicker";
+import { DatePicker } from "../ui/datepicker";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./ui/tooltip";
+} from "../ui/tooltip";
 import { Mood, Time } from "@/lib/interfaces";
 import { postMood } from "@/lib/ApiService";
 import { useAuth } from "@clerk/clerk-react";

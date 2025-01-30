@@ -5,19 +5,17 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
+} from "../ui/card";
 
-import { Checkbox } from "./ui/checkbox";
+import { Checkbox } from "../ui/checkbox";
 import { cn } from "@/lib/utils";
-import { InteractiveChart } from "./InteractiveChart";
-import { ChartConfig } from "./ui/chart";
-import AddToChart from "./AddToChart";
+import { InteractiveChart } from "../inputs/InteractiveChart";
+import { ChartConfig } from "../ui/chart";
+import AddToChart from "../inputs/AddToChart";
 import { transformChartData } from "@/lib/chartview-functions";
-import TimeFrameSelector from "./TimeFrameSelector";
+import TimeFrameSelector from "../inputs/TimeFrameSelector";
 import { getMoods } from "@/lib/ApiService";
 import { MoodFromBackend, MoodSortedByDate } from "@/lib/interfaces";
-import { set } from "date-fns";
-import { Mood } from "@/lib/interfaces";
 import { useAuth } from "@clerk/clerk-react";
 
 const ChartViewer = () => {

@@ -5,8 +5,8 @@ import {
   SelectTrigger,
   SelectValue,
   SelectGroup,
-} from "./ui/select";
-import { Input } from "./ui/input";
+} from "../ui/select";
+import { Input } from "../ui/input";
 import {
   Card,
   CardContent,
@@ -14,11 +14,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Slider } from "./ui/slider";
+} from "../ui/card";
+import { Slider } from "../ui/slider";
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
-import { DatePicker } from "./ui/datepicker";
+import { Button } from "../ui/button";
+import { DatePicker } from "../ui/datepicker";
 import { getActivityTypes, postActivity } from "@/lib/ApiService";
 import { Activity, Time } from "@/lib/interfaces";
 import { useAuth } from "@clerk/clerk-react";
