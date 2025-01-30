@@ -1,5 +1,9 @@
-import React from "react";
-import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const ChartTypeSelector = () => {
   const chartTypes = [
