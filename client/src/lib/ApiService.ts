@@ -1,5 +1,5 @@
 import { AnalysisData } from "@/contexts/interfaces";
-import { Mood, Activity } from "./interfaces";
+import { Mood, Activity, MoodFromBackend } from "./interfaces";
 //TODO: remove any types
 
 const BASE_URL = "http://localhost:3000";
@@ -32,7 +32,10 @@ export async function makeServerRequest<T>(
   }
 }
 
-export const getMoods = async (token: string | undefined): Promise<Mood[]> => {
+// Get all moods
+export const getMoods = async (
+  token: string | undefined
+): Promise<MoodFromBackend[]> => {
   try {
     return await makeServerRequest("mood", token);
   } catch (error) {

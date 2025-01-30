@@ -12,16 +12,18 @@ import { cn } from "@/lib/utils";
 import { InteractiveChart } from "./InteractiveChart";
 import { ChartConfig } from "./ui/chart";
 import AddToChart from "./AddToChart";
-import { MoodFromBackend, transformChartData } from "@/lib/chartview-functions";
+import { transformChartData } from "@/lib/chartview-functions";
 import TimeFrameSelector from "./TimeFrameSelector";
 import { getMoods } from "@/lib/ApiService";
+import { MoodFromBackend, MoodSortedByDate } from "@/lib/interfaces";
+import { set } from "date-fns";
 import { Mood } from "@/lib/interfaces";
 import { useAuth } from "@clerk/clerk-react";
 
 const ChartViewer = () => {
   const { getToken } = useAuth();
   // Fetch this data from the backend
-  const [chartData2, setChartData] = useState<Mood[]>();
+  const [chartData, setChartData] = useState<MoodFromBackend[]>([]);
   const fetchMoods = async () => {
     try {
       const token = await getToken();
@@ -40,177 +42,20 @@ const ChartViewer = () => {
   useEffect(() => {
     fetchMoods();
   }, []);
-  const chartData: MoodFromBackend[] = [
-    {
-      _id: "67979b8b652a8ac3ae9c2202",
-      moodType: "happiness",
-      intensity: 3,
-      userId: "1",
-      moodTime: "all day",
-      date: "2024-10-29T00:00:00.000Z",
-      __v: 0,
-      createdAt: "2025-01-27T14:43:23.652Z",
-      updatedAt: "2025-01-27T14:43:23.652Z",
-    },
-    {
-      _id: "67979b8b652a8ac3ae9c2203",
-      moodType: "happiness",
-      intensity: 2,
-      userId: "1",
-      moodTime: "morning",
-      date: "2024-10-30T00:00:00.000Z",
-      __v: 0,
-      createdAt: "2025-01-27T14:43:23.652Z",
-      updatedAt: "2025-01-27T14:43:23.652Z",
-    },
-    {
-      _id: "67979b8b652a8ac3ae9c2204",
-      moodType: "energy",
-      intensity: 6,
-      userId: "1",
-      moodTime: "afternoon",
-      date: "2024-10-31T00:00:00.000Z",
-      __v: 0,
-      createdAt: "2025-01-27T14:43:23.652Z",
-      updatedAt: "2025-01-27T14:43:23.652Z",
-    },
-    {
-      _id: "67979b8b652a8ac3ae9c2205",
-      moodType: "stress",
-      intensity: 2,
-      userId: "1",
-      moodTime: "afternoon",
-      date: "2024-11-01T00:00:00.000Z",
-      __v: 0,
-      createdAt: "2025-01-27T14:43:23.652Z",
-      updatedAt: "2025-01-27T14:43:23.652Z",
-    },
-    {
-      _id: "67979b8b652a8ac3ae9c2206",
-      moodType: "happiness",
-      intensity: 4,
-      userId: "1",
-      moodTime: "evening",
-      date: "2024-11-02T00:00:00.000Z",
-      __v: 0,
-      createdAt: "2025-01-27T14:43:23.652Z",
-      updatedAt: "2025-01-27T14:43:23.652Z",
-    },
-    {
-      _id: "67979b8b652a8ac3ae9c2207",
-      moodType: "energy",
-      intensity: 0,
-      userId: "1",
-      moodTime: "evening",
-      date: "2024-11-03T00:00:00.000Z",
-      __v: 0,
-      createdAt: "2025-01-27T14:43:23.652Z",
-      updatedAt: "2025-01-27T14:43:23.652Z",
-    },
-    {
-      _id: "67979b8b652a8ac3ae9c2208",
-      moodType: "happiness",
-      intensity: 10,
-      userId: "1",
-      moodTime: "all day",
-      date: "2024-11-04T00:00:00.000Z",
-      __v: 0,
-      createdAt: "2025-01-27T14:43:23.652Z",
-      updatedAt: "2025-01-27T14:43:23.652Z",
-    },
-    {
-      _id: "67979b8b652a8ac3ae9c2209",
-      moodType: "happiness",
-      intensity: 10,
-      userId: "1",
-      moodTime: "all day",
-      date: "2024-11-05T00:00:00.000Z",
-      __v: 0,
-      createdAt: "2025-01-27T14:43:23.652Z",
-      updatedAt: "2025-01-27T14:43:23.652Z",
-    },
-    {
-      _id: "67979b8b652a8ac3ae9c220a",
-      moodType: "energy",
-      intensity: 8,
-      userId: "1",
-      moodTime: "afternoon",
-      date: "2024-11-06T00:00:00.000Z",
-      __v: 0,
-      createdAt: "2025-01-27T14:43:23.652Z",
-      updatedAt: "2025-01-27T14:43:23.652Z",
-    },
-    {
-      _id: "67979b8b652a8ac3ae9c220b",
-      moodType: "stress",
-      intensity: 9,
-      userId: "1",
-      moodTime: "morning",
-      date: "2024-11-07T00:00:00.000Z",
-      __v: 0,
-      createdAt: "2025-01-27T14:43:23.652Z",
-      updatedAt: "2025-01-27T14:43:23.652Z",
-    },
-    {
-      _id: "67979b8b652a8ac3ae9c220c",
-      moodType: "happiness",
-      intensity: 0,
-      userId: "1",
-      moodTime: "all day",
-      date: "2024-11-08T00:00:00.000Z",
-      __v: 0,
-      createdAt: "2025-01-27T14:43:23.652Z",
-      updatedAt: "2025-01-27T14:43:23.652Z",
-    },
-    {
-      _id: "67979b8b652a8ac3ae9c220d",
-      moodType: "stress",
-      intensity: 3,
-      userId: "1",
-      moodTime: "all day",
-      date: "2024-11-09T00:00:00.000Z",
-      __v: 0,
-      createdAt: "2025-01-27T14:43:23.652Z",
-      updatedAt: "2025-01-27T14:43:23.652Z",
-    },
-    {
-      _id: "67979b8b652a8ac3ae9c220e",
-      moodType: "happiness",
-      intensity: 8,
-      userId: "1",
-      moodTime: "all day",
-      date: "2024-11-10T00:00:00.000Z",
-      __v: 0,
-      createdAt: "2025-01-27T14:43:23.652Z",
-      updatedAt: "2025-01-27T14:43:23.652Z",
-    },
-  ];
 
   // Loop through all entries in chartData, saving
 
-  const dataSortedByDate = transformChartData(chartData);
-
-  // FillSpace can most certainly be more efficient, but it works.
-  // Loop through each entry. Find any entries for which there isn't any mood data.
-  // For each entry: check that all the moodTypes have an associated value
-  // If yes, move on to next entry.
-  // If no, find the nearest point backwards and forwards.
-  // eg. Found happiness = 0 at n-2, happiness = 10 n+3.
-  // This would mean putting happiness = 2 at n-1, happiness = 4 at n, happiness = 6 at n + 1 and happiness = 8 at n + 2;
-
-  // Need to extrapolate the other entries from the transformedData.
-
   const chartConfig = {
-    energy: {
-      label: "Energy",
+    energetic: {
+      label: "Energetic",
       color: "hsl(var(--energy))",
     },
-    happiness: {
-      label: "Happiness",
+    happy: {
+      label: "Happy",
       color: "hsl(var(--happiness))",
     },
-    stress: {
-      label: "Stress",
+    relaxed: {
+      label: "Relaxed",
       color: "hsl(var(--stress))",
     },
   } satisfies ChartConfig;
@@ -223,6 +68,19 @@ const ChartViewer = () => {
       return newChartConfig;
     });
   };
+
+  const [timeFrame, setTimeFrame] = useState("Last month");
+  const [dataFilteredAndSorted, setDataFilteredAndSorted] = useState<
+    MoodSortedByDate[]
+  >([]);
+
+  useEffect(() => {
+    setDataFilteredAndSorted(transformChartData(chartData, timeFrame));
+  }, []);
+
+  useEffect(() => {
+    setDataFilteredAndSorted(transformChartData(chartData, timeFrame));
+  }, [timeFrame]);
 
   return (
     <Card>
@@ -239,11 +97,11 @@ const ChartViewer = () => {
                   <div
                     className={cn(
                       `flex items-center gap-2 border-[1px] shadow-md shadow-gray-300 border-opacity-0 rounded-md p-2 text-black font-light`,
-                      chartValue.label === "Energy" &&
+                      chartValue.label === "Energetic" &&
                         "border-energy bg-energy/20",
-                      chartValue.label === "Happiness" &&
+                      chartValue.label === "Happy" &&
                         "border-happiness bg-happiness/20",
-                      chartValue.label === "Stress" &&
+                      chartValue.label === "Relaxed" &&
                         "border-stress bg-stress/20",
                       idx === 0 && "sticky"
                     )}
@@ -266,12 +124,16 @@ const ChartViewer = () => {
 
             <AddToChart />
 
-            <TimeFrameSelector />
+            <TimeFrameSelector
+              timeFrame={timeFrame}
+              setTimeFrame={setTimeFrame}
+            />
           </div>
 
           <InteractiveChart
+            timeFrame={timeFrame}
             chartConfig={chartConfigData}
-            chartData={dataSortedByDate}
+            chartData={dataFilteredAndSorted}
           />
         </div>
       </CardContent>
