@@ -27,7 +27,7 @@ export async function makeServerRequest<T>(
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error occurred";
-      error instanceof Error ? error.message : "Unknown error occurred";
+    error instanceof Error ? error.message : "Unknown error occurred";
     throw new Error(`API Error: ${errorMessage}`);
   }
 }
@@ -41,16 +41,14 @@ export const getMoods = async (
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error occurred";
     throw new Error(errorMessage);
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    throw new Error(errorMessage);
   }
-};
 };
 
 // Get all activities
 
-const getActivityTypes = async (token: string | undefined): Promise<any> => {
+export const getActivityTypes = async (
+  token: string | undefined
+): Promise<any> => {
   try {
     return await makeServerRequest("activity/types", token);
   } catch (error) {
@@ -61,7 +59,7 @@ const getActivityTypes = async (token: string | undefined): Promise<any> => {
 // Post a new activity
 // Post an activity -> activity type, activity duration, activity time
 
-const postActivity = async (
+export const postActivity = async (
   activity: PostActivityProps,
   token: string | undefined
 ): Promise<any> => {
@@ -76,19 +74,14 @@ const postActivity = async (
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error occurred";
     throw new Error(errorMessage);
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    throw new Error(errorMessage);
   }
 };
-};
 
-// -> Returns the updated list of activities
 // -> Returns the updated list of activities
 
 // Post a new mood
 
-const postMood = async (
+export const postMood = async (
   moodData: PostMoodProps,
   token: string | undefined
 ): Promise<any> => {
@@ -100,6 +93,7 @@ const postMood = async (
         "Content-Type": "application/json",
       },
     };
+    return await makeServerRequest("mood", token, options);
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error occurred";
@@ -109,7 +103,9 @@ const postMood = async (
 // Post a mood -> Mood type, mood intensity, mood time
 // -> Returns the updated list of moods
 
-export const getAnalysis = async (): Promise<AnalysisData> => {
+export const getAnalysis = async (
+  token: string | undefined
+): Promise<AnalysisData> => {
   try {
     return await makeServerRequest("analysis", token);
   } catch (error) {

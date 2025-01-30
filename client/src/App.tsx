@@ -2,17 +2,25 @@ import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./components/pages/HomePage";
 import LoginPage from "./components/pages/Login";
-import ChartViewer from "./components/ChartViewer";
 import Dashboard from "./components/pages/DashBoard";
 import Navbar from "./components/NavBar";
-import { SignedOut } from "@clerk/clerk-react";
+import { SignedOut, useAuth } from "@clerk/clerk-react";
 import { getAnalysis } from "./lib/ApiService";
 import { useAnalysisDataContext } from "./contexts/AnalysisDataContext";
 
 function App() {
+  const { getToken } = useAuth();
   const { setAnalysisData } = useAnalysisDataContext();
   useEffect(() => {
-    getAnalysis().then((data) => setAnalysisData(data));
+    const fetchAnalysis = async () => {
+      try {
+        const token = await getToken({ template: "default" });
+        if (token) getAnalysis(token).then((data) => setAnalysisData(data));
+      } catch (error) {
+        error instanceof Error ? error.message : "An error occurred";
+      }
+    };
+    fetchAnalysis();
   }, []);
 
   return (

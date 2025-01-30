@@ -21,8 +21,10 @@ import { Button } from "./ui/button";
 import { DatePicker } from "./ui/datepicker";
 import { getActivityTypes, postActivity } from "@/lib/ApiService";
 import { Time } from "@/lib/interfaces";
+import { useAuth } from "@clerk/clerk-react";
 
 const ActivityInput = () => {
+  const { getToken } = useAuth();
   const [activityDuration, setActivityDuration] = useState<number>(33);
   const [activity, setActivity] = useState<string>("");
   const [activityTime, setActivityTime] = useState<Time>("all day");
@@ -37,9 +39,12 @@ const ActivityInput = () => {
 
   const fetchActivityTypes = async () => {
     try {
-      const data = await getActivityTypes();
-      data.push("Add a Custom Activity");
-      setActivityTypes(data);
+      const token = await getToken();
+      if (token) {
+        const data = await getActivityTypes(token);
+        data.push("Add a Custom Activity");
+        setActivityTypes(data);
+      }
     } catch (error) {
       console.error(
         error instanceof Error ? error.message : "An error occurred"
@@ -68,7 +73,8 @@ const ActivityInput = () => {
       isHabit: false,
     };
     try {
-      await postActivity(activityForm);
+      const token = await getToken();
+      if (token) await postActivity(activityForm, token);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error occurred";

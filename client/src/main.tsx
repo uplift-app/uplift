@@ -17,8 +17,8 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
       <AnalysisDataProvider>
-      <App />
+        <App />
+      </AnalysisDataProvider>
     </ClerkProvider>
-    </AnalysisDataProvider>
   </StrictMode>
 );

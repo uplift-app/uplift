@@ -85,6 +85,7 @@ const MoodInput = () => {
     };
     fetchMoodsData();
   }, []);
+
   async function uploadMood() {
     const moodForm = {
       moodType: mood,
@@ -93,7 +94,8 @@ const MoodInput = () => {
       date: moodDate,
     };
     try {
-      await postMood(moodForm);
+      const token = await getToken({ template: "default" });
+      if (token) await postMood(moodForm, token);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error occurred";
