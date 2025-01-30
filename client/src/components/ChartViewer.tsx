@@ -16,13 +16,19 @@ import { MoodFromBackend, transformChartData } from "@/lib/chartview-functions";
 import TimeFrameSelector from "./TimeFrameSelector";
 import { getMoods } from "@/lib/ApiService";
 import { Mood } from "@/lib/interfaces";
+import { useAuth } from "@clerk/clerk-react";
+
 const ChartViewer = () => {
+  const { getToken } = useAuth();
   // Fetch this data from the backend
   const [chartData2, setChartData] = useState<Mood[]>();
   const fetchMoods = async () => {
     try {
-      const data = await getMoods();
-      setChartData(data);
+      const token = await getToken();
+      if (token) {
+        const data = await getMoods(token);
+        setChartData(data);
+      }
     } catch (error) {
       console.error(
         error instanceof Error
@@ -225,9 +231,9 @@ const ChartViewer = () => {
         <CardDescription>Plot your moods and activities</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="prose space-y-4">
-          <div className="flex flex-col gap-2">
-            <div className="flex gap-2 overflow-scroll justify-center p-2">
+        <div className='prose space-y-4'>
+          <div className='flex flex-col gap-2'>
+            <div className='flex gap-2 overflow-scroll justify-center p-2'>
               {Object.entries(chartConfigData).map(
                 ([chartLabel, chartValue], idx) => (
                   <div
