@@ -52,7 +52,10 @@ export function InteractiveChart({
   };
   const chartKeys = Object.keys(chartConfig);
   return (
-    <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
+    <ChartContainer
+      config={chartConfig}
+      className="min-h-[200px] w-full bg-white rounded-lg"
+    >
       <LineChart
         accessibilityLayer
         data={chartData}

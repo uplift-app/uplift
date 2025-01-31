@@ -110,7 +110,7 @@ const PositiveEffects = () => {
   };
 
   return (
-    <Card className="w-[600px] bg-[#e3e8ff]">
+    <Card className="w-[600px] bg-[#d7d7d7]">
       <CardHeader>
         <CardTitle>Positive Effects</CardTitle>
         <CardDescription>

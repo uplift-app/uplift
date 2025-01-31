@@ -9,7 +9,7 @@ function DashBoard() {
     return (
       <>
         <p className="text-center p-4 text-4xl">Welcome, {user.username}!</p>
-        <div className="w-fit mx-auto bg-[#e3e8ff] rounded-lg p-4">
+        <div className="w-fit mx-auto bg-[#d7d7d7] rounded-lg p-4">
           <h2 className="text-black font-semibold text-lg pb-2">
             Average Mood Level
           </h2>

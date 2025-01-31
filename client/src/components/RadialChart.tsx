@@ -39,7 +39,7 @@ export function RadialChart({
   const chartConfig = {
     curValue: {
       label: `${moodType}`,
-      color: "hsl(var(--chart-2))",
+      color: `hsl(var(--${moodType}))`,
     },
     maxValue: {
       label: "maxValue",
