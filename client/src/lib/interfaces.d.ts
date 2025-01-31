@@ -14,7 +14,7 @@ export interface Activity {
 
 export type MoodFromBackend = {
   _id: string;
-  moodType: "happy" | "relaxed" | "energetic"; // Add other mood types if needed
+  moodType: "happiness" | "stress" | "energy"; // Add other mood types if needed
   intensity: number;
   userId: string;
   moodTime: string;
@@ -26,9 +26,9 @@ export type MoodFromBackend = {
 
 export type MoodSortedByDate = {
   date: string;
-  happy?: number;
-  energetic?: number;
-  relaxed?: number;
+  happiness?: number;
+  energy?: number;
+  stress?: number;
 };
 
 export type Time =
