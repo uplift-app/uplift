@@ -11,8 +11,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { DialogTitle } from "@/components/ui/dialog";
-import { getActivityTypes } from "@/lib/ApiService";
-import { useAuth } from "@clerk/clerk-react";
+import { errorHandler, getActivityTypes } from "@/lib/ApiService";
+
 const AddToChart = () => {
   const [open, setOpen] = useState(false);
   const [activityTypes, setActivityTypes] = useState<string[]>([]);
@@ -20,36 +20,29 @@ const AddToChart = () => {
     fetchActivityTypes();
   }, []);
   const fetchActivityTypes = async () => {
-    const { getToken } = useAuth();
     try {
-      const token = await getToken();
-      if (token) {
-        console.log("inside fetchActivityTypes");
-        const data = await getActivityTypes(token);
-        console.log(data);
-        setActivityTypes(data);
-      }
+      const data = await getActivityTypes();
+      console.log(data);
+      setActivityTypes(data);
     } catch (error) {
-      console.error(
-        error instanceof Error ? error.message : "An error occurred"
-      );
+      errorHandler(error);
     }
   };
   return (
     <>
-      <Button className="mx-auto h-[100%] w-full" onClick={() => setOpen(true)}>
+      <Button className='mx-auto h-[100%] w-full' onClick={() => setOpen(true)}>
         Add a chart <Plus />
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <DialogTitle className="p-4">
+        <DialogTitle className='p-4'>
           Select a mood or an activity to add
         </DialogTitle>
-        <CommandInput placeholder="Search for something to add..." />
+        <CommandInput placeholder='Search for something to add...' />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Moods"></CommandGroup>
+          <CommandGroup heading='Moods'></CommandGroup>
           <CommandSeparator />
-          <CommandGroup heading="Activities">
+          <CommandGroup heading='Activities'>
             {activityTypes.map((activity) => (
               <CommandItem key={activity}>
                 <span>{activity}</span>

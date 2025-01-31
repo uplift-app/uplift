@@ -6,7 +6,7 @@ import Dashboard from "./components/pages/DashBoard";
 import EntriesPage from "./components/pages/EntriesPage";
 import Navbar from "./components/NavBar";
 import { SignedOut, useUser } from "@clerk/clerk-react";
-import { getAnalysis } from "./lib/ApiService";
+import { errorHandler, getAnalysis } from "./lib/ApiService";
 import { useAnalysisDataContext } from "./contexts/AnalysisDataContext";
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
       try {
         getAnalysis().then((data) => setAnalysisData(data));
       } catch (error) {
-        error instanceof Error ? error.message : "An error occurred";
+        errorHandler(error);
       }
     };
     if (isSignedIn) fetchAnalysis();
@@ -26,7 +26,7 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <div className='min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 text-white'>
+      <main className='min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 text-white'>
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route
@@ -40,7 +40,7 @@ function App() {
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/entries' element={<EntriesPage />} />
         </Routes>
-      </div>
+      </main>
     </Router>
   );
 }

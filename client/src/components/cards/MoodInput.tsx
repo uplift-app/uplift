@@ -25,7 +25,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Mood, Time } from "@/lib/interfaces";
-import { postMood } from "@/lib/ApiService";
+import { errorHandler, postMood } from "@/lib/ApiService";
 
 //TODO: add tooltip for times
 
@@ -66,9 +66,7 @@ const MoodInput = () => {
     try {
       await postMood(formState);
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error occurred";
-      throw new Error(errorMessage);
+      errorHandler(error);
     }
     setFormState(initialFormState);
   }
@@ -112,7 +110,7 @@ const MoodInput = () => {
         />
         <Select onValueChange={handleChange} value={formState.moodTime}>
           <SelectTrigger>
-            <SelectValue placeholder='select a time' />
+            <SelectValue placeholder='Select a time' />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
@@ -126,7 +124,7 @@ const MoodInput = () => {
         </Select>
         <Select onValueChange={handleChange} value={formState.moodType}>
           <SelectTrigger>
-            <SelectValue placeholder='select a mood' />
+            <SelectValue placeholder='Select a mood' />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>

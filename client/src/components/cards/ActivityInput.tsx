@@ -18,7 +18,7 @@ import { Slider } from "@/components/ui/slider";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { DatePicker } from "@/components/ui/datepicker";
-import { getActivityTypes, postActivity } from "@/lib/ApiService";
+import { errorHandler, getActivityTypes, postActivity } from "@/lib/ApiService";
 import { Activity, Time } from "@/lib/interfaces";
 import { useAuth } from "@clerk/clerk-react";
 
@@ -61,9 +61,7 @@ const ActivityInput = () => {
       data.push(customActivityLabel);
       setActivityTypes(data);
     } catch (error) {
-      console.error(
-        error instanceof Error ? error.message : "An error occurred"
-      );
+      return errorHandler(error);
     }
   };
 
@@ -82,9 +80,7 @@ const ActivityInput = () => {
       const token = await getToken();
       if (token) await postActivity(formState);
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error occurred";
-      console.error("Failed to post activity:", errorMessage);
+      errorHandler(error);
     }
     setFormState(initialFormState);
     setActivity("");
@@ -134,7 +130,7 @@ const ActivityInput = () => {
         <DatePicker date={formState.date} setDate={handleChange} />
         <Select onValueChange={handleChange} value={formState.activityTime}>
           <SelectTrigger>
-            <SelectValue placeholder='select a time' />
+            <SelectValue placeholder='Select a time' />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
@@ -148,7 +144,7 @@ const ActivityInput = () => {
         </Select>
         <Select onValueChange={handleChange} value={activity}>
           <SelectTrigger data-testid='select-trigger'>
-            <SelectValue placeholder='select an activity' />
+            <SelectValue placeholder='Select an activity' />
           </SelectTrigger>
           <SelectContent>
             {activityTypes.map((activity) => (

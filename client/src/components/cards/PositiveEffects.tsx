@@ -22,7 +22,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
-import { cn } from "@/lib/utils";
 
 interface Ieffect {
   moodType: string;
