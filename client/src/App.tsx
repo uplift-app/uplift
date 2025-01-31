@@ -5,13 +5,14 @@ import LoginPage from "./components/pages/Login";
 import Dashboard from "./components/pages/DashBoard";
 import EntriesPage from "./components/pages/EntriesPage";
 import Navbar from "./components/NavBar";
-import { SignedOut } from "@clerk/clerk-react";
+import { SignedOut, useUser } from "@clerk/clerk-react";
 import { getAnalysis } from "./lib/ApiService";
 import { useAnalysisDataContext } from "./contexts/AnalysisDataContext";
 import DataInsights from "./components/cards/DataInsights";
 import PositiveEffects from "./components/cards/PositiveEffects";
 
 function App() {
+  const { isSignedIn } = useUser();
   const { setAnalysisData } = useAnalysisDataContext();
   useEffect(() => {
     const fetchAnalysis = async () => {
@@ -21,8 +22,8 @@ function App() {
         error instanceof Error ? error.message : "An error occurred";
       }
     };
-    fetchAnalysis();
-  }, []);
+    if (isSignedIn) fetchAnalysis();
+  }, [isSignedIn]);
 
   return (
     <Router>
