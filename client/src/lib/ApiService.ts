@@ -31,10 +31,7 @@ export async function makeServerRequest<T>(
     }
     return (await response.json()) as T;
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    error instanceof Error ? error.message : "Unknown error occurred";
-    throw new Error(`API Error: ${errorMessage}`);
+    return errorHandler(error);
   }
 }
 
@@ -43,9 +40,7 @@ export const getMoods = async (): Promise<MoodFromBackend[]> => {
   try {
     return await makeServerRequest("mood");
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    throw new Error(errorMessage);
+    return errorHandler(error);
   }
 };
 
@@ -55,9 +50,7 @@ export const getActivityTypes = async (): Promise<any> => {
   try {
     return await makeServerRequest("activity/types");
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    throw new Error(errorMessage);
+    return errorHandler(error);
   }
 };
 
@@ -73,9 +66,7 @@ export const postActivity = async (activity: Activity): Promise<any> => {
     };
     return await makeServerRequest("activity", options);
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    throw new Error(errorMessage);
+    return errorHandler(error);
   }
 };
 
@@ -94,9 +85,7 @@ export const postMood = async (moodData: Mood): Promise<any> => {
     };
     return await makeServerRequest("mood", options);
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    throw new Error(errorMessage);
+    return errorHandler(error);
   }
 };
 // Post a mood -> Mood type, mood intensity, mood time
@@ -106,8 +95,25 @@ export const getAnalysis = async (): Promise<AnalysisData> => {
   try {
     return await makeServerRequest("analysis");
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    throw new Error(errorMessage);
+    return errorHandler(error);
   }
+};
+
+export const getQuote = async (): Promise<any> => {
+  try {
+    const quote = (await fetch("https://zenquotes.io/api/today")).json();
+    console.log(quote);
+    return quote;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+export const errorHandler = (error: unknown): never => {
+  if (error instanceof Error) {
+    console.error("API Error:", error.message);
+    throw new Error(error.message);
+  }
+  console.error("Unknown API error occurred");
+  throw new Error("Unknown error occurred");
 };

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { getMoods } from "@/lib/ApiService";
 
 export function RecentEntries() {
   const [recentMoods, setRecentMoods] = useState<any>([]);
