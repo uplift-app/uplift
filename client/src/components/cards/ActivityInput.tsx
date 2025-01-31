@@ -58,12 +58,9 @@ const ActivityInput = () => {
 
   const fetchActivityTypes = async () => {
     try {
-      const token = await getToken();
-      if (token) {
-        const data = await getActivityTypes(token);
-        data.push(customActivityLabel);
-        setActivityTypes(data);
-      }
+      const data = await getActivityTypes();
+      data.push(customActivityLabel);
+      setActivityTypes(data);
     } catch (error) {
       console.error(
         error instanceof Error ? error.message : "An error occurred"
@@ -84,7 +81,7 @@ const ActivityInput = () => {
   async function uploadActivity() {
     try {
       const token = await getToken();
-      if (token) await postActivity(formState, token);
+      if (token) await postActivity(formState);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error occurred";
@@ -128,31 +125,31 @@ const ActivityInput = () => {
   }
 
   return (
-    <Card className="w-[300px] m-1">
+    <Card className='w-[300px] m-1'>
       <CardHeader>
         <CardTitle>Activity</CardTitle>
         <CardDescription>What did you do?</CardDescription>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className='space-y-4'>
         <DatePicker date={formState.date} setDate={handleChange} />
         <Select onValueChange={handleChange} value={formState.activityTime}>
           <SelectTrigger>
-            <SelectValue placeholder="select a time" />
+            <SelectValue placeholder='select a time' />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="morning">Morning</SelectItem>
-              <SelectItem value="afternoon">Afternoon</SelectItem>
-              <SelectItem value="evening">Evening</SelectItem>
-              <SelectItem value="night">Night</SelectItem>
-              <SelectItem value="all day">All Day</SelectItem>
+              <SelectItem value='morning'>Morning</SelectItem>
+              <SelectItem value='afternoon'>Afternoon</SelectItem>
+              <SelectItem value='evening'>Evening</SelectItem>
+              <SelectItem value='night'>Night</SelectItem>
+              <SelectItem value='all day'>All Day</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
         <Select onValueChange={handleChange} value={activity}>
-          <SelectTrigger data-testid="select-trigger">
-            <SelectValue placeholder="select an activity" />
+          <SelectTrigger data-testid='select-trigger'>
+            <SelectValue placeholder='select an activity' />
           </SelectTrigger>
           <SelectContent>
             {activityTypes.map((activity) => (
@@ -166,9 +163,9 @@ const ActivityInput = () => {
           <>
             <h1>{customActivityLabel}</h1>
             <Input
-              type="text"
-              id="custom-activity"
-              placeholder="Bowling"
+              type='text'
+              id='custom-activity'
+              placeholder='Bowling'
               value={customActivity}
               onChange={handleInputChange}
             />
@@ -190,7 +187,7 @@ const ActivityInput = () => {
           Submit
         </Button>
       </CardContent>
-      <CardFooter className="flex justify-between"></CardFooter>
+      <CardFooter className='flex justify-between'></CardFooter>
     </Card>
   );
 };
