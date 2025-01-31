@@ -8,8 +8,8 @@ import Navbar from "./components/NavBar";
 import { SignedOut } from "@clerk/clerk-react";
 import { getAnalysis } from "./lib/ApiService";
 import { useAnalysisDataContext } from "./contexts/AnalysisDataContext";
-import DataInsights from "./components/DataInsights";
-import PositiveEffects from "./components/PositiveEffects";
+import DataInsights from "./components/cards/DataInsights";
+import PositiveEffects from "./components/cards/PositiveEffects";
 
 function App() {
   const { setAnalysisData } = useAnalysisDataContext();

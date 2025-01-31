@@ -4,7 +4,7 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-} from "./ui/card";
+} from "../ui/card";
 import { useAnalysisDataContext } from "@/contexts/AnalysisDataContext";
 import {
   Select,
@@ -13,9 +13,15 @@ import {
   SelectTrigger,
   SelectValue,
   SelectGroup,
-} from "./ui/select";
+} from "../ui/select";
 import { useEffect, useState } from "react";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../ui/carousel";
 import { cn } from "@/lib/utils";
 
 interface Ieffect {
@@ -62,40 +68,42 @@ const PositiveEffects = () => {
       const formattedMood = moodMapping[effect.moodType];
       return (
         <CarouselItem className={cn(filteredEffects.length > 1 && "basis-1/2")}>
-        <Card >
-          <CardHeader>
-            <CardTitle>
-              {formattedMood}{" "}
-              {effect.moodTime === "all day"
-                ? effect.moodTime
-                : "in the " + effect.moodTime}
-              .
-            </CardTitle>
-            <CardDescription>
-              The average intensity of your mood during this time is{" "}
-              {effect.avg_intensity.toFixed(1)}.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {effect.activities.length > 1 ? (
-              <>
-                <p>The activites that positively affected this are:</p>
-                <ul>
-                  {effect.activities.map((activity) => {
-                    return (
-                      <li>{activity[0].toUpperCase() + activity.slice(1)}.</li>
-                    );
-                  })}
-                </ul>
-              </>
-            ) : (
-              <p>
-                The activity that positively affected this is:{" "}
-                {effect.activities[0]}
-              </p>
-            )}
-          </CardContent>
-        </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                {formattedMood}{" "}
+                {effect.moodTime === "all day"
+                  ? effect.moodTime
+                  : "in the " + effect.moodTime}
+                .
+              </CardTitle>
+              <CardDescription>
+                The average intensity of your mood during this time is{" "}
+                {effect.avg_intensity.toFixed(1)}.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {effect.activities.length > 1 ? (
+                <>
+                  <p>The activites that positively affected this are:</p>
+                  <ul>
+                    {effect.activities.map((activity) => {
+                      return (
+                        <li>
+                          {activity[0].toUpperCase() + activity.slice(1)}.
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </>
+              ) : (
+                <p>
+                  The activity that positively affected this is:{" "}
+                  {effect.activities[0]}
+                </p>
+              )}
+            </CardContent>
+          </Card>
         </CarouselItem>
       );
     });
@@ -137,18 +145,17 @@ const PositiveEffects = () => {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Carousel className="w-full">
+        <Carousel className='w-full'>
           <CarouselContent>
-          {filteredEffects.length > 0 ? (
-            formatFilteredEffects(filteredEffects)
-          ) : (
-            <p>No positive effects found for the selected mood and time.</p>
-          )}
+            {filteredEffects.length > 0 ? (
+              formatFilteredEffects(filteredEffects)
+            ) : (
+              <p>No positive effects found for the selected mood and time.</p>
+            )}
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />
         </Carousel>
-        
       </CardContent>
     </Card>
   );

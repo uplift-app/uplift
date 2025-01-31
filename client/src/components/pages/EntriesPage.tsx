@@ -1,7 +1,7 @@
 import { RedirectToSignIn, useUser } from "@clerk/clerk-react";
 import ActivityInput from "../cards/ActivityInput";
 import MoodInput from "../cards/MoodInput";
-import { RecentEntries } from "../RecentEntries";
+import { RecentEntries } from "../cards/RecentEntries";
 import { formatName } from "@/lib/utils";
 
 function EntriesPage() {
