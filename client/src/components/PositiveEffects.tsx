@@ -15,13 +15,18 @@ import {
   SelectGroup,
 } from "./ui/select";
 import { useEffect, useState } from "react";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel";
-import { cn } from "@/lib/utils";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "./ui/carousel";
 
 interface Ieffect {
   moodType: string;
   moodTime: string;
-  avg_intensity: number;
+  avgIntensity: number;
   activities: string[];
 }
 
@@ -53,102 +58,106 @@ const PositiveEffects = () => {
 
   const formatFilteredEffects = (filteredEffects: Ieffect[]) => {
     const moodMapping: { [key: string]: string } = {
-      energetic: "Energy level",
-      happy: "Happiness",
-      relaxed: "Relaxation",
+      energy: "Energy level",
+      happiness: "Happiness",
+      stress: "Relaxation",
     };
 
     return filteredEffects.map((effect) => {
       const formattedMood = moodMapping[effect.moodType];
       return (
-        <CarouselItem className={cn(filteredEffects.length > 1 && "basis-1/2")}>
-        <Card >
-          <CardHeader>
-            <CardTitle>
-              {formattedMood}{" "}
-              {effect.moodTime === "all day"
-                ? effect.moodTime
-                : "in the " + effect.moodTime}
-              .
-            </CardTitle>
-            <CardDescription>
-              The average intensity of your mood during this time is{" "}
-              {effect.avg_intensity.toFixed(1)}.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {effect.activities.length > 1 ? (
-              <>
-                <p>The activites that positively affected this are:</p>
-                <ul>
-                  {effect.activities.map((activity) => {
-                    return (
-                      <li>{activity[0].toUpperCase() + activity.slice(1)}.</li>
-                    );
-                  })}
-                </ul>
-              </>
-            ) : (
-              <p>
-                The activity that positively affected this is:{" "}
-                {effect.activities[0]}
-              </p>
-            )}
-          </CardContent>
-        </Card>
+        <CarouselItem className="basis-1/2">
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                {formattedMood}{" "}
+                {effect.moodTime === "all day"
+                  ? effect.moodTime
+                  : "in the " + effect.moodTime}
+                .
+              </CardTitle>
+              <CardDescription>
+                The average intensity of your mood during this time is{" "}
+                {effect.avgIntensity.toFixed(1)}.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {effect.activities.length > 1 ? (
+                <>
+                  <p>The activites that positively affected this are:</p>
+                  <ul>
+                    {effect.activities.map((activity, index) => {
+                      return (
+                        <li key={index}>
+                          {activity[0].toUpperCase() + activity.slice(1)}.
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </>
+              ) : (
+                <p>
+                  The activity that positively affected this is: <br />
+                  {effect.activities[0][0].toUpperCase() +
+                    effect.activities[0].slice(1)}
+                </p>
+              )}
+            </CardContent>
+          </Card>
         </CarouselItem>
       );
     });
   };
 
   return (
-    <Card className='w-[500px]'>
+    <Card className="w-[600px] bg-[#d7d7d7]">
       <CardHeader>
         <CardTitle>Positive Effects</CardTitle>
         <CardDescription>
           Understand the positive effects of your activities and moods.
         </CardDescription>
       </CardHeader>
-      <CardContent className='space-y-4'>
-        <Select onValueChange={(value) => setMood(value)}>
-          <SelectTrigger>
-            <SelectValue placeholder='Select a mood' />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value='energetic'>Energy</SelectItem>
-              <SelectItem value='happy'>Happiness</SelectItem>
-              <SelectItem value='relaxed'>Relaxation</SelectItem>
-              <SelectItem value='show all'>Show All</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <Select onValueChange={(value) => setTime(value)}>
-          <SelectTrigger>
-            <SelectValue placeholder='Select a time' />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value='morning'>Morning</SelectItem>
-              <SelectItem value='afternoon'>Afternoon</SelectItem>
-              <SelectItem value='evening'>Evening</SelectItem>
-              <SelectItem value='all day'>All Day</SelectItem>
-              <SelectItem value='show all'>Show All</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <Carousel className="w-full">
+      <CardContent className="space-y-4">
+        <div className="mx-12">
+          <Select onValueChange={(value) => setMood(value)}>
+            <SelectTrigger className="mb-4">
+              <SelectValue placeholder="Select a mood" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="energy">Energy</SelectItem>
+                <SelectItem value="happiness">Happiness</SelectItem>
+                <SelectItem value="stress">Relaxation</SelectItem>
+                <SelectItem value="show all">Show All</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select onValueChange={(value) => setTime(value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select a time" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="morning">Morning</SelectItem>
+                <SelectItem value="afternoon">Afternoon</SelectItem>
+                <SelectItem value="evening">Evening</SelectItem>
+                <SelectItem value="all day">All Day</SelectItem>
+                <SelectItem value="show all">Show All</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <Carousel className="mx-12 rounded-lg">
           <CarouselContent>
-          {filteredEffects.length > 0 ? (
-            formatFilteredEffects(filteredEffects)
-          ) : (
-            <p>No positive effects found for the selected mood and time.</p>
-          )}
+            {filteredEffects.length > 0 ? (
+              formatFilteredEffects(filteredEffects)
+            ) : (
+              <p>No positive effects found for the selected mood and time.</p>
+            )}
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />
         </Carousel>
-        
       </CardContent>
     </Card>
   );
