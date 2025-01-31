@@ -90,7 +90,6 @@ const ChartViewer = () => {
     });
   };
 
-  console.log("configData", chartConfigData);
   return (
     <Card>
       <CardHeader>
@@ -98,8 +97,8 @@ const ChartViewer = () => {
         <CardDescription>Plot your moods and activities</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="prose space-y-4">
-          <div className="flex flex-col gap-2">
+        <div className="flex flex-col space-y-4">
+          <div className=" gap-2">
             <div className="flex gap-2 overflow-scroll justify-center p-2">
               {Object.entries(chartConfig).map(
                 ([chartLabel, chartValue], idx) => (
@@ -142,7 +141,7 @@ const ChartViewer = () => {
             chartConfig={chartConfigData}
             chartData={dataFilteredAndSorted}
           />
-          <AddToChart />
+          {/* <AddToChart /> */}
         </div>
       </CardContent>
     </Card>
