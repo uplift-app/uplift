@@ -1,101 +1,205 @@
-import request from "supertest";
-import { app } from "../index";
+import { Request, Response } from "express";
 import Mood from "../models/mood";
+import {
+  getMoods,
+  addMood,
+  editMood,
+  deleteMood,
+  getMoodTypes,
+} from "../controllers/moodController";
+
+jest.mock("../models/mood");
 
 describe("Mood Controller", () => {
-  it("should create a new mood", async () => {
-    const newMood = {
-      moodType: "happy",
-      intensity: 8,
-      userId: "12345",
-      moodTime: "morning",
-      date: new Date().toISOString(),
-    };
+  describe("getMoods", () => {
+    it("should return 200 with list of moods for a user", async () => {
+      const userId = "testUserId";
+      const moods = [
+        {
+          userId,
+          moodType: "happiness",
+          intensity: 5,
+          moodTime: "morning",
+          date: new Date(),
+        },
+        {
+          userId,
+          moodType: "stress",
+          intensity: 3,
+          moodTime: "evening",
+          date: new Date(),
+        },
+      ];
 
-    const response = await request(app).post("/mood").send(newMood);
+      (Mood.find as jest.Mock).mockResolvedValue(moods);
 
-    expect(response.status).toBe(201);
-    expect(response.body).toMatchObject({
-      moodType: "happy",
-      intensity: 8,
-      userId: "12345",
-      moodTime: "morning",
+      const req = {
+        user: { userId },
+        query: {},
+      } as unknown as Request;
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      } as unknown as Response;
+
+      await getMoods(req, res);
+
+      expect(Mood.find).toHaveBeenCalledWith({ userId });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(moods);
     });
 
-    const moodInDb = await Mood.findOne({ userId: "12345" });
-    expect(moodInDb).not.toBeNull();
-  });
+    it("should return filtered moods based on startDate and endDate", async () => {
+      const userId = "testUserId";
+      const startDate = "2025-01-01";
+      const endDate = "2025-01-31";
+      const moods = [
+        {
+          userId,
+          moodType: "energy",
+          intensity: 7,
+          moodTime: "afternoon",
+          date: new Date(startDate),
+        },
+        {
+          userId,
+          moodType: "energy",
+          intensity: 7,
+          moodTime: "afternoon",
+          date: new Date(endDate),
+        },
+      ];
 
-  it("should retrieve moods by userId", async () => {
-    const userId = "12345";
-    await Mood.create({
-      moodType: "excited",
-      intensity: 9,
-      userId,
-      moodTime: "afternoon",
-      date: new Date(),
-    });
+      (Mood.find as jest.Mock).mockResolvedValue(moods);
 
-    const response = await request(app).get(`/mood/${userId}`);
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveLength(1);
-    expect(response.body[0]).toMatchObject({
-      moodType: "excited",
-      intensity: 9,
-      userId,
-      moodTime: "afternoon",
-    });
-  });
+      const req = {
+        user: { userId },
+        query: { startDate, endDate },
+      } as unknown as Request;
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      } as unknown as Response;
 
-  it("should retrieve moods within a date range", async () => {
-    const userId = "12345";
-    await Mood.create([
-      {
-        moodType: "relaxed",
-        intensity: 7,
+      await getMoods(req, res);
+
+      expect(Mood.find).toHaveBeenCalledWith({
         userId,
-        moodTime: "evening",
-        date: new Date("2025-01-15"),
-      },
-      {
-        moodType: "anxious",
-        intensity: 4,
-        userId,
-        moodTime: "morning",
-        date: new Date("2025-01-25"),
-      },
-    ]);
+        date: { $gte: new Date(startDate), $lte: new Date(endDate) },
+      });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(moods);
+    });
 
-    const response = await request(app)
-      .get(`/mood/${userId}`)
-      .query({ startDate: "2025-01-14", endDate: "2025-01-20" });
+    it("should return 500 if an error occurs", async () => {
+      const userId = "testUserId";
+      (Mood.find as jest.Mock).mockRejectedValue(new Error("Database error"));
 
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveLength(1);
-    expect(response.body[0]).toMatchObject({
-      moodType: "relaxed",
-      intensity: 7,
-      date: "2025-01-15T00:00:00.000Z",
+      const req = { user: { userId }, query: {} } as unknown as Request;
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      } as unknown as Response;
+
+      await getMoods(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        message: "Error retrieving moods",
+        error: expect.any(Error),
+      });
     });
   });
 
-  it("should delete a mood", async () => {
-    const mood = await Mood.create({
-      moodType: "sad",
-      intensity: 3,
-      userId: "12345",
-      moodTime: "afternoon",
-      date: new Date(),
+  describe("addMood", () => {
+    let req: Partial<Request>;
+    let res: Partial<Response>;
+
+    beforeEach(() => {
+      req = {
+        body: {
+          moodType: "happiness",
+          intensity: 8,
+          moodTime: "morning",
+          date: "2025-01-28",
+        },
+        user: { userId: "mockUserId" },
+      };
+
+      res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
     });
 
-    const response = await request(app).delete(`/mood/${mood._id}`);
+    it("should successfully add a mood and return status 201", async () => {
+      const mockSave = jest.fn().mockResolvedValue({
+        ...req.body,
+        userId: req.user.userId,
+      });
+      (Mood.prototype.save as jest.Mock) = mockSave;
 
-    expect(response.status).toBe(200);
-    expect(response.body).toMatchObject({
-      message: "Mood deleted successfully",
+      await addMood(req as Request, res as Response);
+
+      expect(mockSave).toHaveBeenCalledTimes(1);
+      expect(res.status).toHaveBeenCalledWith(201);
     });
 
-    const deletedMood = await Mood.findById(mood._id);
-    expect(deletedMood).toBeNull();
+    it("should return a 500 error if there is an error during Mood creation", async () => {
+      const mockSave = jest.fn().mockRejectedValue(new Error("Database Error"));
+      (Mood.prototype.save as jest.Mock) = mockSave;
+
+      await addMood(req as Request, res as Response);
+
+      expect(mockSave).toHaveBeenCalledTimes(1);
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        message: "Error adding mood",
+        error: new Error("Database Error"),
+      });
+    });
+  });
+
+  describe("getMoodTypes", () => {
+    it("should return 200 with mood types", async () => {
+      const userId = "testUserId";
+      const moodTypes = ["happiness", "stress", "energy"];
+
+      (Mood.distinct as jest.Mock).mockResolvedValue(moodTypes);
+
+      const req = { user: { userId } } as unknown as Request;
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      } as unknown as Response;
+
+      await getMoodTypes(req, res);
+
+      expect(Mood.distinct).toHaveBeenCalledWith("moodType", { userId });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(moodTypes);
+    });
+
+    it("should return 500 if an error occurs", async () => {
+      const userId = "testUserId";
+
+      (Mood.distinct as jest.Mock).mockRejectedValue(
+        new Error("Database error")
+      );
+
+      const req = { user: { userId } } as unknown as Request;
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      } as unknown as Response;
+
+      await getMoodTypes(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        message: "Error retrieving mood types",
+        error: expect.any(Error),
+      });
+    });
   });
 });

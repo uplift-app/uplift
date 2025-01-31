@@ -12,7 +12,8 @@ def generate_activity_data(user_id, start_date, end_date, num_records):
         "cooking", "meditation", "party", "smoking", "overtime",
         "fast food", "screen time", "exercise"
     ]
-    activity_times = ["morning", "afternoon", "evening", "all day"]
+
+    activity_times = ["morning", "afternoon", "evening", "night", "all day"]
     data = []
 
     for _ in range(num_records):
