@@ -1,4 +1,10 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "./ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "./ui/card";
 import { useAnalysisDataContext } from "@/contexts/AnalysisDataContext";
 
 const DataInsights = () => {
@@ -19,21 +25,26 @@ const DataInsights = () => {
 
   const formatMoodInsights = () => {
     const moodMapping: { [key: string]: string } = {
-      energetic: "energy level",
-      happy: "happiness",
-      relaxed: "relaxation",
+      energy: "energy level",
+      happiness: "happiness",
+      stress: "relaxation",
     };
-  
+
     return analysisData.avgMood.map((mood) => {
-      const [key, value] = Object.entries(mood)[0]; 
-      const formattedKey = moodMapping[key] 
-      return <p key={key}>Your average {formattedKey} is {value.toFixed(1)}.</p>; 
+      const [key, value] = Object.entries(mood)[0];
+      const formattedKey = moodMapping[key];
+      return (
+        <p key={key}>
+          Your average {formattedKey} is {value.toFixed(1)}.
+        </p>
+      );
     });
   };
 
   const bestMoodTime = () => {
-    let bestTime = Object.entries(analysisData.avgMoodtime).reduce((prev, curr) =>
-      Object.values(prev[1])[0] > Object.values(curr[1])[0] ? prev : curr
+    let bestTime = Object.entries(analysisData.avgMoodtime).reduce(
+      (prev, curr) =>
+        Object.values(prev[1])[0] > Object.values(curr[1])[0] ? prev : curr
     );
     return `You feel best in the ${Object.keys(bestTime[1])[0]} with an average mood score of ${Object.values(bestTime[1])[0].toFixed(1)}.`;
   };
