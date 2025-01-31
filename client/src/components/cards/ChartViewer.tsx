@@ -11,7 +11,6 @@ import { Checkbox } from "../ui/checkbox";
 import { cn } from "@/lib/utils";
 import { InteractiveChart } from "../inputs/InteractiveChart";
 import { ChartConfig } from "../ui/chart";
-import AddToChart from "../inputs/AddToChart";
 import { transformChartData } from "@/lib/chartview-functions";
 import TimeFrameSelector from "../inputs/TimeFrameSelector";
 import { getMoods } from "@/lib/ApiService";
