@@ -24,6 +24,7 @@ const ChartViewer = () => {
     try {
       const data = await getMoods();
       setChartData(data);
+      setDataFilteredAndSorted(transformChartData(data, timeFrame));
     } catch (error) {
       console.error(
         error instanceof Error
@@ -50,15 +51,15 @@ const ChartViewer = () => {
 
   // Initialise the chart configuration
   const chartConfig: ChartConfig = {
-    energetic: {
+    energy: {
       label: "Energetic",
       color: "hsl(var(--energy))",
     },
-    happy: {
+    happiness: {
       label: "Happy",
       color: "hsl(var(--happiness))",
     },
-    relaxed: {
+    stress: {
       label: "Relaxed",
       color: "hsl(var(--stress))",
     },
@@ -85,16 +86,16 @@ const ChartViewer = () => {
   };
 
   return (
-    <Card>
+    <Card className='bg-[#d7d7d7]'>
       <CardHeader>
         <CardTitle>Visualise your progress</CardTitle>
         <CardDescription>Plot your moods and activities</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className='prose space-y-4'>
-          <div className='flex flex-col gap-2'>
+        <div className='flex flex-col space-y-4'>
+          <div className=' gap-2'>
             <div className='flex gap-2 overflow-scroll justify-center p-2'>
-              {Object.entries(chartConfigData).map(
+              {Object.entries(chartConfig).map(
                 ([chartLabel, chartValue], idx) => (
                   <div
                     className={cn(
@@ -111,9 +112,9 @@ const ChartViewer = () => {
                   >
                     <Checkbox
                       className={cn(
-                        chartValue.label === "Energy" && "border-energy",
-                        chartValue.label === "Happiness" && " border-happiness",
-                        chartValue.label === "Stress" && "border-stress"
+                        chartValue.label === "Energetic" && "border-energy",
+                        chartValue.label === "Happy" && " border-happiness",
+                        chartValue.label === "Relaxed" && "border-stress"
                       )}
                       defaultChecked
                       onCheckedChange={() => handleCheckChange(chartLabel)}
@@ -135,7 +136,7 @@ const ChartViewer = () => {
             chartConfig={chartConfigData}
             chartData={dataFilteredAndSorted}
           />
-          <AddToChart />
+          {/* <AddToChart /> */}
         </div>
       </CardContent>
     </Card>

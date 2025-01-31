@@ -5,15 +5,15 @@ const MoodSchema: Schema = new Schema(
   {
     moodType: {
       type: String,
-      required: true,
       enum: ["happiness", "stress", "energy"],
+      required: true,
     },
     intensity: { type: Number, required: true },
     userId: { type: String, required: true },
     moodTime: {
       type: String,
-      required: true,
       enum: ["morning", "afternoon", "evening", "night", "all day"],
+      required: true,
     },
     date: { type: Date, required: true },
   },

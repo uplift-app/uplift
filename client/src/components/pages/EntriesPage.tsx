@@ -30,13 +30,13 @@ function EntriesPage() {
 
         <div className='flex gap-4 px-[10rem]'>
           <div className='w-fit flex flex-col items-center gap-4'>
-            <div className='flex flex-col items-center w-full bg-[#e0f2fe] text-black rounded-lg p-8 gap-2 shadow-md'>
+            <div className='flex flex-col items-center w-full bg-[#d7d7d7] text-black rounded-lg p-8 gap-2 shadow-md'>
               <p className='text-3xl'>
                 “One of the keys to happiness is a bad memory.”
               </p>
               <p className='italic text-lg'>Rita Mae Brown</p>
             </div>
-            <div className='w-full bg-[#e0f2fe] rounded-lg p-4 shadow-md'>
+            <div className='w-full bg-[#d7d7d7] rounded-lg p-4 shadow-md'>
               <h2 className='text-black font-semibold text-lg'>
                 Track your activity and mood
               </h2>

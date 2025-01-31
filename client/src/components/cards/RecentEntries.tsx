@@ -42,7 +42,7 @@ export function RecentEntries() {
   }, []);
 
   return (
-    <div className='w-full bg-[#e3e8ff] rounded-lg p-4 shadow-md'>
+    <div className='w-full bg-[#d7d7d7] rounded-lg p-4 shadow-md'>
       <h2 className='text-[#162046] font-semibold text-lg'>
         Your recent entries
       </h2>
@@ -51,7 +51,7 @@ export function RecentEntries() {
           return (
             <div
               key={`${mood.date}-${index}`}
-              className='flex items-center gap-6 bg-[#b6d1fc] rounded-xl w-full p-4 text-black shadow-sm'
+              className='flex items-center gap-6 bg-white rounded-xl w-full p-4 text-black shadow-sm'
             >
               <div className='text-5xl'>🤪</div>
               <div>

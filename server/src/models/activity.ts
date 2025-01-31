@@ -8,8 +8,8 @@ const ActivitySchema: Schema = new Schema(
     userId: { type: String, required: true },
     activityTime: {
       type: String,
-      required: true,
       enum: ["morning", "afternoon", "evening", "night", "all day"],
+      required: true,
     },
     isHabit: { type: Boolean, required: true, default: false },
     date: { type: Date, required: true },

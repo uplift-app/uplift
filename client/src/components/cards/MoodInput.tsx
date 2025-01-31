@@ -119,6 +119,7 @@ const MoodInput = () => {
               <SelectItem value='morning'>Morning</SelectItem>
               <SelectItem value='afternoon'>Afternoon</SelectItem>
               <SelectItem value='evening'>Evening</SelectItem>
+              <SelectItem value='night'>Night</SelectItem>
               <SelectItem value='all day'>All Day</SelectItem>
             </SelectGroup>
           </SelectContent>
