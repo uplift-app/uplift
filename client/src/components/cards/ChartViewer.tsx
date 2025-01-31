@@ -37,13 +37,24 @@ const ChartViewer = () => {
       );
     }
   };
+
+  // Fetch the data from backend on first render
   useEffect(() => {
     fetchMoods();
   }, []);
 
-  // Loop through all entries in chartData, saving
+  const [timeFrame, setTimeFrame] = useState("Last month");
+  const [dataFilteredAndSorted, setDataFilteredAndSorted] = useState<
+    MoodSortedByDate[]
+  >([]);
 
-  const chartConfig = {
+  //Reset the filtered data when the timeframe changes
+  useEffect(() => {
+    setDataFilteredAndSorted(transformChartData(chartData, timeFrame));
+  }, [timeFrame]);
+
+  // Initialise the chart configuration
+  const chartConfig: ChartConfig = {
     energetic: {
       label: "Energetic",
       color: "hsl(var(--energy))",
@@ -56,29 +67,27 @@ const ChartViewer = () => {
       label: "Relaxed",
       color: "hsl(var(--stress))",
     },
-  } satisfies ChartConfig;
+  };
+
   const [chartConfigData, setChartConfigData] =
     useState<ChartConfig>(chartConfig);
+
+  // update the chart config if the user deselects any moods
   const handleCheckChange = (chartLabel: keyof ChartConfig) => {
     setChartConfigData((prev) => {
-      const newChartConfig = { ...prev } as ChartConfig;
-      delete newChartConfig[chartLabel];
+      const newChartConfig = { ...prev };
+
+      if (chartLabel in newChartConfig) {
+        // If it exists, remove it
+        delete newChartConfig[chartLabel];
+      } else {
+        // If it doesn't exist, add it back from the original chartConfig
+        newChartConfig[chartLabel] = chartConfig[chartLabel];
+      }
+
       return newChartConfig;
     });
   };
-
-  const [timeFrame, setTimeFrame] = useState("Last month");
-  const [dataFilteredAndSorted, setDataFilteredAndSorted] = useState<
-    MoodSortedByDate[]
-  >([]);
-
-  useEffect(() => {
-    setDataFilteredAndSorted(transformChartData(chartData, timeFrame));
-  }, []);
-
-  useEffect(() => {
-    setDataFilteredAndSorted(transformChartData(chartData, timeFrame));
-  }, [timeFrame]);
 
   return (
     <Card>
@@ -87,9 +96,9 @@ const ChartViewer = () => {
         <CardDescription>Plot your moods and activities</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className='prose space-y-4'>
-          <div className='flex flex-col gap-2'>
-            <div className='flex gap-2 overflow-scroll justify-center p-2'>
+        <div className="prose space-y-4">
+          <div className="flex flex-col gap-2">
+            <div className="flex gap-2 overflow-scroll justify-center p-2">
               {Object.entries(chartConfigData).map(
                 ([chartLabel, chartValue], idx) => (
                   <div
@@ -120,8 +129,6 @@ const ChartViewer = () => {
               )}
             </div>
 
-            <AddToChart />
-
             <TimeFrameSelector
               timeFrame={timeFrame}
               setTimeFrame={setTimeFrame}
@@ -133,6 +140,7 @@ const ChartViewer = () => {
             chartConfig={chartConfigData}
             chartData={dataFilteredAndSorted}
           />
+          <AddToChart />
         </div>
       </CardContent>
     </Card>
