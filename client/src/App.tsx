@@ -8,8 +8,6 @@ import Navbar from "./components/NavBar";
 import { SignedOut, useUser } from "@clerk/clerk-react";
 import { getAnalysis } from "./lib/ApiService";
 import { useAnalysisDataContext } from "./contexts/AnalysisDataContext";
-import DataInsights from "./components/cards/DataInsights";
-import PositiveEffects from "./components/cards/PositiveEffects";
 
 function App() {
   const { isSignedIn } = useUser();
