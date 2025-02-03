@@ -62,7 +62,7 @@ for index, row in positive_effects.iterrows():
     "moodType": row["moodType"],
     "moodTime": row["moodTime"],
     "activities": row["activities"],
-    "avg_intensity": row["avg_intensity"]})
+    "avgIntensity": row["avg_intensity"]})
 res["positiveEffects"] = positive_effects_arr
 
 

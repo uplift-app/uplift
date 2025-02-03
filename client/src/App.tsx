@@ -8,6 +8,9 @@ import Navbar from "./components/NavBar";
 import { SignedOut, useAuth } from "@clerk/clerk-react";
 import { getAnalysis } from "./lib/ApiService";
 import { useAnalysisDataContext } from "./contexts/AnalysisDataContext";
+import DataInsights from "./components/DataInsights";
+import PositiveEffects from "./components/PositiveEffects";
+
 
 function App() {
   const { getToken } = useAuth();

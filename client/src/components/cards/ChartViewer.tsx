@@ -56,15 +56,15 @@ const ChartViewer = () => {
 
   // Initialise the chart configuration
   const chartConfig: ChartConfig = {
-    energetic: {
+    energy: {
       label: "Energetic",
       color: "hsl(var(--energy))",
     },
-    happy: {
+    happiness: {
       label: "Happy",
       color: "hsl(var(--happiness))",
     },
-    relaxed: {
+    stress: {
       label: "Relaxed",
       color: "hsl(var(--stress))",
     },
@@ -91,7 +91,7 @@ const ChartViewer = () => {
   };
 
   return (
-    <Card>
+    <Card className="bg-[#d7d7d7]">
       <CardHeader>
         <CardTitle>Visualise your progress</CardTitle>
         <CardDescription>Plot your moods and activities</CardDescription>
