@@ -3,6 +3,7 @@ import ActivityInput from "../cards/ActivityInput";
 import MoodInput from "../cards/MoodInput";
 import ChartViewer from "../cards/ChartViewer";
 import YearOfPixels from "../YearOfPixels";
+import PositiveEffects from "../PositiveEffects";
 
 function DashBoard() {
   const { user, isSignedIn } = useUser();
@@ -13,8 +14,6 @@ function DashBoard() {
           Welcome, {user.username}!
         </p>
         <div className='flex items-center justify-center pt-2'>
-          <ActivityInput />
-          <MoodInput />
           <ChartViewer />
           <YearOfPixels />
         </div>

@@ -112,10 +112,11 @@ const YearOfPixels = () => {
     <Card>
       <CardHeader>
         <CardTitle>
-          Your year:
+          Your year in pixels:
         </CardTitle>
         <CardDescription>
-
+          See your average mood intensity for each day in the last year! 
+          Each square is one day and the colour ranges from red, to green. Where red represents 0 and green represents 10.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -125,9 +126,9 @@ const YearOfPixels = () => {
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectItem value='energetic'>Energy</SelectItem>
-            <SelectItem value='happy'>Happiness</SelectItem>
-            <SelectItem value='relaxed'>Relaxation</SelectItem>
+            <SelectItem value='energy'>Energy</SelectItem>
+            <SelectItem value='happiness'>Happiness</SelectItem>
+            <SelectItem value='stress'>Stress</SelectItem>
             <SelectItem value='Avg'>Show Average</SelectItem>
           </SelectGroup>
         </SelectContent>

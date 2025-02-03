@@ -13,12 +13,12 @@ def generate_dates(start_date, end_date):
         current_date += timedelta(days=1)
 
 # Mood data settings
-mood_types = ["happy", "relaxed", "energetic"]
-mood_times = ["morning", "afternoon", "evening", "all day"]
+mood_types = ["happiness", "stress", "energy"]
+mood_times = ["morning", "afternoon", "evening", "night", "all day"]
 
 # Generate data for User 1 (last three months)
 end_date_user1 = datetime.today()
-start_date_user1 = end_date_user1 - timedelta(days=90)
+start_date_user1 = end_date_user1 - timedelta(days=365)
 dates_user1 = list(generate_dates(start_date_user1, end_date_user1))
 
 user1_data = [
