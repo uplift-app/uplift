@@ -3,6 +3,8 @@ import ActivityInput from "../cards/ActivityInput";
 import MoodInput from "../cards/MoodInput";
 import { RecentEntries } from "../cards/RecentEntries";
 import { formatName } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { errorHandler, getQuote } from "@/lib/ApiService";
 
 function EntriesPage() {
   /**
@@ -21,6 +23,28 @@ function EntriesPage() {
    * Sad: #ef4444 (red)
    */
   const { user, isSignedIn } = useUser();
+  const [quote, setQuote] = useState<String | null>(null);
+  const [author, setAuthor] = useState<String | null>(null);
+
+  useEffect(() => {
+    async function fetchQuote() {
+      try {
+        const response = await getQuote();
+        if (!response) {
+          throw new Error("Failed to fetch quote");
+        } else {
+          setQuote(response[0].q);
+          setAuthor(response[0].a);
+        }
+      } catch (error) {
+        errorHandler(error);
+        setQuote("An error occurred while fetching the quote.");
+      }
+    }
+
+    fetchQuote();
+  }, []);
+
   if (user && isSignedIn) {
     let username = user.username ? user.username : "User";
     username = formatName(username);
@@ -31,10 +55,8 @@ function EntriesPage() {
         <div className='flex gap-4 px-[10rem]'>
           <div className='w-fit flex flex-col items-center gap-4'>
             <div className='flex flex-col items-center w-full bg-[#d7d7d7] text-black rounded-lg p-8 gap-2 shadow-md'>
-              <p className='text-3xl'>
-                “One of the keys to happiness is a bad memory.”
-              </p>
-              <p className='italic text-lg'>Rita Mae Brown</p>
+              <p className='text-3xl'>“{quote || "Loading quote..."}”</p>
+              <p className='italic text-lg'>{author || ""}</p>
             </div>
             <div className='w-full bg-[#d7d7d7] rounded-lg p-4 shadow-md'>
               <h2 className='text-black font-semibold text-lg'>

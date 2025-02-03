@@ -38,3 +38,9 @@ export type Time =
   | "night"
   | "all day"
   | "";
+
+export interface Quote {
+  q: string;
+  a: string;
+  h: string;
+}

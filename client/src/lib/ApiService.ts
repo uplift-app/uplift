@@ -1,5 +1,5 @@
 import { AnalysisData } from "@/contexts/interfaces";
-import { Mood, Activity, MoodFromBackend } from "./interfaces";
+import { Mood, Activity, MoodFromBackend, Quote } from "./interfaces";
 import Cookie from "js-cookie";
 //TODO: remove any types
 
@@ -94,6 +94,14 @@ export const postMood = async (moodData: Mood): Promise<any> => {
 export const getAnalysis = async (): Promise<AnalysisData> => {
   try {
     return await makeServerRequest("analysis");
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+export const getQuote = async (): Promise<Quote[]> => {
+  try {
+    return await makeServerRequest("quote");
   } catch (error) {
     return errorHandler(error);
   }
