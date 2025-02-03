@@ -141,7 +141,7 @@ const ChartViewer = () => {
             chartConfig={chartConfigData}
             chartData={dataFilteredAndSorted}
           />
-          {/* <AddToChart /> */}
+          <AddToChart />
         </div>
       </CardContent>
     </Card>

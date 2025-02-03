@@ -41,9 +41,9 @@ const ActivityInput = () => {
   const [customActivity, setCustomActivity] = useState("");
   // ! create a activity state and update formState with useEffect on activity and customActivity?
 
-  useEffect(() => {
-    fetchActivityTypes();
-  }, []);
+  // useEffect(() => {
+  //   fetchActivityTypes();
+  // }, []);
 
   useEffect(() => {
     if (activity === customActivityLabel) {
