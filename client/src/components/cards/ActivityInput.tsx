@@ -20,10 +20,8 @@ import { Button } from "@/components/ui/button";
 import { DatePicker } from "@/components/ui/datepicker";
 import { errorHandler, getActivityTypes, postActivity } from "@/lib/ApiService";
 import { Activity, Time } from "@/lib/interfaces";
-import { useAuth } from "@clerk/clerk-react";
 
 const ActivityInput = () => {
-  const { getToken } = useAuth();
   const customActivityLabel = "Add a custom activity";
   const initialFormState: Activity = {
     activityType: "",
@@ -77,8 +75,7 @@ const ActivityInput = () => {
 
   async function uploadActivity() {
     try {
-      const token = await getToken();
-      if (token) await postActivity(formState);
+      await postActivity(formState);
     } catch (error) {
       errorHandler(error);
     }
