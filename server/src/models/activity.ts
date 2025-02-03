@@ -6,7 +6,11 @@ const ActivitySchema: Schema = new Schema(
     duration: { type: Number, required: true },
     activityType: { type: String, required: true },
     userId: { type: String, required: true },
-    activityTime: { type: String, required: true },
+    activityTime: {
+      type: String,
+      enum: ["morning", "afternoon", "evening", "night", "all day"],
+      required: true,
+    },
     isHabit: { type: Boolean, required: true, default: false },
     date: { type: Date, required: true },
   },
