@@ -1,9 +1,23 @@
+import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ActivityInput from "../components/cards/ActivityInput";
 import { getActivityTypes, postActivity } from "@/lib/ApiService";
 import { beforeEach, describe, expect, it, vi, Mock } from "vitest";
 import { format } from "date-fns";
+
+// Mock Clerk hooks so that useAuth returns a fake token.
+// This prevents the "useAuth can only be used within the <ClerkProvider /> component" error.
+vi.mock("@clerk/clerk-react", () => {
+  return {
+    // Provide a dummy ClerkProvider that simply renders children.
+    ClerkProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+    // Mock useAuth to return an object with getToken.
+    useAuth: () => ({
+      getToken: async () => "fake-token",
+    }),
+  };
+});
 
 // Mock the API functions
 vi.mock("@/lib/ApiService", () => ({
@@ -26,6 +40,7 @@ describe("ActivityInput", () => {
     render(<ActivityInput />);
     expect(screen.getByText("Activity")).toBeInTheDocument();
     expect(screen.getByText("What did you do?")).toBeInTheDocument();
+    // Verify the current date is rendered in the proper format
     expect(screen.getByText(format(new Date(), "PPP"))).toBeInTheDocument();
     expect(screen.getByText(activitySelectLabel)).toBeInTheDocument();
     expect(screen.getByText("33 minutes.")).toBeInTheDocument();
@@ -46,10 +61,10 @@ describe("ActivityInput", () => {
 
     // Check if the activity types are rendered
     mockActivityTypes.forEach((activity) => {
-      const elements = screen.getAllByText(activity); // Use getAllByText to handle multiple elements
-      expect(elements.length).toBeGreaterThan(0); // Ensure at least one element exists
+      const elements = screen.getAllByText(activity);
+      expect(elements.length).toBeGreaterThan(0);
       elements.forEach((element) => {
-        expect(element).toBeInTheDocument(); // Verify each element is in the document
+        expect(element).toBeInTheDocument();
       });
     });
   });
@@ -63,8 +78,8 @@ describe("ActivityInput", () => {
     // Ensure initial value is correct
     expect(screen.getByText("33 minutes.")).toBeInTheDocument();
 
-    // **Manually trigger slider value change**
-    await userEvent.click(slider); // Focus on the slider
+    // Trigger slider change via keyboard
+    await userEvent.click(slider);
     await userEvent.keyboard(
       "{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}"
     );
@@ -105,12 +120,12 @@ describe("ActivityInput", () => {
     // Open the select dropdown
     fireEvent.click(screen.getByText(activitySelectLabel));
 
-    // Find and select "Add a Custom Activity"
+    // Find and select "Add a custom activity"
     const customActivityOptions = await screen.findAllByText(
       "Add a custom activity"
     );
     const customActivityOption =
-      customActivityOptions[customActivityOptions.length - 1]; // Select the last one
+      customActivityOptions[customActivityOptions.length - 1];
     expect(customActivityOption).toBeInTheDocument();
     fireEvent.click(customActivityOption);
 
@@ -137,17 +152,17 @@ describe("ActivityInput", () => {
     const allDayOption = await screen.findByText("All Day");
     fireEvent.click(allDayOption);
 
-    // Ensure the selection has updated
+    // Ensure the time selection has updated
     await waitFor(() => {
       expect(screen.getByText("All Day")).toBeInTheDocument();
     });
 
-    // Open the select dropdown and select "Running"
+    // Open the activity select dropdown and select "Running"
     fireEvent.click(screen.getByText(activitySelectLabel));
     const runningOption = await screen.findByText("Running");
     fireEvent.click(runningOption);
 
-    // Ensure the selection has updated
+    // Ensure the activity selection has updated
     await waitFor(() => {
       expect(screen.getByText("Running")).toBeInTheDocument();
     });
@@ -161,7 +176,7 @@ describe("ActivityInput", () => {
       "{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}"
     );
 
-    // Wait for the value to update
+    // Wait for the duration value to update
     await waitFor(() => {
       expect(screen.getByText("38 minutes.")).toBeInTheDocument();
     });
@@ -170,20 +185,23 @@ describe("ActivityInput", () => {
     const submitButton = screen.getByRole("button", { name: "Submit" });
     expect(submitButton).toBeEnabled();
 
-    // Mock scrollIntoView to prevent errors
+    // Prevent potential errors from scrollIntoView
     global.HTMLElement.prototype.scrollIntoView = vi.fn();
 
     // Click the submit button
     fireEvent.click(submitButton);
 
-    // Ensure postActivity is called with correct data
+    // Verify postActivity is called with the correct form state and the fake token.
     await waitFor(() => {
-      expect(postActivity).toHaveBeenCalledWith({
-        activityType: "Running",
-        duration: 38, // Updated from slider
-        activityTime: "all day",
-        date: expect.any(Date),
-      });
+      expect(postActivity).toHaveBeenCalledWith(
+        {
+          activityType: "Running",
+          duration: 38,
+          activityTime: "all day",
+          date: expect.any(Date),
+        },
+        "fake-token"
+      );
     });
   });
 
@@ -208,7 +226,7 @@ describe("ActivityInput", () => {
     (getActivityTypes as Mock).mockResolvedValue(mockActivityTypes);
     (postActivity as Mock).mockRejectedValue(mockError);
 
-    // Spy on console.error
+    // Spy on console.error to verify error logging
     const consoleErrorSpy = vi
       .spyOn(console, "error")
       .mockImplementation(() => {});
@@ -225,12 +243,12 @@ describe("ActivityInput", () => {
     const allDayOption = await screen.findByText("All Day");
     fireEvent.click(allDayOption);
 
-    // Ensure the selection has updated
+    // Ensure the time selection has updated
     await waitFor(() => {
       expect(screen.getByText("All Day")).toBeInTheDocument();
     });
 
-    // Open the select dropdown and wait for options to appear
+    // Open the activity select dropdown using the test id
     const selectTrigger = screen.getByTestId("select-trigger");
     await userEvent.click(selectTrigger);
 
@@ -257,3 +275,4 @@ describe("ActivityInput", () => {
     consoleErrorSpy.mockRestore();
   });
 });
+
