@@ -40,7 +40,6 @@ describe("ActivityInput", () => {
     render(<ActivityInput />);
     expect(screen.getByText("Activity")).toBeInTheDocument();
     expect(screen.getByText("What did you do?")).toBeInTheDocument();
-    // Verify the current date is rendered in the proper format
     expect(screen.getByText(format(new Date(), "PPP"))).toBeInTheDocument();
     expect(screen.getByText(activitySelectLabel)).toBeInTheDocument();
     expect(screen.getByText("33 minutes.")).toBeInTheDocument();
