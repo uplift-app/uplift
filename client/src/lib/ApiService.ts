@@ -26,6 +26,7 @@ export async function makeServerRequest<T>(
       headers: headers,
     };
     const response = await fetch(`${BASE_URL}/${endpoint}`, updatedOptions);
+    console.log("Server response:", response);
     if (!response.ok) {
       throw new Error("Error fetching data");
     }
@@ -41,6 +42,36 @@ export const getMoods = async (): Promise<MoodFromBackend[]> => {
     return await makeServerRequest("mood");
   } catch (error) {
     return errorHandler(error);
+  }
+};
+
+export const getRecentMoods = async (): Promise<MoodFromBackend[]> => {
+  try {
+    const moods = await getMoods();
+    const sortedMoods = moods.sort((a, b) => {
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+      return dateB - dateA;
+    });
+
+    const recentMoods = sortedMoods.slice(0, 10);
+
+    return recentMoods;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+export const deleteMood = async (id: string) => {
+  try {
+    const options = {
+      method: "DELETE",
+    };
+    const response = await makeServerRequest(`mood/${id}`, options);
+    console.log("Delete response from server:", response);
+    return response;
+  } catch (error) {
+    errorHandler(error);
   }
 };
 
