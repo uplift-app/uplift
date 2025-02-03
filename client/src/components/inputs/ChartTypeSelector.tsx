@@ -8,24 +8,30 @@ import {
 import AreaChartPlaceholder from "./AreaChartPlaceholder";
 import BarChartPlaceholder from "./BarChartPlaceholder";
 import LineChartPlaceholder from "./LineChartPlaceholder";
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { cn } from "@/lib/utils";
-
-const ChartTypeSelector = () => {
-  const [chosenChart, setChosenChart] = useState("");
+import { ChartTypes } from "@/lib/interfaces";
+interface ChartTypeSelectorProps {
+  chosenChart: ChartTypes;
+  setChosenChart: Dispatch<SetStateAction<ChartTypes>>;
+}
+const ChartTypeSelector = ({
+  chosenChart,
+  setChosenChart,
+}: ChartTypeSelectorProps) => {
   const chartTypes = [
     {
-      title: "Area Chart",
+      title: "Area" as ChartTypes,
       description: "Showing hours of reading and stretching",
       component: <AreaChartPlaceholder />,
     },
     {
-      title: "Bar Chart",
+      title: "Bar" as ChartTypes,
       description: "Showing time exercising and gaming",
       component: <BarChartPlaceholder />,
     },
     {
-      title: "Line Chart",
+      title: "Line" as ChartTypes,
       description: "Showing meditation and playing guitar",
       component: <LineChartPlaceholder />,
     },
@@ -42,7 +48,7 @@ const ChartTypeSelector = () => {
           onClick={() => setChosenChart(chartType.title)}
         >
           <CardHeader>
-            <CardTitle>{chartType.title}</CardTitle>
+            <CardTitle>{chartType.title + " Chart"}</CardTitle>
             <CardDescription>{chartType.description}</CardDescription>
           </CardHeader>
           <CardContent>{chartType.component}</CardContent>

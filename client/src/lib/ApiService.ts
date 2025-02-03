@@ -117,3 +117,14 @@ export const getAnalysis = async (
     throw new Error(errorMessage);
   }
 };
+
+
+export const getActivities = async (token: string | undefined): Promise<any> => {
+  try {
+    return await makeServerRequest("activity", token);
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error occurred";
+    throw new Error(errorMessage);
+  }
+}

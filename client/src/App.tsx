@@ -11,7 +11,6 @@ import { useAnalysisDataContext } from "./contexts/AnalysisDataContext";
 import DataInsights from "./components/DataInsights";
 import PositiveEffects from "./components/PositiveEffects";
 
-
 function App() {
   const { getToken } = useAuth();
   const { setAnalysisData } = useAnalysisDataContext();
