@@ -1,5 +1,11 @@
 import { AnalysisData } from "@/contexts/interfaces";
-import { Mood, Activity, MoodFromBackend, Quote } from "./interfaces";
+import {
+  Mood,
+  Activity,
+  MoodFromBackend,
+  Quote,
+  ActivityFromBackend,
+} from "./interfaces";
 import Cookie from "js-cookie";
 //TODO: remove any types
 
@@ -26,7 +32,6 @@ export async function makeServerRequest<T>(
       headers: headers,
     };
     const response = await fetch(`${BASE_URL}/${endpoint}`, updatedOptions);
-    console.log("Server response:", response);
     if (!response.ok) {
       throw new Error("Error fetching data");
     }
@@ -36,7 +41,6 @@ export async function makeServerRequest<T>(
   }
 }
 
-// Get all moods
 export const getMoods = async (): Promise<MoodFromBackend[]> => {
   try {
     return await makeServerRequest("mood");
@@ -62,49 +66,6 @@ export const getRecentMoods = async (): Promise<MoodFromBackend[]> => {
   }
 };
 
-export const deleteMood = async (id: string) => {
-  try {
-    const options = {
-      method: "DELETE",
-    };
-    const response = await makeServerRequest(`mood/${id}`, options);
-    console.log("Delete response from server:", response);
-    return response;
-  } catch (error) {
-    errorHandler(error);
-  }
-};
-
-// Get all activities
-
-export const getActivityTypes = async (): Promise<any> => {
-  try {
-    return await makeServerRequest("activity/types");
-  } catch (error) {
-    return errorHandler(error);
-  }
-};
-
-// Post a new activity
-// Post an activity -> activity type, activity duration, activity time
-
-export const postActivity = async (activity: Activity): Promise<any> => {
-  try {
-    const options = {
-      method: "POST",
-      body: JSON.stringify(activity),
-      headers: { "content-type": "application/json" },
-    };
-    return await makeServerRequest("activity", options);
-  } catch (error) {
-    return errorHandler(error);
-  }
-};
-
-// -> Returns the updated list of activities
-
-// Post a new mood
-
 export const postMood = async (moodData: Mood): Promise<any> => {
   try {
     const options = {
@@ -119,8 +80,75 @@ export const postMood = async (moodData: Mood): Promise<any> => {
     return errorHandler(error);
   }
 };
-// Post a mood -> Mood type, mood intensity, mood time
-// -> Returns the updated list of moods
+
+export const deleteMood = async (id: string) => {
+  try {
+    const options = {
+      method: "DELETE",
+    };
+    const response = await makeServerRequest(`mood/${id}`, options);
+    return response;
+  } catch (error) {
+    errorHandler(error);
+  }
+};
+
+export const getActivities = async (): Promise<ActivityFromBackend[]> => {
+  try {
+    return await makeServerRequest("activity");
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+export const getRecentActivities = async (): Promise<ActivityFromBackend[]> => {
+  try {
+    const activities = await getActivities();
+    const sortedActivities = activities.sort((a, b) => {
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+      return dateB - dateA;
+    });
+
+    const recentActivities = sortedActivities.slice(0, 10);
+    return recentActivities;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+export const getActivityTypes = async (): Promise<any> => {
+  try {
+    return await makeServerRequest("activity/types");
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+export const postActivity = async (activity: Activity): Promise<any> => {
+  try {
+    const options = {
+      method: "POST",
+      body: JSON.stringify(activity),
+      headers: { "content-type": "application/json" },
+    };
+    return await makeServerRequest("activity", options);
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+export const deleteActivity = async (id: string) => {
+  try {
+    const options = {
+      method: "DELETE",
+    };
+    const response = await makeServerRequest(`activity/${id}`, options);
+    return response;
+  } catch (error) {
+    errorHandler(error);
+  }
+};
 
 export const getAnalysis = async (): Promise<AnalysisData> => {
   try {
