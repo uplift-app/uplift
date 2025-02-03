@@ -71,7 +71,7 @@ const MoodInput = () => {
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error occurred";
-      throw new Error(errorMessage);
+      console.error("Failed to post mood:", errorMessage)
     }
     setFormState(initialFormState);
   }
