@@ -2,6 +2,7 @@ import { RedirectToSignIn, useUser } from "@clerk/clerk-react";
 import ActivityInput from "../cards/ActivityInput";
 import MoodInput from "../cards/MoodInput";
 import ChartViewer from "../cards/ChartViewer";
+import YearOfPixels from "../YearOfPixels";
 
 function DashBoard() {
   const { user, isSignedIn } = useUser();
@@ -15,6 +16,7 @@ function DashBoard() {
           <ActivityInput />
           <MoodInput />
           <ChartViewer />
+          <YearOfPixels />
         </div>
       </>
     );
