@@ -1,11 +1,12 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import MoodInput from "../cards/MoodInput";
-import ActivityInput from "../cards/ActivityInput";
 import {
   ActivityFromBackend,
   MoodFromBackend,
   RecentEntryItemProps,
 } from "@/lib/interfaces";
+import EditMood from "../cards/EditMood";
+import EditActivity from "../cards/EditActivity";
+import { useState } from "react";
 
 export function RecentEntryItem({
   entry,
@@ -13,13 +14,25 @@ export function RecentEntryItem({
   handleEdit,
   handleDelete,
 }: RecentEntryItemProps) {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   const moodEmojis: Record<string, string> = {
-    happiness: "icons/faces/laugh-beam.svg", // Replace with appropriate svg file
-    stress: "icons/faces/laugh-beam.svg", // Replace with appropriate svg file
-    energy: "icons/faces/laugh-beam.svg", // Replace with appropriate svg file
+    0: "icons/faces/dizzy.svg",
+    1: "icons/faces/dizzy.svg",
+    2: "icons/faces/frown.svg",
+    3: "icons/faces/frown.svg",
+    4: "icons/faces/meh.svg",
+    5: "icons/faces/meh.svg",
+    6: "icons/faces/smile.svg",
+    7: "icons/faces/smile.svg",
+    8: "icons/faces/laugh-beam.svg",
+    9: "icons/faces/laugh-beam.svg",
+    10: "icons/faces/laugh-beam.svg",
   };
-  const activityEmoji = "icons/faces/laugh-beam.svg"; //Replace with appropriate svg file
-  const formatDate = (date: string) => {
+
+  const activityEmoji = "icons/running-man.svg";
+
+  const formatDate = (date: Date) => {
     const formattedDate = new Date(date);
     const options: Intl.DateTimeFormatOptions = {
       month: "long",
@@ -28,17 +41,17 @@ export function RecentEntryItem({
     };
     return formattedDate.toLocaleDateString(undefined, options);
   };
-
   const formattedDate = formatDate(entry.date);
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+  };
 
   return (
     <div className='flex items-center gap-6 w-full p-4'>
       <div className='w-12'>
         {type === "mood" && (
-          <img
-            src={moodEmojis[(entry as MoodFromBackend).moodType]}
-            alt={(entry as MoodFromBackend).moodType}
-          />
+          <img src={moodEmojis[(entry as MoodFromBackend).intensity]} />
         )}
         {type === "activity" && <img src={activityEmoji} alt='Activity' />}
       </div>
@@ -74,20 +87,34 @@ export function RecentEntryItem({
         )}
       </div>
       <div className='ml-auto flex gap-4 mb-auto'>
-        <Dialog.Root>
-          <Dialog.Trigger
-            className='text-2xl cursor-pointer'
-            // onClick={() => handleEdit(entry._id)}
-          >
-            <img src='icons/edit.svg' alt='' className='w-6 cursor-pointer' />
+        <Dialog.Root open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <Dialog.Trigger className='text-2xl cursor-pointer'>
+            <img
+              src='icons/edit.svg'
+              alt=''
+              className='w-6 cursor-pointer'
+              onClick={() => setIsDialogOpen(true)}
+            />
           </Dialog.Trigger>
           <Dialog.Portal>
             <Dialog.Overlay className='fixed inset-0 bg-black opacity-30' />
             <Dialog.Content className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 p-8 bg-white rounded-lg shadow-lg'>
               <Dialog.Title></Dialog.Title>
               <Dialog.Description></Dialog.Description>
-              {type === "mood" && <MoodInput />}
-              {type === "activity" && <ActivityInput />}
+              {type === "mood" && (
+                <EditMood
+                  entry={entry as MoodFromBackend}
+                  handleClose={handleCloseDialog}
+                  handleEdit={handleEdit}
+                />
+              )}
+              {type === "activity" && (
+                <EditActivity
+                  entry={entry as ActivityFromBackend}
+                  handleClose={handleCloseDialog}
+                  handleEdit={handleEdit}
+                />
+              )}
               <Dialog.Close className='mt-4 bg-gray-500 text-white p-2 rounded'>
                 Close
               </Dialog.Close>

@@ -14,11 +14,11 @@ export interface Activity {
 
 export type MoodFromBackend = {
   _id: string;
-  moodType: "happiness" | "stress" | "energy";
+  moodType: string;
   intensity: number;
   userId: string;
   moodTime: Time;
-  date: string;
+  date: Date;
   __v: number;
   createdAt: string;
   updatedAt: string;
@@ -31,7 +31,7 @@ export type ActivityFromBackend = {
   userId: string;
   activityTime: Time;
   isHabit: boolean;
-  date: string;
+  date: Date;
   __v: number;
   createdAt: string;
   updatedAt: string;
@@ -54,6 +54,6 @@ export interface Quote {
 interface RecentEntryItemProps {
   entry: MoodFromBackend | ActivityFromBackend;
   type: "mood" | "activity";
-  handleEdit: (id: string) => void;
+  handleEdit: (updatedEntry: ActivityFromBackend | MoodFromBackend) => void;
   handleDelete: (id: string) => void;
 }
