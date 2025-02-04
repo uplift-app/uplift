@@ -5,17 +5,11 @@ import {
   deleteMood,
   deleteActivity,
   errorHandler,
-  editMood,
-  editActivity,
 } from "@/lib/ApiService";
 import { ActivityFromBackend, MoodFromBackend } from "@/lib/interfaces";
 import { RecentEntryItem } from "../inputs/RecentEntryItem";
 
 export function RecentEntries() {
-  const [recentMoods, setRecentMoods] = useState<MoodFromBackend[]>([]);
-  const [recentActivities, setRecentActivities] = useState<
-    ActivityFromBackend[]
-  >([]);
   const [combinedEntries, setCombinedEntries] = useState<
     (MoodFromBackend | ActivityFromBackend)[]
   >([]);
@@ -35,8 +29,6 @@ export function RecentEntries() {
 
       const limitedEntries = sortedEntries.slice(0, 10);
 
-      setRecentMoods(moods);
-      setRecentActivities(activities);
       setCombinedEntries(limitedEntries);
     } catch (error) {
       errorHandler(error);
@@ -73,22 +65,12 @@ export function RecentEntries() {
     }
   };
 
-  const handleEditMood = async (moodData: MoodFromBackend) => {
-    try {
-      const response = await editMood(moodData);
-      return response;
-    } catch (error) {
-      errorHandler(error);
-    }
-  };
-
-  const handleEditActivity = async (activityData: ActivityFromBackend) => {
-    try {
-      const response = await editActivity(activityData);
-      return response;
-    } catch (error) {
-      errorHandler(error);
-    }
+  const handleEdit = (updatedEntry: ActivityFromBackend | MoodFromBackend) => {
+    setCombinedEntries((prevEntries) =>
+      prevEntries.map((entry) =>
+        entry._id === updatedEntry._id ? updatedEntry : entry
+      )
+    );
   };
 
   return (
@@ -101,11 +83,7 @@ export function RecentEntries() {
               key={entry._id}
               entry={entry}
               type={entry.hasOwnProperty("moodType") ? "mood" : "activity"}
-              handleEdit={
-                entry.hasOwnProperty("moodType")
-                  ? handleEditMood
-                  : handleEditActivity
-              }
+              handleEdit={handleEdit}
               handleDelete={
                 entry.hasOwnProperty("moodType")
                   ? handleDeleteMood
