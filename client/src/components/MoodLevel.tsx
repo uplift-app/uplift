@@ -25,7 +25,11 @@ const MoodLevels = () => {
     });
   };
 
-  return <div className="flex gap-4">{formatMoodInsights()}</div>;
+  return (
+    <div className="flex flex-col sm:flex-row flex-wrap gap-4">
+      {formatMoodInsights()}
+    </div>
+  );
 };
 
 export default MoodLevels;
