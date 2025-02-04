@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const Activity = require("../dist/models/activity.js").default;
 const Mood = require("../dist/models/mood.js").default;
 const User = require("../dist/models/user.js").default;
-const activityData = require("../mocks/activity.js"); 
+const activityData = require("../mocks/activity.js");
 const moodData = require("../mocks/mood.js");
 const userData = require("../mocks/user.js");
 const dotenv = require("dotenv");
@@ -35,8 +35,6 @@ const fillDatabase = async () => {
 };
 
 (async () => {
-  
-  
   await mongoose.connect(
     `${process.env.DATABASE_URL}/${process.env.DATABASE_NAME}`
   );

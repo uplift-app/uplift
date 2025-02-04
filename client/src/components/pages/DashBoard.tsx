@@ -3,6 +3,7 @@ import ChartViewer from "../cards/ChartViewer";
 import { formatName } from "@/lib/utils";
 import PositiveEffects from "../cards/PositiveEffects";
 import MoodLevels from "../cards/MoodLevel";
+import YearOfPixels from "../YearOfPixels";
 
 function DashBoard() {
   const { user, isSignedIn } = useUser();
@@ -17,8 +18,11 @@ function DashBoard() {
             <h2 className='heading-style pb-2'>Average Mood Level</h2>
             <MoodLevels />
           </div>
-          <ChartViewer />
           <PositiveEffects />
+          <YearOfPixels />
+          <div className="rounded-lg xl:col-span-2">
+          <ChartViewer />
+          </div>
         </div>
       </>
     );
