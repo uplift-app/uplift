@@ -8,9 +8,6 @@ import Navbar from "./components/NavBar";
 import { SignedOut, useAuth } from "@clerk/clerk-react";
 import { getAnalysis } from "./lib/ApiService";
 import { useAnalysisDataContext } from "./contexts/AnalysisDataContext";
-import DataInsights from "./components/DataInsights";
-import PositiveEffects from "./components/PositiveEffects";
-
 
 function App() {
   const { getToken } = useAuth();
@@ -30,7 +27,7 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 text-white">
+      <main className="min-h-[calc(100vh-4rem)] bg-gradient-to-br from-[#DEF3FF] to-[#fef9c3] text-fontColor py-4 px-[4%] md:px-[12%] font-nunito">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route
@@ -44,7 +41,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/entries" element={<EntriesPage />} />
         </Routes>
-      </div>
+      </main>
     </Router>
   );
 }

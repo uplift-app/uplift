@@ -11,7 +11,6 @@ import { Checkbox } from "../ui/checkbox";
 import { cn } from "@/lib/utils";
 import { InteractiveChart } from "../inputs/InteractiveChart";
 import { ChartConfig } from "../ui/chart";
-import AddToChart from "../inputs/AddToChart";
 import { transformChartData } from "@/lib/chartview-functions";
 import TimeFrameSelector from "../inputs/TimeFrameSelector";
 import { getMoods } from "@/lib/ApiService";
@@ -91,15 +90,17 @@ const ChartViewer = () => {
   };
 
   return (
-    <Card className="bg-[#d7d7d7]">
+    <Card className="component-style !p-0">
       <CardHeader>
-        <CardTitle>Visualise your progress</CardTitle>
+        <CardTitle className="heading-style">
+          Visualise your progress.
+        </CardTitle>
         <CardDescription>Plot your moods and activities</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex flex-col space-y-4">
           <div className=" gap-2">
-            <div className="flex gap-2 overflow-scroll justify-center p-2">
+            <div className="flex gap-2 overflow-scroll justify-center pb-2 flex-wrap">
               {Object.entries(chartConfig).map(
                 ([chartLabel, chartValue], idx) => (
                   <div
