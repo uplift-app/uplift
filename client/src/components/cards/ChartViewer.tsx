@@ -45,9 +45,7 @@ const ChartViewer = () => {
   return (
     <Card className="component-style !p-0">
       <CardHeader>
-        <CardTitle className="heading-style">
-          Visualise your progress.
-        </CardTitle>
+        <CardTitle className="heading-style">Visualise your progress</CardTitle>
         <CardDescription>Plot your moods and activities</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

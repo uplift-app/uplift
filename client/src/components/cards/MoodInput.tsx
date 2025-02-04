@@ -27,8 +27,19 @@ import {
 import { Mood, Time } from "@/lib/interfaces";
 import { errorHandler, postMood } from "@/lib/ApiService";
 
-//TODO: add tooltip for times
+import Smiley0 from "../smileys/Smiley0";
+import Smiley1 from "../smileys/Smiley1";
+import Smiley2 from "../smileys/Smiley2";
+import Smiley3 from "../smileys/Smiley3";
+import Smiley4 from "../smileys/Smiley4";
 
+const smileyArray = [
+  <Smiley0 />,
+  <Smiley1 />,
+  <Smiley2 />,
+  <Smiley3 />,
+  <Smiley4 />,
+];
 const MoodInput = () => {
   const initialFormState: Mood = {
     moodType: "",
@@ -37,30 +48,6 @@ const MoodInput = () => {
     date: new Date(),
   };
   const [formState, setFormState] = useState<Mood>(initialFormState);
-
-  function moodLevelAsEmoji(moodLevel: number): string {
-    if (moodLevel < 2) {
-      return String.fromCodePoint(0x1f62d);
-    } else if (moodLevel === 2) {
-      return String.fromCodePoint(0x1f62b);
-    } else if (moodLevel === 3) {
-      return String.fromCodePoint(0x1f62a);
-    } else if (moodLevel === 4) {
-      return String.fromCodePoint(0x1f61f);
-    } else if (moodLevel === 5) {
-      return String.fromCodePoint(0x1f610);
-    } else if (moodLevel === 6) {
-      return String.fromCodePoint(0x1f60a);
-    } else if (moodLevel === 7) {
-      return String.fromCodePoint(0x1f61d);
-    } else if (moodLevel === 8) {
-      return String.fromCodePoint(0x1f606);
-    } else if (moodLevel === 9) {
-      return String.fromCodePoint(0x1f600);
-    } else {
-      return String.fromCodePoint(0x1f601);
-    }
-  }
 
   async function uploadMood() {
     try {
@@ -71,14 +58,7 @@ const MoodInput = () => {
     setFormState(initialFormState);
   }
 
-  const timeValues = [
-    "morning",
-    "afternoon",
-    "evening",
-    "night",
-    "all day",
-    "",
-  ];
+  const timeValues = ["morning", "afternoon", "evening", "night", "all day"];
 
   function handleChange(newValue: any) {
     if (newValue instanceof Date) {
@@ -94,84 +74,78 @@ const MoodInput = () => {
       setFormState((prevState) => ({ ...prevState, moodType: newValue }));
     }
   }
-
+  const moodTypeArray = [
+    { value: "happiness", tooltip: "0 = Sad, 10 = happy" },
+    { value: "stress", tooltip: "0 = Stressed, 10 = Relaxed" },
+    { value: "energy", tooltip: "0 = Lazy, 10 = Energetic" },
+  ];
   return (
-    <Card className='flex-grow m-1'>
+    <Card className="flex-grow m-1 ">
       <CardHeader>
         <CardTitle>Mood</CardTitle>
         <CardDescription>How are you feeling?</CardDescription>
       </CardHeader>
 
-      <CardContent className='space-y-4'>
+      <CardContent className="flex flex-col space-y-4 flex-grow ">
         <DatePicker
           date={formState.date}
           setDate={handleChange}
-          data-testid='datepicker'
+          data-testid="datepicker"
         />
         <Select onValueChange={handleChange} value={formState.moodTime}>
           <SelectTrigger>
-            <SelectValue placeholder='Select a time' />
+            <SelectValue placeholder="Select a time" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value='morning'>Morning</SelectItem>
-              <SelectItem value='afternoon'>Afternoon</SelectItem>
-              <SelectItem value='evening'>Evening</SelectItem>
-              <SelectItem value='night'>Night</SelectItem>
-              <SelectItem value='all day'>All Day</SelectItem>
+              {timeValues.map((timeValue) => (
+                <SelectItem value={timeValue}>
+                  {timeValue[0].toUpperCase() + timeValue.slice(1)}
+                </SelectItem>
+              ))}
             </SelectGroup>
           </SelectContent>
         </Select>
         <Select onValueChange={handleChange} value={formState.moodType}>
           <SelectTrigger>
-            <SelectValue placeholder='Select a mood' />
+            <SelectValue placeholder="Select a mood" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value='happiness'>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger>Happiness</TooltipTrigger>
-                    <TooltipContent>
-                      <p>0 = Sad, 10 = happy</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </SelectItem>
-              <SelectItem value='stress'>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger>Stress</TooltipTrigger>
-                    <TooltipContent>
-                      <p>0 = Stressed, 10 = Relaxed</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </SelectItem>
-              <SelectItem value='energy'>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger>Energy</TooltipTrigger>
-                    <TooltipContent>
-                      <p>0 = Lazy, 10 = Energetic</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </SelectItem>
+              {moodTypeArray.map((moodType) => (
+                <SelectItem value={moodType.value}>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        {moodType.value[0].toUpperCase() +
+                          moodType.value.slice(1)}
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>{moodType.tooltip}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </SelectItem>
+              ))}
             </SelectGroup>
           </SelectContent>
         </Select>
-        <div className='flex'>
-          <Slider
-            defaultValue={[5]}
-            max={10}
-            step={1}
-            onValueChange={handleChange}
-            value={[formState.intensity]}
-          />
-          <h1>{moodLevelAsEmoji(formState.intensity)}</h1>
+        <h1 className="font-semibold pb-0">Intensity</h1>
+        <Slider
+          defaultValue={[5]}
+          min={0}
+          max={10}
+          step={1}
+          onValueChange={handleChange}
+          value={[formState.intensity]}
+        />
+        <div className="flex w-full justify-center">
+          <div className="w-6 h-6">
+            {smileyArray[Math.min(Math.floor(formState.intensity / 2), 4)]}
+          </div>
         </div>
         <Button
+          className="w-full mt-auto justify-self-end"
           onClick={uploadMood}
           disabled={!formState.moodTime || !formState.moodType}
         >
