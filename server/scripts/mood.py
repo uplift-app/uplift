@@ -18,7 +18,7 @@ mood_times = ["morning", "afternoon", "evening", "night", "all day"]
 
 # Generate data for User 1 (last three months)
 end_date_user1 = datetime.today()
-start_date_user1 = end_date_user1 - timedelta(days=365)
+start_date_user1 = end_date_user1 - timedelta(days=90)
 dates_user1 = list(generate_dates(start_date_user1, end_date_user1))
 
 user1_data = [

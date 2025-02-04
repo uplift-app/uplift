@@ -31,8 +31,8 @@ def generate_activity_data(user_id, start_date, end_date, num_records):
 
 # Generate data for user 1 for the last 3 months
 end_date = datetime.now()
-start_date_user_1 = end_date - timedelta(days=365)  # Last 3 months
-user_1_data = generate_activity_data(1, start_date_user_1, end_date, 750)
+start_date_user_1 = end_date - timedelta(days=90)  # Last 3 months
+user_1_data = generate_activity_data(1, start_date_user_1, end_date, 210)
 
 # Generate data for user 2 for the last month
 start_date_user_2 = end_date - timedelta(days=30)  # Last month
