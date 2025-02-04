@@ -24,6 +24,19 @@ export type MoodFromBackend = {
   updatedAt: string;
 };
 
+export type ActivityFromBackend = {
+  activityTime: string;
+  activityType: string;
+  createdAt: string;
+  date: string;
+  duration: number;
+  isHabit: boolean;
+  updatedAt: string;
+  userId: string;
+  __v: number;
+  _id: string;
+}
+
 export type MoodSortedByDate = {
   date: string;
   happiness?: number;

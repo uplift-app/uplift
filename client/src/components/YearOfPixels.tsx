@@ -111,7 +111,7 @@ const YearOfPixels = () => {
   return (
     <Card className="component-style">
       <CardHeader>
-        <CardTitle className="heading-style pb-2">
+        <CardTitle className="heading-style">
           Your year in pixels:
         </CardTitle>
         <CardDescription>
