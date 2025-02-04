@@ -4,7 +4,7 @@ export interface Mood {
   moodTime: Time;
   date: Date;
 }
-export type MoodTypes = "happiness" | "energy" | "stress";
+export type MoodTypes = "" | "happiness" | "energy" | "stress";
 export interface Activity {
   duration: number;
   activityType: string;
@@ -14,7 +14,7 @@ export interface Activity {
 
 export type MoodFromBackend = {
   _id: string;
-  moodType: MoodTypes; 
+  moodType: MoodTypes;
   intensity: number;
   userId: string;
   moodTime: Time;
@@ -24,8 +24,6 @@ export type MoodFromBackend = {
   updatedAt: string;
 };
 
-
-
 export type Time =
   | "morning"
   | "afternoon"
@@ -34,8 +32,7 @@ export type Time =
   | "all day"
   | "";
 
-
-export type ChartTypes = "Area" | "Bar" | "Line"
+export type ChartTypes = "Area" | "Bar" | "Line";
 export interface CustomChart {
   type: ChartTypes;
   data: string[];
@@ -44,12 +41,12 @@ export interface CustomChart {
 export type ActivityFromBackend = {
   __v: number;
   _id: string;
-  activityTime: string; 
+  activityTime: string;
   activityType: string;
   createdAt: string;
   date: string;
   duration: number;
-  isHabit: boolean;  
+  isHabit: boolean;
   updatedAt: string;
   userId: string;
 };
@@ -61,12 +58,10 @@ export type MoodSortedByDate = {
   stress?: number;
 };
 
-
 export type ActivitySortedByDate = {
   date: string;
   [key: string]: number | string;
 };
-
 
 export interface Quote {
   q: string;

@@ -24,7 +24,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Mood, Time } from "@/lib/interfaces";
+import { Mood, MoodTypes, Time } from "@/lib/interfaces";
 import { errorHandler, postMood } from "@/lib/ApiService";
 
 const MoodInput = () => {
@@ -78,6 +78,8 @@ const MoodInput = () => {
     "",
   ];
 
+  const moodValues = ["", "happiness", "energy", "stress"];
+
   function handleChange(newValue: any) {
     if (newValue instanceof Date) {
       setFormState((prevState) => ({ ...prevState, date: newValue }));
@@ -88,45 +90,48 @@ const MoodInput = () => {
       }));
     } else if (Array.isArray(newValue)) {
       setFormState((prevState) => ({ ...prevState, intensity: newValue[0] }));
-    } else if (typeof newValue === "string") {
-      setFormState((prevState) => ({ ...prevState, moodType: newValue }));
+    } else if (typeof newValue === "string" && moodValues.includes(newValue)) {
+      setFormState((prevState) => ({
+        ...prevState,
+        moodType: newValue as MoodTypes,
+      }));
     }
   }
 
   return (
-    <Card className='flex-grow m-1'>
+    <Card className="flex-grow m-1">
       <CardHeader>
         <CardTitle>Mood</CardTitle>
         <CardDescription>How are you feeling?</CardDescription>
       </CardHeader>
 
-      <CardContent className='space-y-4'>
+      <CardContent className="space-y-4">
         <DatePicker
           date={formState.date}
           setDate={handleChange}
-          data-testid='datepicker'
+          data-testid="datepicker"
         />
         <Select onValueChange={handleChange} value={formState.moodTime}>
           <SelectTrigger>
-            <SelectValue placeholder='Select a time' />
+            <SelectValue placeholder="Select a time" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value='morning'>Morning</SelectItem>
-              <SelectItem value='afternoon'>Afternoon</SelectItem>
-              <SelectItem value='evening'>Evening</SelectItem>
-              <SelectItem value='night'>Night</SelectItem>
-              <SelectItem value='all day'>All Day</SelectItem>
+              <SelectItem value="morning">Morning</SelectItem>
+              <SelectItem value="afternoon">Afternoon</SelectItem>
+              <SelectItem value="evening">Evening</SelectItem>
+              <SelectItem value="night">Night</SelectItem>
+              <SelectItem value="all day">All Day</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
         <Select onValueChange={handleChange} value={formState.moodType}>
           <SelectTrigger>
-            <SelectValue placeholder='Select a mood' />
+            <SelectValue placeholder="Select a mood" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value='happiness'>
+              <SelectItem value="happiness">
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>Happiness</TooltipTrigger>
@@ -136,7 +141,7 @@ const MoodInput = () => {
                   </Tooltip>
                 </TooltipProvider>
               </SelectItem>
-              <SelectItem value='stress'>
+              <SelectItem value="stress">
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>Stress</TooltipTrigger>
@@ -146,7 +151,7 @@ const MoodInput = () => {
                   </Tooltip>
                 </TooltipProvider>
               </SelectItem>
-              <SelectItem value='energy'>
+              <SelectItem value="energy">
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>Energy</TooltipTrigger>
@@ -159,7 +164,7 @@ const MoodInput = () => {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <div className='flex'>
+        <div className="flex">
           <Slider
             defaultValue={[5]}
             max={10}
