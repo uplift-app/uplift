@@ -24,17 +24,22 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Mood, MoodTypes, Time } from "@/lib/interfaces";
+import { Mood, MoodInputProps, MoodTypes, Time } from "@/lib/interfaces";
 import { errorHandler, postMood } from "@/lib/ApiService";
 
-const MoodInput = () => {
-  const initialFormState: Mood = {
-    moodType: "",
-    intensity: 5,
-    moodTime: "",
-    date: new Date(),
-  };
-  const [formState, setFormState] = useState<Mood>(initialFormState);
+const initialFormState: Mood = {
+  moodType: "",
+  intensity: 5,
+  moodTime: "",
+  date: new Date(),
+};
+
+const MoodInput = ({
+  mood = initialFormState,
+  edit = false,
+  clickHandler,
+}: MoodInputProps) => {
+  const [formState, setFormState] = useState<Mood>(mood);
 
   function moodLevelAsEmoji(moodLevel: number): string {
     if (moodLevel < 2) {
@@ -175,10 +180,10 @@ const MoodInput = () => {
           <h1>{moodLevelAsEmoji(formState.intensity)}</h1>
         </div>
         <Button
-          onClick={uploadMood}
+          onClick={edit ? () => clickHandler(formState) : uploadMood}
           disabled={!formState.moodTime || !formState.moodType}
         >
-          Submit
+          {edit ? "Edit" : "Submit"}
         </Button>
       </CardContent>
     </Card>

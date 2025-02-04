@@ -72,6 +72,12 @@ export interface Quote {
 export interface RecentEntryItemProps {
   entry: MoodFromBackend | ActivityFromBackend;
   type: "mood" | "activity";
-  handleEdit: (id: string) => void;
+  handleEdit: (data: MoodFromBackend | ActivityFromBackend) => void;
   handleDelete: (id: string) => void;
+}
+
+export interface MoodInputProps {
+  mood: Mood;
+  edit: boolean;
+  clickHandler: (mood: Mood) => void;
 }
