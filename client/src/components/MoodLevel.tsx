@@ -4,12 +4,12 @@ import { RadialChart } from "./RadialChart";
 const MoodLevels = () => {
   const { analysisData } = useAnalysisDataContext();
 
-  if (!analysisData || Object.keys(analysisData).length === 0) {
-    return (
-      <div>
-        No data available yet. Track activities and moods to gain insights.
-      </div>
-    );
+  if (
+    !analysisData ||
+    Object.keys(analysisData).length === 0 ||
+    analysisData.avgMood.length === 0
+  ) {
+    return <p>No data available yet. Track moods to gain insights.</p>;
   }
 
   const formatMoodInsights = () => {
