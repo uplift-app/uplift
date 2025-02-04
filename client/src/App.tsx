@@ -27,7 +27,7 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <main className='min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 text-white'>
+      <main className='min-h-[calc(100vh-4rem)] bg-gradient-to-br from-[#DEF3FF] to-[#fef9c3] text-fontColor py-4 px-[4%] md:px-[12%] font-nunito'>
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route

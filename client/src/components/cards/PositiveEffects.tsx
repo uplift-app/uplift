@@ -66,8 +66,8 @@ const PositiveEffects = () => {
     return filteredEffects.map((effect) => {
       const formattedMood = moodMapping[effect.moodType];
       return (
-        <CarouselItem className='basis-1/2'>
-          <Card>
+        <CarouselItem className='basis-full sm:basis-1/2'>
+          <Card className='w-full'>
             <CardHeader>
               <CardTitle>
                 {formattedMood}{" "}
@@ -110,15 +110,15 @@ const PositiveEffects = () => {
   };
 
   return (
-    <Card className='w-[600px] bg-[#d7d7d7]'>
+    <Card className='overflow-hidden component-style !p-0'>
       <CardHeader>
-        <CardTitle>Positive Effects</CardTitle>
+        <CardTitle className='heading-style'>Positive Effects</CardTitle>
         <CardDescription>
           Understand the positive effects of your activities and moods.
         </CardDescription>
       </CardHeader>
       <CardContent className='space-y-4'>
-        <div className='mx-12'>
+        <div className='mx-10'>
           <Select onValueChange={(value) => setMood(value)}>
             <SelectTrigger className='mb-4'>
               <SelectValue placeholder='Select a mood' />
@@ -147,7 +147,8 @@ const PositiveEffects = () => {
             </SelectContent>
           </Select>
         </div>
-        <Carousel className='mx-12 rounded-lg'>
+        <Carousel className='rounded-lg flex gap-2 items-center '>
+          <CarouselPrevious />
           <CarouselContent>
             {filteredEffects.length > 0 ? (
               formatFilteredEffects(filteredEffects)
@@ -155,7 +156,6 @@ const PositiveEffects = () => {
               <p>No positive effects found for the selected mood and time.</p>
             )}
           </CarouselContent>
-          <CarouselPrevious />
           <CarouselNext />
         </Carousel>
       </CardContent>

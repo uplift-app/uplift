@@ -96,7 +96,7 @@ const MoodInput = () => {
   }
 
   return (
-    <Card className='w-[300px] m-1'>
+    <Card className='flex-grow m-1'>
       <CardHeader>
         <CardTitle>Mood</CardTitle>
         <CardDescription>How are you feeling?</CardDescription>

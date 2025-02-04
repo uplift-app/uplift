@@ -37,14 +37,14 @@ export function RadialChart({
   } satisfies ChartConfig;
 
   return (
-    <Card className='flex flex-col'>
+    <Card className='flex flex-col items-center bg-white bg-opacity-50 grow'>
       <CardHeader className='items-center pb-0'>
         <CardTitle>{formattedName}</CardTitle>
       </CardHeader>
       <CardContent className='flex flex-1 items-center pb-0'>
         <ChartContainer
           config={chartConfig}
-          className='-mb-24 -mt-4 -mx-8 aspect-square w-60 max-w-[250px]'
+          className='-mb-24 -mt-4 -mx-8 aspect-square w-60'
         >
           <RadialBarChart
             data={chartData}
@@ -94,12 +94,6 @@ export function RadialChart({
           </RadialBarChart>
         </ChartContainer>
       </CardContent>
-      {/* <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 font-medium leading-none">
-          Your average energy level is {currentValue}{" "}
-          <TrendingUp className="h-4 w-4" />
-        </div>
-      </CardFooter> */}
     </Card>
   );
 }

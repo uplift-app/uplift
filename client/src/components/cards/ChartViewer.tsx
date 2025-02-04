@@ -85,15 +85,17 @@ const ChartViewer = () => {
   };
 
   return (
-    <Card className='bg-[#d7d7d7]'>
+    <Card className='component-style !p-0'>
       <CardHeader>
-        <CardTitle>Visualise your progress</CardTitle>
+        <CardTitle className='heading-style'>
+          Visualise your progress.
+        </CardTitle>
         <CardDescription>Plot your moods and activities</CardDescription>
       </CardHeader>
       <CardContent>
         <div className='flex flex-col space-y-4'>
           <div className=' gap-2'>
-            <div className='flex gap-2 overflow-scroll justify-center p-2'>
+            <div className='flex gap-2 overflow-scroll justify-center pb-2 flex-wrap'>
               {Object.entries(chartConfig).map(
                 ([chartLabel, chartValue], idx) => (
                   <div
