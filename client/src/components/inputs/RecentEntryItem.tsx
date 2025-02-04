@@ -14,11 +14,11 @@ export function RecentEntryItem({
   handleDelete,
 }: RecentEntryItemProps) {
   const moodEmojis: Record<string, string> = {
-    happiness: "😊",
-    stress: "😡",
-    energy: "😌",
+    happiness: "icons/faces/laugh-beam.svg", // Replace with appropriate svg file
+    stress: "icons/faces/laugh-beam.svg", // Replace with appropriate svg file
+    energy: "icons/faces/laugh-beam.svg", // Replace with appropriate svg file
   };
-  const activityEmoji = "🏃‍♂️";
+  const activityEmoji = "icons/faces/laugh-beam.svg"; //Replace with appropriate svg file
   const formatDate = (date: string) => {
     const formattedDate = new Date(date);
     const options: Intl.DateTimeFormatOptions = {
@@ -32,10 +32,15 @@ export function RecentEntryItem({
   const formattedDate = formatDate(entry.date);
 
   return (
-    <div className='flex items-center gap-6 bg-white rounded-xl w-full p-4 text-black shadow-sm'>
-      <div className='text-5xl'>
-        {type === "mood" && moodEmojis[(entry as MoodFromBackend).moodType]}
-        <div className='text-5xl'>{type === "activity" && activityEmoji}</div>
+    <div className='flex items-center gap-6 w-full p-4'>
+      <div className='w-12'>
+        {type === "mood" && (
+          <img
+            src={moodEmojis[(entry as MoodFromBackend).moodType]}
+            alt={(entry as MoodFromBackend).moodType}
+          />
+        )}
+        {type === "activity" && <img src={activityEmoji} alt='Activity' />}
       </div>
       <div>
         <div>{formattedDate}</div>
@@ -74,7 +79,7 @@ export function RecentEntryItem({
             className='text-2xl cursor-pointer'
             // onClick={() => handleEdit(entry._id)}
           >
-            ✍️
+            <img src='icons/edit.svg' alt='' className='w-6 cursor-pointer' />
           </Dialog.Trigger>
           <Dialog.Portal>
             <Dialog.Overlay className='fixed inset-0 bg-black opacity-30' />
@@ -93,7 +98,7 @@ export function RecentEntryItem({
           className='text-2xl cursor-pointer'
           onClick={() => handleDelete(entry._id)}
         >
-          🗑️
+          <img src='icons/trash.svg' alt='' className='w-5 cursor-pointer' />
         </div>
       </div>
     </div>
