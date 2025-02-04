@@ -25,11 +25,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Mood, Time } from "@/lib/interfaces";
-import { postMood } from "@/lib/ApiService";
-import { useAuth } from "@clerk/clerk-react";
+import { errorHandler, postMood } from "@/lib/ApiService";
 
 const MoodInput = () => {
-  const { getToken } = useAuth();
   const initialFormState: Mood = {
     moodType: "",
     intensity: 5,
@@ -64,12 +62,9 @@ const MoodInput = () => {
 
   async function uploadMood() {
     try {
-      const token = await getToken();
-      if (token) await postMood(formState, token);
+      await postMood(formState);
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error occurred";
-      throw new Error(errorMessage);
+      errorHandler(error);
     }
     setFormState(initialFormState);
   }
@@ -99,39 +94,39 @@ const MoodInput = () => {
   }
 
   return (
-    <Card className="flex-grow m-1">
+    <Card className='flex-grow m-1'>
       <CardHeader>
         <CardTitle>Mood</CardTitle>
         <CardDescription>How are you feeling?</CardDescription>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className='space-y-4'>
         <DatePicker
           date={formState.date}
           setDate={handleChange}
-          data-testid="datepicker"
+          data-testid='datepicker'
         />
         <Select onValueChange={handleChange} value={formState.moodTime}>
           <SelectTrigger>
-            <SelectValue placeholder="select a time" />
+            <SelectValue placeholder='Select a time' />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="morning">Morning</SelectItem>
-              <SelectItem value="afternoon">Afternoon</SelectItem>
-              <SelectItem value="evening">Evening</SelectItem>
-              <SelectItem value="night">Night</SelectItem>
-              <SelectItem value="all day">All Day</SelectItem>
+              <SelectItem value='morning'>Morning</SelectItem>
+              <SelectItem value='afternoon'>Afternoon</SelectItem>
+              <SelectItem value='evening'>Evening</SelectItem>
+              <SelectItem value='night'>Night</SelectItem>
+              <SelectItem value='all day'>All Day</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
         <Select onValueChange={handleChange} value={formState.moodType}>
           <SelectTrigger>
-            <SelectValue placeholder="select a mood" />
+            <SelectValue placeholder='Select a mood' />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="happiness">
+              <SelectItem value='happiness'>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>Happiness</TooltipTrigger>
@@ -141,7 +136,7 @@ const MoodInput = () => {
                   </Tooltip>
                 </TooltipProvider>
               </SelectItem>
-              <SelectItem value="stress">
+              <SelectItem value='stress'>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>Stress</TooltipTrigger>
@@ -151,7 +146,7 @@ const MoodInput = () => {
                   </Tooltip>
                 </TooltipProvider>
               </SelectItem>
-              <SelectItem value="energy">
+              <SelectItem value='energy'>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>Energy</TooltipTrigger>
@@ -164,7 +159,7 @@ const MoodInput = () => {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <div className="flex">
+        <div className='flex'>
           <Slider
             defaultValue={[5]}
             max={10}

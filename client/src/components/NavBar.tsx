@@ -74,14 +74,19 @@ function Navbar() {
               }}
             />
           ) : (
-            <Link to="/login">Login</Link>
+            <>
+              <Link to="/register" className="px-2">
+                Sign up
+              </Link>
+              <Link to="/login">Login</Link>
+            </>
           )}
         </div>
       </div>
       <div
         className={
           (openMenu ? "translate-x-0" : "-translate-x-full") +
-          " fixed z-[10] top-16 left-0 md:hidden flex flex-col gap-8 py-6 px-10 bg-white transform transition-all duration-[500ms] rounded-br-lg font-comfortaa font-extrabold"
+          " fixed z-[10] top-16 left-0 md:hidden flex flex-col gap-8 py-6 px-10 bg-white transform transition-all duration-500 rounded-br-lg font-comfortaa font-extrabold"
         }
       >
         <Link

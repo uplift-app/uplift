@@ -1,28 +1,28 @@
 import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./components/pages/HomePage";
-import LoginPage from "./components/pages/Login";
 import Dashboard from "./components/pages/DashBoard";
 import EntriesPage from "./components/pages/EntriesPage";
 import Navbar from "./components/NavBar";
-import { SignedOut, useAuth } from "@clerk/clerk-react";
-import { getAnalysis } from "./lib/ApiService";
+import { SignedOut, useUser } from "@clerk/clerk-react";
+import { errorHandler, getAnalysis } from "./lib/ApiService";
 import { useAnalysisDataContext } from "./contexts/AnalysisDataContext";
+import Login from "./components/pages/Login";
+import Register from "./components/pages/Register";
 
 function App() {
-  const { getToken } = useAuth();
+  const { isSignedIn } = useUser();
   const { setAnalysisData } = useAnalysisDataContext();
   useEffect(() => {
     const fetchAnalysis = async () => {
       try {
-        const token = await getToken({ template: "default" });
-        if (token) getAnalysis(token).then((data) => setAnalysisData(data));
+        getAnalysis().then((data) => setAnalysisData(data));
       } catch (error) {
-        error instanceof Error ? error.message : "An error occurred";
+        errorHandler(error);
       }
     };
-    fetchAnalysis();
-  }, []);
+    if (isSignedIn) fetchAnalysis();
+  }, [isSignedIn]);
 
   return (
     <Router>
@@ -34,7 +34,15 @@ function App() {
             path="/login"
             element={
               <SignedOut>
-                <LoginPage />
+                <Login />
+              </SignedOut>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <SignedOut>
+                <Register />
               </SignedOut>
             }
           />

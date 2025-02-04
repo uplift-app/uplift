@@ -3,6 +3,7 @@ import activityRouter from "./activityRouter";
 import analysisRouter from "./analysisRouter";
 import moodRouter from "./moodRouter";
 import userRouter from "./userRouter";
+import quoteRouter from "./quoteRouter";
 
 const rootRouter = Router();
 rootRouter.all("*", (req, res) => {
@@ -14,6 +15,7 @@ const setRouting = (app: Express) => {
   app.use("/analysis", analysisRouter);
   app.use("/mood", moodRouter);
   app.use("/user", userRouter);
+  app.use("/quote", quoteRouter);
   app.use(rootRouter);
 };
 
