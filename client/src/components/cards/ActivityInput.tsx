@@ -18,12 +18,10 @@ import { Slider } from "@/components/ui/slider";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { DatePicker } from "@/components/ui/datepicker";
-import { getActivityTypes, postActivity } from "@/lib/ApiService";
+import { errorHandler, getActivityTypes, postActivity } from "@/lib/ApiService";
 import { Activity, Time } from "@/lib/interfaces";
-import { useAuth } from "@clerk/clerk-react";
 
 const ActivityInput = () => {
-  const { getToken } = useAuth();
   const customActivityLabel = "Add a custom activity";
   const initialFormState: Activity = {
     activityType: "",
@@ -38,7 +36,6 @@ const ActivityInput = () => {
 
   const [activity, setActivity] = useState("");
   const [customActivity, setCustomActivity] = useState("");
-  // ! create a activity state and update formState with useEffect on activity and customActivity?
 
   useEffect(() => {
     fetchActivityTypes();
@@ -57,16 +54,11 @@ const ActivityInput = () => {
 
   const fetchActivityTypes = async () => {
     try {
-      const token = await getToken();
-      if (token) {
-        const data = await getActivityTypes(token);
-        data.push(customActivityLabel);
-        setActivityTypes(data);
-      }
+      const data = await getActivityTypes();
+      data.push(customActivityLabel);
+      setActivityTypes(data);
     } catch (error) {
-      console.error(
-        error instanceof Error ? error.message : "An error occurred"
-      );
+      return errorHandler(error);
     }
   };
 
@@ -82,12 +74,9 @@ const ActivityInput = () => {
 
   async function uploadActivity() {
     try {
-      const token = await getToken();
-      if (token) await postActivity(formState, token);
+      await postActivity(formState);
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error occurred";
-      console.error("Failed to post activity:", errorMessage);
+      errorHandler(error);
     }
     setFormState(initialFormState);
     setActivity("");
@@ -127,31 +116,31 @@ const ActivityInput = () => {
   }
 
   return (
-    <Card className="w-[300px] m-1">
+    <Card className='flex-grow m-1'>
       <CardHeader>
         <CardTitle>Activity</CardTitle>
         <CardDescription>What did you do?</CardDescription>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className='space-y-4'>
         <DatePicker date={formState.date} setDate={handleChange} />
         <Select onValueChange={handleChange} value={formState.activityTime}>
           <SelectTrigger>
-            <SelectValue placeholder="select a time" />
+            <SelectValue placeholder='Select a time' />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="morning">Morning</SelectItem>
-              <SelectItem value="afternoon">Afternoon</SelectItem>
-              <SelectItem value="evening">Evening</SelectItem>
-              <SelectItem value="night">Night</SelectItem>
-              <SelectItem value="all day">All Day</SelectItem>
+              <SelectItem value='morning'>Morning</SelectItem>
+              <SelectItem value='afternoon'>Afternoon</SelectItem>
+              <SelectItem value='evening'>Evening</SelectItem>
+              <SelectItem value='night'>Night</SelectItem>
+              <SelectItem value='all day'>All Day</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
         <Select onValueChange={handleChange} value={activity}>
-          <SelectTrigger data-testid="select-trigger">
-            <SelectValue placeholder="select an activity" />
+          <SelectTrigger data-testid='select-trigger'>
+            <SelectValue placeholder='Select an activity' />
           </SelectTrigger>
           <SelectContent>
             {activityTypes.map((activity) => (
@@ -165,9 +154,9 @@ const ActivityInput = () => {
           <>
             <h1>{customActivityLabel}</h1>
             <Input
-              type="text"
-              id="custom-activity"
-              placeholder="Bowling"
+              type='text'
+              id='custom-activity'
+              placeholder='Bowling'
               value={customActivity}
               onChange={handleInputChange}
             />

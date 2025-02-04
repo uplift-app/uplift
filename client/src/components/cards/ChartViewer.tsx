@@ -7,34 +7,29 @@ import {
   CardTitle,
 } from "../ui/card";
 
-import AddToChart from "../inputs/AddToChart";
-import { getActivities, getActivityTypes } from "@/lib/ApiService";
+import AddToChart from "@/components/inputs/AddToChart";
+import {
+  errorHandler,
+  getActivities,
+  getActivityTypes,
+} from "@/lib/ApiService";
 import { ActivityFromBackend, CustomChart } from "@/lib/interfaces";
-import { useAuth } from "@clerk/clerk-react";
 import MoodChart from "../MoodChart";
 import CustomChartsWrapper from "../CustomChartsWrapper";
 
 const ChartViewer = () => {
-  const { getToken } = useAuth();
   // Fetch this data from the backend
   const [activityData, setActivityData] = useState<ActivityFromBackend[]>([]);
   const [activityTypes, setActivityTypes] = useState<string[]>([]);
 
   const fetchActivityData = async () => {
     try {
-      const token = await getToken();
-      if (token) {
-        const activityTypes = await getActivityTypes(token);
-        const data = await getActivities(token);
-        setActivityData(data);
-        setActivityTypes(activityTypes);
-      }
+      const activityTypes = await getActivityTypes();
+      const data = await getActivities();
+      setActivityData(data);
+      setActivityTypes(activityTypes);
     } catch (error) {
-      console.error(
-        error instanceof Error
-          ? error.message
-          : "An error occurred fetching the moods in the chartViewer."
-      );
+      errorHandler(error);
     }
   };
 
@@ -48,9 +43,11 @@ const ChartViewer = () => {
   const [customCharts, setCustomCharts] = useState<CustomChart[]>([]);
 
   return (
-    <Card className="bg-[#d7d7d7]">
+    <Card className="component-style !p-0">
       <CardHeader>
-        <CardTitle>Visualise your progress</CardTitle>
+        <CardTitle className="heading-style">
+          Visualise your progress.
+        </CardTitle>
         <CardDescription>Plot your moods and activities</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

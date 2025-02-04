@@ -10,8 +10,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Check, Plus } from "lucide-react";
 import { DialogTitle } from "@/components/ui/dialog";
-import { getActivityTypes } from "@/lib/ApiService";
-import { useAuth } from "@clerk/clerk-react";
+import { errorHandler, getActivityTypes } from "@/lib/ApiService";
+
 import ChartTypeSelector from "./ChartTypeSelector";
 import { cn } from "@/lib/utils";
 import { ChartTypes, CustomChart } from "@/lib/interfaces";
@@ -19,7 +19,6 @@ interface AddToChartProps {
   setCustomCharts: Dispatch<SetStateAction<CustomChart[]>>;
 }
 const AddToChart = ({ setCustomCharts }: AddToChartProps) => {
-  const { getToken } = useAuth();
   const [open, setOpen] = useState(false);
   const [activityTypes, setActivityTypes] = useState<string[]>([]);
   const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
@@ -30,24 +29,11 @@ const AddToChart = ({ setCustomCharts }: AddToChartProps) => {
 
   const fetchActivityTypes = async () => {
     try {
-      const token = await getToken();
-      if (token) {
-        const data = await getActivityTypes(token);
-        setActivityTypes(data);
-      }
+      const data = await getActivityTypes();
+      setActivityTypes(data);
     } catch (error) {
-      console.error(
-        error instanceof Error ? error.message : "An error occurred"
-      );
+      errorHandler(error);
     }
-  };
-
-  const toggleActivity = (activity: string) => {
-    setSelectedActivities((prev) =>
-      prev.includes(activity)
-        ? prev.filter((a) => a !== activity)
-        : [...prev, activity]
-    );
   };
 
   const handleCustomChartAdd = () => {
@@ -62,6 +48,15 @@ const AddToChart = ({ setCustomCharts }: AddToChartProps) => {
     setChosenChart("Area");
     setOpen(false);
   };
+
+  const toggleActivity = (activity: string) => {
+    setSelectedActivities((prev) =>
+      prev.includes(activity)
+        ? prev.filter((a) => a !== activity)
+        : [...prev, activity]
+    );
+  };
+
   return (
     <div>
       <Button className="mx-auto h-[100%] w-full" onClick={() => setOpen(true)}>
@@ -92,10 +87,11 @@ const AddToChart = ({ setCustomCharts }: AddToChartProps) => {
             </Button>
           )}
         </DialogTitle>
-
-        <CommandInput placeholder="Search for an activity..." />
+        <CommandInput placeholder="Search for something to add..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
+          <CommandGroup heading="Moods"></CommandGroup>
+
           <CommandGroup heading="Activities">
             {activityTypes.map((activity) => (
               <CommandItem

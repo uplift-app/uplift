@@ -17,15 +17,24 @@ export type MoodFromBackend = {
   moodType: MoodTypes; 
   intensity: number;
   userId: string;
-  moodTime: string;
+  moodTime: Time;
   date: string;
   __v: number;
   createdAt: string;
   updatedAt: string;
 };
 
-export type MoodSortedByDate = {
+export type ActivityFromBackend = {
+  _id: string;
+  duration: number;
+  activityType: string;
+  userId: string;
+  activityTime: Time;
+  isHabit: boolean;
   date: string;
+  __v: number;
+  createdAt: string;
+  updatedAt: string;
 } & Partial<Record<MoodTypes, number>>;
 
 export type Time =
@@ -61,3 +70,17 @@ export type ActivitySortedByDate = {
   date: string;
   [key: string]: number | string;
 };
+
+
+export interface Quote {
+  q: string;
+  a: string;
+  h: string;
+}
+
+export interface RecentEntryItemProps {
+  entry: MoodFromBackend | ActivityFromBackend;
+  type: "mood" | "activity";
+  handleEdit: (id: string) => void;
+  handleDelete: (id: string) => void;
+}
