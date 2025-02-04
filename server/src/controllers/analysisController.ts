@@ -9,38 +9,45 @@ import {
 } from "../middleware/databaseQuery";
 
 export const analyseData = async (req: Request, res: Response) => {
-  // TODO: this is intentionally hardcoded. database queries will be modularised; and should probably add some more error checks here
-  // I have left an example of how the functionality works, startDate and endDate are both optional params to build query
-  const userId = "1";
-  // const startDate = 'some date as a string'
-  // const endDate = 'some date as a string'
-  const query = buildQuery(userId);
-  const moods = await fetchMoods(query);
-  const activities = await fetchActivities(query);
+  try {
+    const { startDate, endDate } = req.query;
+    const query = buildQuery(
+      req.user.userId,
+      startDate as string,
+      endDate as string
+    );
 
-  const moodPath = path.resolve(__dirname, "../../mocks/mood.json");
-  const activityPath = path.resolve(__dirname, "../../mocks/activity.json");
-  fs.writeFileSync(moodPath, JSON.stringify(moods));
-  fs.writeFileSync(activityPath, JSON.stringify(activities));
+    const moods = await fetchMoods(query);
+    const activities = await fetchActivities(query);
 
-  runPython("scripts/analysis/analyse.py", (err: string, result: string) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      // cleanup breaks the code; i think its because react executes every request twice in dev mode
-      // the request are async made and the deleting the files in one request might lead to the error in the second request
-      // fs.unlinkSync(moodPath);
-      // fs.unlinkSync(activityPath);
-      res.json(JSON.parse(result.replace(/'/g, '"')));
-    }
-  });
+    const moodPath = path.resolve(__dirname, "../../mocks/mood.json");
+    const activityPath = path.resolve(__dirname, "../../mocks/activity.json");
+    fs.writeFileSync(moodPath, JSON.stringify(moods));
+    fs.writeFileSync(activityPath, JSON.stringify(activities));
+
+    runPython("scripts/analysis/analyse.py", (err: string, result: string) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        // cleanup breaks the code; i think its because react executes every request twice in dev mode
+        // the request are async made and the deleting the files in one request might lead to the error in the second request
+        // fs.unlinkSync(moodPath);
+        // fs.unlinkSync(activityPath);
+        res.json(JSON.parse(result.replace(/'/g, '"')));
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error analysing data", error });
+  }
 };
 
 function runPython(scriptPath: string, callback: Function) {
-  const pythonExecutable = path.join(
-    __dirname,
-    "../../venv/Scripts/python.exe"
-  ); // Adjust path to match the project structure
+  let pythonExecutable;
+  if (process.platform === "win32") {
+    pythonExecutable = path.join(__dirname, "../../venv/Scripts/python.exe");
+  } else {
+    pythonExecutable = "python";
+  }
   const pythonProcess = spawn(pythonExecutable, [scriptPath]);
 
   let data = "";
