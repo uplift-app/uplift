@@ -27,11 +27,11 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <main className='min-h-[calc(100vh-4rem)] bg-gradient-to-br from-[#DEF3FF] to-[#fef9c3] text-fontColor py-4 px-[4%] md:px-[12%] font-nunito'>
+      <main className="min-h-[calc(100vh-4rem)] bg-gradient-to-br from-[#DEF3FF] to-[#fef9c3] text-fontColor py-4 px-[4%] md:px-[12%] font-nunito">
         <Routes>
-          <Route path='/' element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
           <Route
-            path='/login'
+            path="/login"
             element={
               <SignedOut>
                 <Login />
@@ -39,15 +39,15 @@ function App() {
             }
           />
           <Route
-            path='/register'
+            path="/register"
             element={
               <SignedOut>
                 <Register />
               </SignedOut>
             }
           />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/entries' element={<EntriesPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/entries" element={<EntriesPage />} />
         </Routes>
       </main>
     </Router>
