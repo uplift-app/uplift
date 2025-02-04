@@ -1,5 +1,5 @@
 export interface Mood {
-  moodType: MoodTypes;
+  moodType: string;
   intensity: number;
   moodTime: Time;
   date: Date;

@@ -35,19 +35,20 @@ function EntriesPage() {
     username = formatName(username);
     return (
       <>
-        <div className='grid xl:grid-cols-[2fr_3fr] gap-4 items-stretch pt-4'>
-          <div className='flex flex-col items-center gap-4'>
-            <div className='flex flex-col items-center w-full component-style gap-2 grow'>
-              <p className='text-3xl font-medium tracking-tight'>
-                ““{quote || "Loading quote..."}”
+        <div className="grid xl:grid-cols-[2fr_3fr] gap-4 items-stretch pt-10">
+          <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col justify-center items-center w-full component-style gap-2 grow">
+              Quote of the day
+              <p className="text-3xl font-medium tracking-tight text-center">
+                “{quote || "Loading quote..."}”
               </p>
-              <p className='italic text-lg'>{author || ""}</p>
+              <p className="italic text-lg">{author || ""}</p>
             </div>
-            <div className='w-full component-style grow'>
-              <h2 className='heading-style pb-2'>
+            <div className="w-full component-style grow flex flex-col">
+              <h2 className="heading-style pb-2">
                 Track your activity and mood
               </h2>
-              <div className='flex flex-col sm:flex-row gap-2'>
+              <div className="flex flex-col sm:flex-row gap-2 justify-self-center ">
                 <ActivityInput />
                 <MoodInput />
               </div>
