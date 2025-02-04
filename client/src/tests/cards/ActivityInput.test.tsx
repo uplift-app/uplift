@@ -6,6 +6,8 @@ import { getActivityTypes, postActivity } from "@/lib/ApiService";
 import { beforeEach, describe, expect, it, vi, Mock } from "vitest";
 import { format } from "date-fns";
 
+//! worth noting that AI has been used for debugging and working out how to test certain aspects (such as clerk) so please review the test files with a pinch of salt.
+
 // Mock Clerk hooks so that useAuth returns a fake token.
 // This prevents the "useAuth can only be used within the <ClerkProvider /> component" error.
 vi.mock("@clerk/clerk-react", () => {

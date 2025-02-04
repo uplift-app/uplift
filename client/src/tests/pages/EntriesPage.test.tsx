@@ -3,13 +3,12 @@ import { render, screen } from "@testing-library/react";
 import EntriesPage from "@/components/pages/EntriesPage";
 import { useUser } from "@clerk/clerk-react";
 
-// Mock Clerk's useUser hook
+
 vi.mock("@clerk/clerk-react", () => ({
   useUser: vi.fn(),
   RedirectToSignIn: () => <div>Redirecting to sign in...</div>,
 }));
 
-// Mock child components
 vi.mock("@/components/cards/ActivityInput", () => ({
   default: () => <div data-testid="activity-input">ActivityInput</div>,
 }));
