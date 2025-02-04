@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { InteractiveAreaChart } from "./InteractiveAreaChart";
 import { InteractiveBarChart } from "./InteractiveBarChart";
 import { transformActivityData } from "@/lib/chartview-functions";
-import { InteractiveChart } from "./inputs/InteractiveChart";
+import { InteractiveLineChart } from "./inputs/InteractiveLineChart";
 import { Card, CardContent, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
 import { X } from "lucide-react";
@@ -75,7 +75,7 @@ const CustomChartComponent = ({
           />
         )}
         {customChartData.type === "Line" && (
-          <InteractiveChart
+          <InteractiveLineChart
             timeFrame={timeFrame}
             chartData={dataFilteredAndSorted}
             chartConfig={chartConfig}

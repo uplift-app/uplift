@@ -24,18 +24,7 @@ export type MoodFromBackend = {
   updatedAt: string;
 };
 
-export type ActivityFromBackend = {
-  _id: string;
-  duration: number;
-  activityType: string;
-  userId: string;
-  activityTime: Time;
-  isHabit: boolean;
-  date: string;
-  __v: number;
-  createdAt: string;
-  updatedAt: string;
-} & Partial<Record<MoodTypes, number>>;
+
 
 export type Time =
   | "morning"
@@ -63,6 +52,13 @@ export type ActivityFromBackend = {
   isHabit: boolean;  
   updatedAt: string;
   userId: string;
+};
+
+export type MoodSortedByDate = {
+  date: string;
+  happiness?: number;
+  energy?: number;
+  stress?: number;
 };
 
 

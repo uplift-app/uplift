@@ -6,13 +6,14 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { ActivitySortedByDate } from "@/lib/interfaces";
 import { useState } from "react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { AxisInterval } from "recharts/types/util/types";
 
 interface ChartProps {
   chartConfig: ChartConfig;
-  chartData: any;
+  chartData: ActivitySortedByDate[];
   timeFrame: string;
 }
 
@@ -24,7 +25,6 @@ export function InteractiveBarChart({
   const [interval, setInterval] = useState<AxisInterval>("preserveStartEnd");
   const formatDate = (timeFrame: string, dateString: string) => {
     const date = new Date(dateString);
-    // const dayOfWeek = ["S", "M", "T", "W", "T", "F", "S"][date.getDay()];
     const dayOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][
       date.getDay()
     ];

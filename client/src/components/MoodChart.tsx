@@ -3,32 +3,22 @@ import { Card, CardTitle } from "@/components/ui/card";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { InteractiveChart } from "@/components/inputs/InteractiveChart";
+import { InteractiveLineChart } from "@/components/inputs/InteractiveLineChart";
 import { ChartConfig } from "@/components/ui/chart";
 import { transformMoodData } from "@/lib/chartview-functions";
 import TimeFrameSelector from "@/components/inputs/TimeFrameSelector";
-import { getMoods } from "@/lib/ApiService";
+import { errorHandler, getMoods } from "@/lib/ApiService";
 import { MoodFromBackend, MoodSortedByDate } from "@/lib/interfaces";
-import { useAuth } from "@clerk/clerk-react";
 
 const MoodChart = () => {
-  const { getToken } = useAuth();
-  // Fetch this data from the backend
   const [chartData, setChartData] = useState<MoodFromBackend[]>([]);
   const fetchMoods = async () => {
     try {
-      const token = await getToken();
-      if (token) {
-        const data = await getMoods(token);
-        setChartData(data);
-        setDataFilteredAndSorted(transformMoodData(data, timeFrame));
-      }
+      const data = await getMoods();
+      setChartData(data);
+      setDataFilteredAndSorted(transformMoodData(data, timeFrame));
     } catch (error) {
-      console.error(
-        error instanceof Error
-          ? error.message
-          : "An error occurred fetching the moods in the chartViewer."
-      );
+      errorHandler(error);
     }
   };
 
@@ -117,7 +107,7 @@ const MoodChart = () => {
         <TimeFrameSelector timeFrame={timeFrame} setTimeFrame={setTimeFrame} />
       </div>
 
-      <InteractiveChart
+      <InteractiveLineChart
         timeFrame={timeFrame}
         chartConfig={chartConfigData}
         chartData={dataFilteredAndSorted}
