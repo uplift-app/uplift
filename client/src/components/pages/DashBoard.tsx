@@ -9,8 +9,7 @@ import YearOfPixels from "../YearOfPixels";
 function DashBoard() {
   const { user, isSignedIn } = useUser();
   if (user && isSignedIn) {
-    let username = user.username ? user.username : "User";
-    username = formatName(username);
+    const username = formatName(user.username || "User");
     return (
       <>
         <p className='text-center pb-4 text-4xl'>Welcome, {username}!</p>
@@ -24,11 +23,8 @@ function DashBoard() {
             <IntensityLevels />
           </div>
           <ChartViewer />
-          <PositiveEffects />
           <YearOfPixels />
-          <div className='rounded-lg xl:col-span-2'>
-            <ChartViewer />
-          </div>
+          <PositiveEffects />
         </div>
       </>
     );
