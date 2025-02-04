@@ -57,16 +57,14 @@ const YearOfPixels = () => {
 
   const fetchMoods = async () => {
     try {
-      const token = await getToken();
-      if (token) {
-        const data = await getMoods(token);
+        const data = await getMoods();
         if (filter === "Avg") {
           return calculateAverageMoodPastYear(data);
         } else {
           const filteredData = data.filter((entry) => entry.moodType === filter)
           return calculateAverageMoodPastYear(filteredData);
         }
-      }
+      
     } catch (error) {
       console.error(
         error instanceof Error
