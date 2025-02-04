@@ -7,8 +7,8 @@ function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
   return (
     <>
-      <div className="flex px-[4%] md:px-8 items-center h-16 border-b-[3px] border-[#cab904] font-comfortaa">
-        <div className="hidden md:flex gap-8 font-extrabold w-[16rem]">
+      <div className="flex px-[4%] md:px-8 items-center h-16 border-b-[3px] border-[#cab904] font-comfortaa text-fontColor">
+        <div className="hidden md:flex gap-8 font-extrabold w-[17rem]">
           <Link to="/dashboard" className="hover:underline">
             Dashboard
           </Link>
@@ -42,7 +42,7 @@ function Navbar() {
           />
         </div>
         <div className="font-bold text-xl uppercase mx-auto">Uplift</div>
-        <div className="w-[16rem] flex justify-end font-extrabold">
+        <div className="w-[17rem] flex justify-end font-extrabold">
           {isSignedIn ? (
             <UserButton
               showName
@@ -75,7 +75,7 @@ function Navbar() {
             />
           ) : (
             <>
-              <Link to="/register" className="px-2">
+              <Link to="/register" className="pr-8">
                 Sign up
               </Link>
               <Link to="/login">Login</Link>
@@ -86,7 +86,7 @@ function Navbar() {
       <div
         className={
           (openMenu ? "translate-x-0" : "-translate-x-full") +
-          " fixed z-[10] top-16 left-0 md:hidden flex flex-col gap-8 py-6 px-10 bg-white transform transition-all duration-500 rounded-br-lg font-comfortaa font-extrabold"
+          " fixed z-[10] top-16 left-0 md:hidden flex flex-col gap-8 py-6 px-10 bg-white transform transition-all duration-500 rounded-br-lg font-comfortaa font-extrabold text-fontColor"
         }
       >
         <Link
