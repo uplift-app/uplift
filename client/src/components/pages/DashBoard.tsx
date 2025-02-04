@@ -1,21 +1,21 @@
 import { RedirectToSignIn, useUser } from "@clerk/clerk-react";
-import ActivityInput from "../cards/ActivityInput";
-import MoodInput from "../cards/MoodInput";
 import ChartViewer from "../cards/ChartViewer";
-import YearOfPixels from "../YearOfPixels";
 import PositiveEffects from "../PositiveEffects";
+import MoodLevels from "../MoodLevel";
 
 function DashBoard() {
   const { user, isSignedIn } = useUser();
   if (user && isSignedIn) {
     return (
       <>
-        <p className='justify-self-center text-4xl'>
-          Welcome, {user.username}!
-        </p>
-        <div className='flex items-center justify-center pt-2'>
+        <p className="text-center pb-4 text-4xl">Welcome, {user.username}!</p>
+        <div className="grid xl:grid-cols-[2fr_3fr] gap-4">
+          <div className="component-style rounded-lg p-4 xl:col-span-2">
+            <h2 className="heading-style pb-2">Average Mood Level</h2>
+            <MoodLevels />
+          </div>
           <ChartViewer />
-          <YearOfPixels />
+          <PositiveEffects />
         </div>
       </>
     );

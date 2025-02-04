@@ -11,7 +11,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -39,7 +38,6 @@ const ActivityInput = () => {
 
   const [activity, setActivity] = useState("");
   const [customActivity, setCustomActivity] = useState("");
-  // ! create a activity state and update formState with useEffect on activity and customActivity?
 
   useEffect(() => {
     fetchActivityTypes();
@@ -128,7 +126,7 @@ const ActivityInput = () => {
   }
 
   return (
-    <Card className="w-[300px] m-1">
+    <Card className="flex-grow m-1">
       <CardHeader>
         <CardTitle>Activity</CardTitle>
         <CardDescription>What did you do?</CardDescription>
@@ -190,7 +188,6 @@ const ActivityInput = () => {
           Submit
         </Button>
       </CardContent>
-      <CardFooter className="flex justify-between"></CardFooter>
     </Card>
   );
 };

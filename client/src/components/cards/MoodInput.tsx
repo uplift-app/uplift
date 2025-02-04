@@ -101,7 +101,7 @@ const MoodInput = () => {
   }
 
   return (
-    <Card className="w-[300px] m-1">
+    <Card className="flex-grow m-1">
       <CardHeader>
         <CardTitle>Mood</CardTitle>
         <CardDescription>How are you feeling?</CardDescription>
@@ -122,6 +122,7 @@ const MoodInput = () => {
               <SelectItem value="morning">Morning</SelectItem>
               <SelectItem value="afternoon">Afternoon</SelectItem>
               <SelectItem value="evening">Evening</SelectItem>
+              <SelectItem value="night">Night</SelectItem>
               <SelectItem value="all day">All Day</SelectItem>
             </SelectGroup>
           </SelectContent>

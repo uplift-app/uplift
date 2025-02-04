@@ -19,7 +19,7 @@ export interface AnalysisData {
     moodType: string;
     moodTime: string;
     activities: Array<string>;
-    avg_intensity: number;
+    avgIntensity: number;
   }>;
   activityCounts: Array<object>;
   moodCounts: Array<object>;
