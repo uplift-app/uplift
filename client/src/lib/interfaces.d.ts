@@ -1,7 +1,7 @@
 export interface Mood {
   moodType: string;
   intensity: number;
-  moodTime: Time;
+  moodTime: Time | "";
   date: Date;
 }
 
@@ -17,7 +17,7 @@ export type MoodFromBackend = {
   moodType: "happiness" | "stress" | "energy";
   intensity: number;
   userId: string;
-  moodTime: string;
+  moodTime: Time;
   date: string;
   __v: number;
   createdAt: string;

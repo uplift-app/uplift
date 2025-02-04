@@ -57,10 +57,7 @@ export const getRecentMoods = async (): Promise<MoodFromBackend[]> => {
       const dateB = new Date(b.createdAt).getTime();
       return dateB - dateA;
     });
-
-    const recentMoods = sortedMoods.slice(0, 10);
-
-    return recentMoods;
+    return sortedMoods;
   } catch (error) {
     return errorHandler(error);
   }
@@ -78,6 +75,21 @@ export const postMood = async (moodData: Mood): Promise<any> => {
     return await makeServerRequest("mood", options);
   } catch (error) {
     return errorHandler(error);
+  }
+};
+
+export const editMood = async (moodData: MoodFromBackend): Promise<any> => {
+  try {
+    const options = {
+      method: "PUT",
+      body: JSON.stringify(moodData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    return await makeServerRequest(`mood/${moodData._id}`, options);
+  } catch (error) {
+    errorHandler(error);
   }
 };
 
@@ -109,9 +121,7 @@ export const getRecentActivities = async (): Promise<ActivityFromBackend[]> => {
       const dateB = new Date(b.createdAt).getTime();
       return dateB - dateA;
     });
-
-    const recentActivities = sortedActivities.slice(0, 10);
-    return recentActivities;
+    return sortedActivities;
   } catch (error) {
     return errorHandler(error);
   }
@@ -135,6 +145,23 @@ export const postActivity = async (activity: Activity): Promise<any> => {
     return await makeServerRequest("activity", options);
   } catch (error) {
     return errorHandler(error);
+  }
+};
+
+export const editActivity = async (
+  activityData: ActivityFromBackend
+): Promise<any> => {
+  try {
+    const options = {
+      method: "PUT",
+      body: JSON.stringify(activityData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    return await makeServerRequest(`activity/${activityData._id}`, options);
+  } catch (error) {
+    errorHandler(error);
   }
 };
 
