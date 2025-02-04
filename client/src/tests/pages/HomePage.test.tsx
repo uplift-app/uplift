@@ -14,7 +14,7 @@ describe("HomePage", () => {
     );
 
     expect(screen.getByText("Uplift")).toBeInTheDocument();
-    expect(screen.getByText("Track Your Moods & Behaviors")).toBeInTheDocument();
+    expect(screen.getByText("Track Your Moods & Behaviours")).toBeInTheDocument();
     expect(
       screen.getByText("Stay mindful of your emotions, recognize patterns, and gain insights into your well-being. Uplift your inner self.")
     ).toBeInTheDocument();
