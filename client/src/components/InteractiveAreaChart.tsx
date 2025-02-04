@@ -6,17 +6,18 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { ActivitySortedByDate } from "@/lib/interfaces";
 import { useState } from "react";
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import { AxisInterval } from "recharts/types/util/types";
 
 interface ChartProps {
   chartConfig: ChartConfig;
-  chartData: any;
+  chartData: ActivitySortedByDate[];
   timeFrame: string;
 }
 
-export function InteractiveChart({
+export function InteractiveAreaChart({
   chartData,
   chartConfig,
   timeFrame,
@@ -24,7 +25,7 @@ export function InteractiveChart({
   const [interval, setInterval] = useState<AxisInterval>("preserveStartEnd");
   const formatDate = (timeFrame: string, dateString: string) => {
     const date = new Date(dateString);
-    // const dayOfWeek = ["S", "M", "T", "W", "T", "F", "S"][date.getDay()];
+
     const dayOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][
       date.getDay()
     ];
@@ -56,7 +57,7 @@ export function InteractiveChart({
       config={chartConfig}
       className="min-h-[200px] w-full bg-white rounded-lg"
     >
-      <LineChart
+      <AreaChart
         accessibilityLayer
         data={chartData}
         margin={{
@@ -75,17 +76,19 @@ export function InteractiveChart({
         />
         <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
         {chartKeys.map((chartKey) => (
-          <Line
+          <Area
             key={chartKey}
             dataKey={chartKey}
             type="natural"
+            fill={`var(--color-${chartKey})`}
+            fillOpacity={0.4}
             stroke={`var(--color-${chartKey})`}
             strokeWidth={2}
             dot={false}
           />
         ))}
         <ChartLegend content={<ChartLegendContent />} />
-      </LineChart>
+      </AreaChart>
     </ChartContainer>
   );
 }

@@ -1,15 +1,27 @@
 import { AnalysisData } from "@/contexts/interfaces";
-import { Mood, Activity, MoodFromBackend } from "./interfaces";
+import {
+  Mood,
+  Activity,
+  MoodFromBackend,
+  Quote,
+  ActivityFromBackend,
+} from "./interfaces";
+import Cookie from "js-cookie";
 //TODO: remove any types
 
 const BASE_URL = "http://localhost:3000";
 
+export async function getCookie() {
+  const cookie = Cookie.get("__session");
+  return cookie;
+}
+
 export async function makeServerRequest<T>(
   endpoint: string,
-  token: string | undefined,
   options?: RequestInit
 ): Promise<T> {
   try {
+    const token = await getCookie();
     if (!token) {
       throw new Error("Authentication token is missing");
     }
@@ -25,69 +37,33 @@ export async function makeServerRequest<T>(
     }
     return (await response.json()) as T;
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    error instanceof Error ? error.message : "Unknown error occurred";
-    throw new Error(`API Error: ${errorMessage}`);
+    return errorHandler(error);
   }
 }
 
-// Get all moods
-export const getMoods = async (
-  token: string | undefined
-): Promise<MoodFromBackend[]> => {
+export const getMoods = async (): Promise<MoodFromBackend[]> => {
   try {
-    return await makeServerRequest("mood", token);
+    return await makeServerRequest("mood");
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    throw new Error(errorMessage);
+    return errorHandler(error);
   }
 };
 
-// Get all activities
-
-export const getActivityTypes = async (
-  token: string | undefined
-): Promise<any> => {
+export const getRecentMoods = async (): Promise<MoodFromBackend[]> => {
   try {
-    return await makeServerRequest("activity/types", token);
+    const moods = await getMoods();
+    const sortedMoods = moods.sort((a, b) => {
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+      return dateB - dateA;
+    });
+    return sortedMoods;
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    throw new Error(errorMessage);
+    return errorHandler(error);
   }
 };
 
-// Post a new activity
-// Post an activity -> activity type, activity duration, activity time
-
-export const postActivity = async (
-  activity: Activity,
-  token: string | undefined
-): Promise<any> => {
-  try {
-    const options = {
-      method: "POST",
-      body: JSON.stringify(activity),
-      headers: { "content-type": "application/json" },
-    };
-    return await makeServerRequest("activity", token, options);
-  } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    throw new Error(errorMessage);
-  }
-};
-
-// -> Returns the updated list of activities
-
-// Post a new mood
-
-export const postMood = async (
-  moodData: Mood,
-  token: string | undefined
-): Promise<any> => {
+export const postMood = async (moodData: Mood): Promise<any> => {
   try {
     const options = {
       method: "POST",
@@ -96,24 +72,133 @@ export const postMood = async (
         "Content-Type": "application/json",
       },
     };
-    return await makeServerRequest("mood", token, options);
+    return await makeServerRequest("mood", options);
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    throw new Error(errorMessage);
+    return errorHandler(error);
   }
 };
-// Post a mood -> Mood type, mood intensity, mood time
-// -> Returns the updated list of moods
 
-export const getAnalysis = async (
-  token: string | undefined
-): Promise<AnalysisData> => {
+export const editMood = async (moodData: MoodFromBackend): Promise<any> => {
   try {
-    return await makeServerRequest("analysis", token);
+    const options = {
+      method: "PUT",
+      body: JSON.stringify(moodData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    return await makeServerRequest(`mood/${moodData._id}`, options);
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    throw new Error(errorMessage);
+    errorHandler(error);
   }
 };
+
+export const deleteMood = async (id: string) => {
+  try {
+    const options = {
+      method: "DELETE",
+    };
+    const response = await makeServerRequest(`mood/${id}`, options);
+    return response;
+  } catch (error) {
+    errorHandler(error);
+  }
+};
+
+export const getActivities = async (): Promise<ActivityFromBackend[]> => {
+  try {
+    return await makeServerRequest("activity");
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+export const getRecentActivities = async (): Promise<ActivityFromBackend[]> => {
+  try {
+    const activities = await getActivities();
+    const sortedActivities = activities.sort((a, b) => {
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+      return dateB - dateA;
+    });
+    return sortedActivities;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+export const getActivityTypes = async (): Promise<any> => {
+  try {
+    return await makeServerRequest("activity/types");
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+export const postActivity = async (activity: Activity): Promise<any> => {
+  try {
+    const options = {
+      method: "POST",
+      body: JSON.stringify(activity),
+      headers: { "content-type": "application/json" },
+    };
+    return await makeServerRequest("activity", options);
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+export const editActivity = async (
+  activityData: ActivityFromBackend
+): Promise<any> => {
+  try {
+    const options = {
+      method: "PUT",
+      body: JSON.stringify(activityData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    return await makeServerRequest(`activity/${activityData._id}`, options);
+  } catch (error) {
+    errorHandler(error);
+  }
+};
+
+export const deleteActivity = async (id: string) => {
+  try {
+    const options = {
+      method: "DELETE",
+    };
+    const response = await makeServerRequest(`activity/${id}`, options);
+    return response;
+  } catch (error) {
+    errorHandler(error);
+  }
+};
+
+export const getAnalysis = async (): Promise<AnalysisData> => {
+  try {
+    return await makeServerRequest("analysis");
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+export const getQuote = async (): Promise<Quote[]> => {
+  try {
+    return await makeServerRequest("quote");
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+export const errorHandler = (error: unknown): never => {
+  if (error instanceof Error) {
+    console.error("API Error:", error.message);
+    throw new Error(error.message);
+  }
+  console.error("Unknown API error occurred");
+  throw new Error("Unknown error occurred");
+};
+

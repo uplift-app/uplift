@@ -1,5 +1,5 @@
 import { useAnalysisDataContext } from "@/contexts/AnalysisDataContext";
-import { RadialChart } from "./RadialChart";
+import { RadialChart } from "../inputs/RadialChart";
 
 const MoodLevels = () => {
   const { analysisData } = useAnalysisDataContext();
@@ -25,7 +25,11 @@ const MoodLevels = () => {
     });
   };
 
-  return <div className="flex gap-4">{formatMoodInsights()}</div>;
+  return (
+    <div className='flex flex-col sm:flex-row flex-wrap gap-4'>
+      {formatMoodInsights()}
+    </div>
+  );
 };
 
 export default MoodLevels;
