@@ -109,9 +109,9 @@ const YearOfPixels = () => {
   });
 
   return (
-    <Card>
+    <Card className="component-style">
       <CardHeader>
-        <CardTitle>
+        <CardTitle className="heading-style pb-2">
           Your year in pixels:
         </CardTitle>
         <CardDescription>
@@ -134,9 +134,9 @@ const YearOfPixels = () => {
         </SelectContent>
       </Select>
       {monthOrder.map((month) => (
-        <div key={month} className="flex items-center">
-          <div className="w-20 text-right mr-2 font-bold">{month}</div>
-          <div className="flex flex-wrap gap-1">
+        <div key={month} className="grid grid-cols-6 mt-3">
+          <div className="w-50 text-right mr-3 font-bold">{month}</div>
+          <div className="flex items-center flex-wrap gap-1 col-span-5">
             {groupedByMonth[month].map((entry) => (
               <div
                 key={entry.date}

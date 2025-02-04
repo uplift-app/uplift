@@ -2,6 +2,7 @@ import { RedirectToSignIn, useUser } from "@clerk/clerk-react";
 import ChartViewer from "../cards/ChartViewer";
 import PositiveEffects from "../PositiveEffects";
 import MoodLevels from "../MoodLevel";
+import YearOfPixels from "../YearOfPixels";
 
 function DashBoard() {
   const { user, isSignedIn } = useUser();
@@ -14,8 +15,11 @@ function DashBoard() {
             <h2 className="heading-style pb-2">Average Mood Level</h2>
             <MoodLevels />
           </div>
-          <ChartViewer />
           <PositiveEffects />
+          <YearOfPixels />
+          <div className="rounded-lg xl:col-span-2">
+          <ChartViewer />
+          </div>
         </div>
       </>
     );
