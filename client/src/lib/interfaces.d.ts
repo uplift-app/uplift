@@ -1,10 +1,10 @@
 export interface Mood {
-  moodType: string;
+  moodType: MoodTypes;
   intensity: number;
   moodTime: Time;
   date: Date;
 }
-
+export type MoodTypes = "happiness" | "energy" | "stress";
 export interface Activity {
   duration: number;
   activityType: string;
@@ -14,7 +14,7 @@ export interface Activity {
 
 export type MoodFromBackend = {
   _id: string;
-  moodType: string;
+  moodType: MoodTypes;
   intensity: number;
   userId: string;
   moodTime: Time;
@@ -45,13 +45,44 @@ export type Time =
   | "all day"
   | "";
 
+export type ChartTypes = "Area" | "Bar" | "Line";
+export interface CustomChart {
+  type: ChartTypes;
+  data: string[];
+}
+
+export type ActivityFromBackend = {
+  __v: number;
+  _id: string;
+  activityTime: string;
+  activityType: string;
+  createdAt: string;
+  date: string;
+  duration: number;
+  isHabit: boolean;
+  updatedAt: string;
+  userId: string;
+};
+
+export type MoodSortedByDate = {
+  date: string;
+  happiness?: number;
+  energy?: number;
+  stress?: number;
+};
+
+export type ActivitySortedByDate = {
+  date: string;
+  [key: string]: number | string;
+};
+
 export interface Quote {
   q: string;
   a: string;
   h: string;
 }
 
-interface RecentEntryItemProps {
+export interface RecentEntryItemProps {
   entry: MoodFromBackend | ActivityFromBackend;
   type: "mood" | "activity";
   handleEdit: (updatedEntry: ActivityFromBackend | MoodFromBackend) => void;

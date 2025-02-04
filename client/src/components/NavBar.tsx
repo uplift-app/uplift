@@ -7,22 +7,22 @@ function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
   return (
     <>
-      <div className='flex px-[4%] md:px-8 items-center h-16 border-b-[3px] border-[#cab904] font-comfortaa'>
-        <div className='hidden md:flex gap-8 font-extrabold w-[16rem]'>
-          <Link to='/dashboard' className='hover:underline'>
+      <div className="flex px-[4%] md:px-8 items-center h-16 border-b-[3px] border-[#cab904] font-comfortaa">
+        <div className="hidden md:flex gap-8 font-extrabold w-[16rem]">
+          <Link to="/dashboard" className="hover:underline">
             Dashboard
           </Link>
-          <Link to='/entries' className='hover:underline'>
+          <Link to="/entries" className="hover:underline">
             Entries
           </Link>
-          <Link to='/' className='hover:underline'>
+          <Link to="/" className="hover:underline">
             Home
           </Link>
         </div>
-        <div className='md:hidden w-[16rem] relative'>
+        <div className="md:hidden w-[16rem] relative">
           <img
-            src='icons/navbar/hamburger.svg'
-            alt=''
+            src="icons/navbar/hamburger.svg"
+            alt=""
             className={
               (openMenu ? "opacity-0 scale-y-[0%] pointer-events-none" : "") +
               " z-[11] w-7 !h-7 transition-all duration-500 cursor-pointer"
@@ -30,8 +30,8 @@ function Navbar() {
             onClick={() => setOpenMenu(true)}
           />
           <img
-            src='icons/navbar/xmark.svg'
-            alt=''
+            src="icons/navbar/xmark.svg"
+            alt=""
             className={
               (openMenu
                 ? "opacity-1"
@@ -41,8 +41,8 @@ function Navbar() {
             onClick={() => setOpenMenu(false)}
           />
         </div>
-        <div className='font-bold text-xl uppercase mx-auto'>Uplift</div>
-        <div className='w-[16rem] flex justify-end font-extrabold'>
+        <div className="font-bold text-xl uppercase mx-auto">Uplift</div>
+        <div className="w-[16rem] flex justify-end font-extrabold">
           {isSignedIn ? (
             <UserButton
               showName
@@ -75,10 +75,10 @@ function Navbar() {
             />
           ) : (
             <>
-              <Link to='/register' className='px-2'>
+              <Link to="/register" className="px-2">
                 Sign up
               </Link>
-              <Link to='/login'>Login</Link>
+              <Link to="/login">Login</Link>
             </>
           )}
         </div>
@@ -86,26 +86,26 @@ function Navbar() {
       <div
         className={
           (openMenu ? "translate-x-0" : "-translate-x-full") +
-          " fixed z-[10] top-16 left-0 md:hidden flex flex-col gap-8 py-6 px-10 bg-white transform transition-all duration-[500ms] rounded-br-lg font-comfortaa font-extrabold"
+          " fixed z-[10] top-16 left-0 md:hidden flex flex-col gap-8 py-6 px-10 bg-white transform transition-all duration-500 rounded-br-lg font-comfortaa font-extrabold"
         }
       >
         <Link
-          to='/dashboard'
-          className='hover:underline'
+          to="/dashboard"
+          className="hover:underline"
           onClick={() => setOpenMenu(false)}
         >
           Dashboard
         </Link>
         <Link
-          to='/entries'
-          className='hover:underline'
+          to="/entries"
+          className="hover:underline"
           onClick={() => setOpenMenu(false)}
         >
           Entries
         </Link>
         <Link
-          to='/'
-          className='hover:underline'
+          to="/"
+          className="hover:underline"
           onClick={() => setOpenMenu(false)}
         >
           Home

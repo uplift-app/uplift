@@ -16,7 +16,7 @@ interface ChartProps {
   timeFrame: string;
 }
 
-export function InteractiveChart({
+export function InteractiveLineChart({
   chartData,
   chartConfig,
   timeFrame,

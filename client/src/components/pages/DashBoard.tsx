@@ -4,6 +4,7 @@ import { formatName } from "@/lib/utils";
 import PositiveEffects from "../cards/PositiveEffects";
 import MoodLevels from "../cards/MoodLevel";
 import IntensityLevels from "../cards/IntensityLevel";
+import YearOfPixels from "../YearOfPixels";
 
 function DashBoard() {
   const { user, isSignedIn } = useUser();
@@ -24,6 +25,10 @@ function DashBoard() {
           </div>
           <ChartViewer />
           <PositiveEffects />
+          <YearOfPixels />
+          <div className='rounded-lg xl:col-span-2'>
+            <ChartViewer />
+          </div>
         </div>
       </>
     );

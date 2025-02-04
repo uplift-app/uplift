@@ -27,8 +27,6 @@ import {
 import { Mood, Time } from "@/lib/interfaces";
 import { errorHandler, postMood } from "@/lib/ApiService";
 
-//TODO: add tooltip for times
-
 const MoodInput = () => {
   const initialFormState: Mood = {
     moodType: "",
