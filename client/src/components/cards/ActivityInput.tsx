@@ -116,31 +116,31 @@ const ActivityInput = () => {
   }
 
   return (
-    <Card className='flex-grow m-1'>
+    <Card className="flex-grow m-1">
       <CardHeader>
         <CardTitle>Activity</CardTitle>
         <CardDescription>What did you do?</CardDescription>
       </CardHeader>
 
-      <CardContent className='space-y-4'>
+      <CardContent className="space-y-4">
         <DatePicker date={formState.date} setDate={handleChange} />
         <Select onValueChange={handleChange} value={formState.activityTime}>
           <SelectTrigger>
-            <SelectValue placeholder='Select a time' />
+            <SelectValue placeholder="Select a time" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value='morning'>Morning</SelectItem>
-              <SelectItem value='afternoon'>Afternoon</SelectItem>
-              <SelectItem value='evening'>Evening</SelectItem>
-              <SelectItem value='night'>Night</SelectItem>
-              <SelectItem value='all day'>All Day</SelectItem>
+              <SelectItem value="morning">Morning</SelectItem>
+              <SelectItem value="afternoon">Afternoon</SelectItem>
+              <SelectItem value="evening">Evening</SelectItem>
+              <SelectItem value="night">Night</SelectItem>
+              <SelectItem value="all day">All Day</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
         <Select onValueChange={handleChange} value={activity}>
-          <SelectTrigger data-testid='select-trigger'>
-            <SelectValue placeholder='Select an activity' />
+          <SelectTrigger data-testid="select-trigger">
+            <SelectValue placeholder="Select an activity" />
           </SelectTrigger>
           <SelectContent>
             {activityTypes.map((activity) => (
@@ -154,15 +154,15 @@ const ActivityInput = () => {
           <>
             <h1>{customActivityLabel}</h1>
             <Input
-              type='text'
-              id='custom-activity'
-              placeholder='Bowling'
+              type="text"
+              id="custom-activity"
+              placeholder="Bowling"
               value={customActivity}
               onChange={handleInputChange}
             />
           </>
         ) : null}
-        <h1>Activity duration</h1>
+        <h1 className="font-semibold pb-0">Duration</h1>
         <Slider
           defaultValue={[33]}
           max={240}
@@ -172,6 +172,7 @@ const ActivityInput = () => {
         />
         <h1>{convertToTimeString(formState.duration)}</h1>
         <Button
+          className="w-full"
           onClick={uploadActivity}
           disabled={!formState.activityTime || !formState.activityType}
         >

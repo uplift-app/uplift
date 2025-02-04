@@ -74,10 +74,10 @@ export function RecentEntries() {
   };
 
   return (
-    <div className='w-full component-style'>
-      <h2 className='heading-style pb-2'>Your recent entries</h2>
-      <div className='flex flex-col gap-4'>
-        <div className='flex flex-col gap-4'>
+    <div className="w-full component-style max-h-[80vh]">
+      <h2 className="heading-style pb-2">Your recent entries</h2>
+      <div className="flex flex-col gap-4 overflow-y-scroll max-h-[95%] ">
+        <div className="flex flex-col gap-4">
           {combinedEntries.map((entry) => (
             <RecentEntryItem
               key={entry._id}
@@ -91,17 +91,6 @@ export function RecentEntries() {
               }
             />
           ))}
-        </div>
-      </div>
-      <div className='flex items-center gap-6 bg-white bg-opacity-50 border border-solid border-[#838383] rounded-xl w-full p-4 shadow-sm'>
-        <img src='icons/faces/laugh-beam.svg' alt='' className='w-12' />
-        <img src='icons/faces/smile.svg' alt='' className='w-12' />
-        <img src='icons/faces/meh.svg' alt='' className='w-12' />
-        <img src='icons/faces/frown.svg' alt='' className='w-12' />
-        <img src='icons/faces/dizzy.svg' alt='' className='w-12' />
-        <div className='ml-auto flex gap-4 mb-auto'>
-          <img src='icons/edit.svg' alt='' className='w-6 cursor-pointer' />
-          <img src='icons/trash.svg' alt='' className='w-5 cursor-pointer' />
         </div>
       </div>
     </div>
