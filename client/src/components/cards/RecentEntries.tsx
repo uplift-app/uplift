@@ -14,29 +14,42 @@ export function RecentEntries() {
   const [recentActivities, setRecentActivities] = useState<
     ActivityFromBackend[]
   >([]);
+  const [combinedEntries, setCombinedEntries] = useState<
+    (MoodFromBackend | ActivityFromBackend)[]
+  >([]);
+
+  const fetchAndUpdateEntries = async () => {
+    try {
+      const [moods, activities] = await Promise.all([
+        getRecentMoods(),
+        getRecentActivities(),
+      ]);
+
+      const allEntries = [...moods, ...activities];
+
+      const sortedEntries = allEntries.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+
+      const limitedEntries = sortedEntries.slice(0, 10);
+
+      setRecentMoods(moods);
+      setRecentActivities(activities);
+      setCombinedEntries(limitedEntries);
+    } catch (error) {
+      errorHandler(error);
+    }
+  };
 
   useEffect(() => {
-    async function fetchRecentMoods() {
-      const recentMoods = await getRecentMoods();
-      setRecentMoods(recentMoods);
-    }
-    fetchRecentMoods();
-  }, []);
-
-  useEffect(() => {
-    async function fetchRecentActivities() {
-      const recentActivities = await getRecentActivities();
-      setRecentActivities(recentActivities);
-    }
-    fetchRecentActivities();
+    fetchAndUpdateEntries();
   }, []);
 
   const handleDeleteMood = async (id: string) => {
     try {
       const response = await deleteMood(id);
       if (response) {
-        const newMoods = await getRecentMoods();
-        setRecentMoods(newMoods);
+        fetchAndUpdateEntries();
       } else {
         console.error("Failed to delete the mood");
       }
@@ -49,8 +62,7 @@ export function RecentEntries() {
     try {
       const response = await deleteActivity(id);
       if (response) {
-        const newActivities = await getRecentActivities();
-        setRecentActivities(newActivities);
+        fetchAndUpdateEntries();
       } else {
         console.error("Failed to delete the activity");
       }
@@ -64,39 +76,32 @@ export function RecentEntries() {
   };
 
   const handleEditActivity = (id: string) => {
-    console.log(`Edit mood entry with ID: ${id}`);
+    console.log(`Edit activity entry with ID: ${id}`);
   };
 
   return (
     <div className='w-full bg-[#d7d7d7] rounded-lg p-4 shadow-md'>
-      <h2 className='text-[#162046] font-semibold text-lg'>
+      <h2 className='text-[#162046] font-semibold text-lg pb-2'>
         Your recent entries
       </h2>
-      <div className='grid grid-cols-1 sm:grid-cols-2 gap-8'>
+      <div className='flex flex-col gap-8'>
         <div className='space-y-4'>
-          <h3 className='font-semibold text-xl mb-4'>Recent Moods</h3>
           <div className='flex flex-col gap-4'>
-            {recentMoods.map((mood) => (
+            {combinedEntries.map((entry) => (
               <RecentEntryItem
-                key={mood._id}
-                entry={mood}
-                type='mood'
-                handleEdit={handleEditMood}
-                handleDelete={handleDeleteMood}
-              />
-            ))}
-          </div>
-        </div>
-        <div className='space-y-4'>
-          <h3 className='font-semibold text-xl mb-4'>Recent Activities</h3>
-          <div className='flex flex-col gap-4'>
-            {recentActivities.map((activity) => (
-              <RecentEntryItem
-                key={activity._id}
-                entry={activity}
-                type='activity'
-                handleEdit={handleEditActivity}
-                handleDelete={handleDeleteActivity}
+                key={entry._id}
+                entry={entry}
+                type={entry.hasOwnProperty("moodType") ? "mood" : "activity"}
+                handleEdit={
+                  entry.hasOwnProperty("moodType")
+                    ? handleEditMood
+                    : handleEditActivity
+                }
+                handleDelete={
+                  entry.hasOwnProperty("moodType")
+                    ? handleDeleteMood
+                    : handleDeleteActivity
+                }
               />
             ))}
           </div>

@@ -26,7 +26,7 @@ export function RecentEntryItem({
     return formattedDate.toLocaleDateString(undefined, options);
   };
 
-  const formattedDate = formatDate(entry.createdAt);
+  const formattedDate = formatDate(entry.date);
 
   return (
     <div className='flex items-center gap-6 bg-white rounded-xl w-full p-4 text-black shadow-sm'>
@@ -38,10 +38,11 @@ export function RecentEntryItem({
         <div>{formattedDate}</div>
         {type === "mood" && (
           <>
-            <div>{`${
+            <div>{`Mood: ${
               (entry as MoodFromBackend).moodType[0].toUpperCase() +
               (entry as MoodFromBackend).moodType.slice(1)
-            } - ${(entry as MoodFromBackend).intensity}`}</div>
+            } `}</div>
+            <div>Intensity: {(entry as MoodFromBackend).intensity}</div>
             <div>{`${
               (entry as MoodFromBackend).moodTime[0].toUpperCase() +
               (entry as MoodFromBackend).moodTime.slice(1)
@@ -57,7 +58,7 @@ export function RecentEntryItem({
             <div>{`Duration: ${
               (entry as ActivityFromBackend).duration
             } mins`}</div>
-            <div>{`Time: ${
+            <div>{`${
               (entry as ActivityFromBackend).activityTime[0].toUpperCase() +
               (entry as ActivityFromBackend).activityTime.slice(1)
             }`}</div>
