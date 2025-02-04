@@ -1,6 +1,5 @@
 import { AnalysisData } from "@/contexts/interfaces";
 import { Mood, Activity, MoodFromBackend, ActivityFromBackend } from "./interfaces";
-//TODO: remove any types
 
 const BASE_URL = "http://localhost:3000";
 
@@ -72,7 +71,6 @@ export const postActivity = async (
       body: JSON.stringify(activity),
       headers: { "content-type": "application/json" },
     };
-    console.log(makeServerRequest("activity", token, options));
     return await makeServerRequest("activity", token, options);
   } catch (error) {
     const errorMessage =
@@ -97,7 +95,6 @@ export const postMood = async (
         "Content-Type": "application/json",
       },
     };
-    console.log(makeServerRequest("mood", token, options));
     return await makeServerRequest("mood", token, options);
   } catch (error) {
     const errorMessage =

@@ -28,8 +28,6 @@ import { Mood, Time } from "@/lib/interfaces";
 import { postMood } from "@/lib/ApiService";
 import { useAuth } from "@clerk/clerk-react";
 
-//TODO: add tooltip for times
-
 const MoodInput = () => {
   const { getToken } = useAuth();
   const initialFormState: Mood = {

@@ -60,7 +60,6 @@ const YearOfPixels = () => {
       const token = await getToken();
       if (token) {
         const data = await getMoods(token);
-        console.log(data);
         if (filter === "Avg") {
           return calculateAverageMoodPastYear(data);
         } else {
@@ -85,7 +84,6 @@ const YearOfPixels = () => {
   useEffect(() => {
     const fetchData = async () => {
       const moods = await fetchMoods();
-      console.log(moods);
       if (moods) {
         setAvgMoodPerDate(moods);
       }
