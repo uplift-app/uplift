@@ -2,6 +2,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import MoodInput from "../cards/MoodInput";
 import ActivityInput from "../cards/ActivityInput";
 import {
+  Activity,
   ActivityFromBackend,
   Mood,
   MoodFromBackend,
@@ -118,7 +119,18 @@ export function RecentEntryItem({
                   }
                 />
               )}
-              {type === "activity" && <ActivityInput />}
+              {type === "activity" && (
+                <ActivityInput
+                  activityProp={entry as unknown as Activity}
+                  edit={true}
+                  clickHandler={(activity: Activity) =>
+                    handleEdit({
+                      _id: entry._id,
+                      ...activity,
+                    } as unknown as ActivityFromBackend)
+                  }
+                />
+              )}
               <Dialog.Close className="mt-4 text-black hover:bg-gray-200 p-2 rounded absolute top-8 right-12">
                 <X />
               </Dialog.Close>

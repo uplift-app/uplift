@@ -50,7 +50,7 @@ const initialFormState: Mood = {
 const MoodInput = ({
   mood = initialFormState,
   edit = false,
-  clickHandler,
+  clickHandler = () => {},
 }: MoodInputProps) => {
   const [formState, setFormState] = useState<Mood>(mood);
 

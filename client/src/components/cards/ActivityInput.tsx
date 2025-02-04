@@ -19,17 +19,22 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { DatePicker } from "@/components/ui/datepicker";
 import { errorHandler, getActivityTypes, postActivity } from "@/lib/ApiService";
-import { Activity, Time } from "@/lib/interfaces";
+import { Activity, ActivityInputProps, Time } from "@/lib/interfaces";
 
-const ActivityInput = () => {
+const initialFormState: Activity = {
+  activityType: "",
+  activityTime: "",
+  duration: 33,
+  date: new Date(),
+};
+
+const ActivityInput = ({
+  activityProp = initialFormState,
+  edit = false,
+  clickHandler = () => {},
+}: ActivityInputProps) => {
   const customActivityLabel = "Add a custom activity";
-  const initialFormState: Activity = {
-    activityType: "",
-    activityTime: "",
-    duration: 33,
-    date: new Date(),
-  };
-  const [formState, setFormState] = useState<Activity>(initialFormState);
+  const [formState, setFormState] = useState<Activity>(activityProp);
   const [activityTypes, setActivityTypes] = useState<string[]>([
     customActivityLabel,
   ]);
@@ -173,10 +178,10 @@ const ActivityInput = () => {
         <h1>{convertToTimeString(formState.duration)}</h1>
         <Button
           className="w-full"
-          onClick={uploadActivity}
+          onClick={edit ? () => clickHandler(formState) : uploadActivity}
           disabled={!formState.activityTime || !formState.activityType}
         >
-          Submit
+          {edit ? "Edit" : "Submit"}
         </Button>
       </CardContent>
     </Card>
