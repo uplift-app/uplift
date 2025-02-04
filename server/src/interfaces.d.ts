@@ -41,6 +41,8 @@ export interface QueryFilter {
   };
 }
 
-interface JwtProps {
-  userId: string;
+export interface Quote {
+  q: string;
+  a: string;
+  h: string;
 }

@@ -4,7 +4,7 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-} from "./ui/card";
+} from "../ui/card";
 import { useAnalysisDataContext } from "@/contexts/AnalysisDataContext";
 import {
   Select,
@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
   SelectGroup,
-} from "./ui/select";
+} from "../ui/select";
 import { useEffect, useState } from "react";
 import {
   Carousel,
@@ -21,7 +21,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "./ui/carousel";
+} from "../ui/carousel";
 
 interface Ieffect {
   moodType: string;
@@ -66,8 +66,8 @@ const PositiveEffects = () => {
     return filteredEffects.map((effect) => {
       const formattedMood = moodMapping[effect.moodType];
       return (
-        <CarouselItem className="basis-full sm:basis-1/2">
-          <Card className="w-full">
+        <CarouselItem className='basis-full sm:basis-1/2'>
+          <Card className='w-full'>
             <CardHeader>
               <CardTitle>
                 {formattedMood}{" "}
@@ -110,44 +110,44 @@ const PositiveEffects = () => {
   };
 
   return (
-    <Card className="overflow-hidden component-style !p-0">
+    <Card className='overflow-hidden component-style !p-0'>
       <CardHeader>
-        <CardTitle className="heading-style">Positive Effects</CardTitle>
+        <CardTitle className='heading-style'>Positive Effects</CardTitle>
         <CardDescription>
           Understand the positive effects of your activities and moods.
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="mx-10">
+      <CardContent className='space-y-4'>
+        <div className='mx-10'>
           <Select onValueChange={(value) => setMood(value)}>
-            <SelectTrigger className="mb-4">
-              <SelectValue placeholder="Select a mood" />
+            <SelectTrigger className='mb-4'>
+              <SelectValue placeholder='Select a mood' />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem value="energy">Energy</SelectItem>
-                <SelectItem value="happiness">Happiness</SelectItem>
-                <SelectItem value="stress">Relaxation</SelectItem>
-                <SelectItem value="show all">Show All</SelectItem>
+                <SelectItem value='energy'>Energy</SelectItem>
+                <SelectItem value='happiness'>Happiness</SelectItem>
+                <SelectItem value='stress'>Relaxation</SelectItem>
+                <SelectItem value='show all'>Show All</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
           <Select onValueChange={(value) => setTime(value)}>
             <SelectTrigger>
-              <SelectValue placeholder="Select a time" />
+              <SelectValue placeholder='Select a time' />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem value="morning">Morning</SelectItem>
-                <SelectItem value="afternoon">Afternoon</SelectItem>
-                <SelectItem value="evening">Evening</SelectItem>
-                <SelectItem value="all day">All Day</SelectItem>
-                <SelectItem value="show all">Show All</SelectItem>
+                <SelectItem value='morning'>Morning</SelectItem>
+                <SelectItem value='afternoon'>Afternoon</SelectItem>
+                <SelectItem value='evening'>Evening</SelectItem>
+                <SelectItem value='all day'>All Day</SelectItem>
+                <SelectItem value='show all'>Show All</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
         </div>
-        <Carousel className="rounded-lg flex gap-2 items-center ">
+        <Carousel className='rounded-lg flex gap-2 items-center '>
           <CarouselPrevious />
           <CarouselContent>
             {filteredEffects.length > 0 ? (

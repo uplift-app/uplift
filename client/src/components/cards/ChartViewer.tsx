@@ -15,20 +15,15 @@ import { transformChartData } from "@/lib/chartview-functions";
 import TimeFrameSelector from "../inputs/TimeFrameSelector";
 import { getMoods } from "@/lib/ApiService";
 import { MoodFromBackend, MoodSortedByDate } from "@/lib/interfaces";
-import { useAuth } from "@clerk/clerk-react";
 
 const ChartViewer = () => {
-  const { getToken } = useAuth();
   // Fetch this data from the backend
   const [chartData, setChartData] = useState<MoodFromBackend[]>([]);
   const fetchMoods = async () => {
     try {
-      const token = await getToken();
-      if (token) {
-        const data = await getMoods(token);
-        setChartData(data);
-        setDataFilteredAndSorted(transformChartData(data, timeFrame));
-      }
+      const data = await getMoods();
+      setChartData(data);
+      setDataFilteredAndSorted(transformChartData(data, timeFrame));
     } catch (error) {
       console.error(
         error instanceof Error
@@ -90,17 +85,17 @@ const ChartViewer = () => {
   };
 
   return (
-    <Card className="component-style !p-0">
+    <Card className='component-style !p-0'>
       <CardHeader>
-        <CardTitle className="heading-style">
+        <CardTitle className='heading-style'>
           Visualise your progress.
         </CardTitle>
         <CardDescription>Plot your moods and activities</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col space-y-4">
-          <div className=" gap-2">
-            <div className="flex gap-2 overflow-scroll justify-center pb-2 flex-wrap">
+        <div className='flex flex-col space-y-4'>
+          <div className=' gap-2'>
+            <div className='flex gap-2 overflow-scroll justify-center pb-2 flex-wrap'>
               {Object.entries(chartConfig).map(
                 ([chartLabel, chartValue], idx) => (
                   <div

@@ -14,21 +14,27 @@ export interface Activity {
 
 export type MoodFromBackend = {
   _id: string;
-  moodType: "happiness" | "stress" | "energy"; // Add other mood types if needed
+  moodType: "happiness" | "stress" | "energy";
   intensity: number;
   userId: string;
-  moodTime: string;
+  moodTime: Time;
   date: string;
   __v: number;
   createdAt: string;
   updatedAt: string;
 };
 
-export type MoodSortedByDate = {
+export type ActivityFromBackend = {
+  _id: string;
+  duration: number;
+  activityType: string;
+  userId: string;
+  activityTime: Time;
+  isHabit: boolean;
   date: string;
-  happiness?: number;
-  energy?: number;
-  stress?: number;
+  __v: number;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type Time =
@@ -38,3 +44,16 @@ export type Time =
   | "night"
   | "all day"
   | "";
+
+export interface Quote {
+  q: string;
+  a: string;
+  h: string;
+}
+
+interface RecentEntryItemProps {
+  entry: MoodFromBackend | ActivityFromBackend;
+  type: "mood" | "activity";
+  handleEdit: (id: string) => void;
+  handleDelete: (id: string) => void;
+}
