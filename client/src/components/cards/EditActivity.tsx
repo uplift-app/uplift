@@ -120,7 +120,7 @@ const EditActivity = ({
     <Card className='flex-grow m-1'>
       <CardHeader>
         <CardTitle>Activity</CardTitle>
-        <CardDescription>What did you do?</CardDescription>
+        <CardDescription>Edit existing activity</CardDescription>
       </CardHeader>
 
       <CardContent className='space-y-4'>

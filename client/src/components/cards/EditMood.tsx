@@ -105,7 +105,7 @@ const EditMood = ({
     <Card className='flex-grow m-1'>
       <CardHeader>
         <CardTitle>Mood</CardTitle>
-        <CardDescription>How are you feeling?</CardDescription>
+        <CardDescription>Edit existing mood</CardDescription>
       </CardHeader>
 
       <CardContent className='space-y-4'>
