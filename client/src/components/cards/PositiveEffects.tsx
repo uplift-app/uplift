@@ -63,10 +63,10 @@ const PositiveEffects = () => {
       stress: "Relaxation",
     };
 
-    return filteredEffects.map((effect) => {
+    return filteredEffects.map((effect, index) => {
       const formattedMood = moodMapping[effect.moodType];
       return (
-        <CarouselItem className='basis-full sm:basis-1/2'>
+        <CarouselItem className='basis-full sm:basis-1/2' key={index}>
           <Card className='w-full'>
             <CardHeader>
               <CardTitle>
