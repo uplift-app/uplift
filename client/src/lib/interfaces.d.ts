@@ -1,7 +1,7 @@
 export interface Mood {
   moodType: string;
   intensity: number;
-  moodTime: Time | "";
+  moodTime: Time;
   date: Date;
 }
 
