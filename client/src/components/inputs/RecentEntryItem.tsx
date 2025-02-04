@@ -1,6 +1,9 @@
+import * as Dialog from "@radix-ui/react-dialog";
+import MoodInput from "../cards/MoodInput";
+import ActivityInput from "../cards/ActivityInput";
 import {
-  MoodFromBackend,
   ActivityFromBackend,
+  MoodFromBackend,
   RecentEntryItemProps,
 } from "@/lib/interfaces";
 
@@ -66,12 +69,26 @@ export function RecentEntryItem({
         )}
       </div>
       <div className='ml-auto flex gap-4 mb-auto'>
-        <div
-          className='text-2xl cursor-pointer'
-          onClick={() => handleEdit(entry._id)}
-        >
-          ✍️
-        </div>
+        <Dialog.Root>
+          <Dialog.Trigger
+            className='text-2xl cursor-pointer'
+            // onClick={() => handleEdit(entry._id)}
+          >
+            ✍️
+          </Dialog.Trigger>
+          <Dialog.Portal>
+            <Dialog.Overlay className='fixed inset-0 bg-black opacity-30' />
+            <Dialog.Content className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 p-8 bg-white rounded-lg shadow-lg'>
+              <Dialog.Title></Dialog.Title>
+              <Dialog.Description></Dialog.Description>
+              {type === "mood" && <MoodInput />}
+              {type === "activity" && <ActivityInput />}
+              <Dialog.Close className='mt-4 bg-gray-500 text-white p-2 rounded'>
+                Close
+              </Dialog.Close>
+            </Dialog.Content>
+          </Dialog.Portal>
+        </Dialog.Root>
         <div
           className='text-2xl cursor-pointer'
           onClick={() => handleDelete(entry._id)}
@@ -82,3 +99,5 @@ export function RecentEntryItem({
     </div>
   );
 }
+
+export default RecentEntryItem;

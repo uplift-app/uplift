@@ -5,6 +5,8 @@ import {
   deleteMood,
   deleteActivity,
   errorHandler,
+  editMood,
+  editActivity,
 } from "@/lib/ApiService";
 import { ActivityFromBackend, MoodFromBackend } from "@/lib/interfaces";
 import { RecentEntryItem } from "../inputs/RecentEntryItem";
@@ -71,12 +73,22 @@ export function RecentEntries() {
     }
   };
 
-  const handleEditMood = (id: string) => {
-    console.log(`Edit mood entry with ID: ${id}`);
+  const handleEditMood = async (moodData: MoodFromBackend) => {
+    try {
+      const response = await editMood(moodData);
+      return response;
+    } catch (error) {
+      errorHandler(error);
+    }
   };
 
-  const handleEditActivity = (id: string) => {
-    console.log(`Edit activity entry with ID: ${id}`);
+  const handleEditActivity = async (activityData: ActivityFromBackend) => {
+    try {
+      const response = await editActivity(activityData);
+      return response;
+    } catch (error) {
+      errorHandler(error);
+    }
   };
 
   return (
@@ -110,3 +122,5 @@ export function RecentEntries() {
     </div>
   );
 }
+
+export default RecentEntries;
