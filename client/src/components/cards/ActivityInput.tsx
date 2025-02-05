@@ -39,7 +39,7 @@ const ActivityInput = ({
     customActivityLabel,
   ]);
 
-  const [activity, setActivity] = useState("");
+  const [activity, setActivity] = useState(activityProp.activityType);
   const [customActivity, setCustomActivity] = useState("");
 
   useEffect(() => {
@@ -157,7 +157,7 @@ const ActivityInput = ({
         </Select>
         {activity === customActivityLabel ? (
           <>
-            <h1>{customActivityLabel}</h1>
+            <h3>{customActivityLabel}</h3>
             <Input
               type="text"
               id="custom-activity"
@@ -167,7 +167,7 @@ const ActivityInput = ({
             />
           </>
         ) : null}
-        <h1 className="font-semibold pb-0">Duration</h1>
+        <h3 className="font-semibold pb-0">Duration</h3>
         <Slider
           defaultValue={[33]}
           max={240}
@@ -175,7 +175,7 @@ const ActivityInput = ({
           onValueChange={handleChange}
           value={[formState.duration]}
         />
-        <h1>{convertToTimeString(formState.duration)}</h1>
+        <p>{convertToTimeString(formState.duration)}</p>
         <Button
           className="w-full"
           onClick={edit ? () => clickHandler(formState) : uploadActivity}

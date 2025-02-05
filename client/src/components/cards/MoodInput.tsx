@@ -140,7 +140,7 @@ const MoodInput = ({
             </SelectGroup>
           </SelectContent>
         </Select>
-        <h1 className="font-semibold pb-0">Intensity</h1>
+        <h3 className="font-semibold pb-0">Intensity</h3>
         <Slider
           defaultValue={[5]}
           min={0}

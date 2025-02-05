@@ -35,7 +35,7 @@ function EntriesPage() {
     username = formatName(username);
     return (
       <>
-        <div className="grid xl:grid-cols-[2fr_3fr] gap-4 items-stretch pt-10">
+        <div className="grid xl:grid-cols-[2fr_3fr] gap-4 items-stretch pt-2">
           <div className="flex flex-col items-center gap-4">
             <div className="flex flex-col justify-center items-center w-full component-style gap-2 grow">
               Quote of the day
