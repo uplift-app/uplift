@@ -1,10 +1,10 @@
 import { errorHandler, getQuote } from "@/lib/ApiService";
-import { formatName } from "@/lib/utils";
 import { RedirectToSignIn, useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
 import ActivityInput from "../cards/ActivityInput";
 import MoodInput from "../cards/MoodInput";
 import { RecentEntries } from "../cards/RecentEntries";
+import LoadingPage from "./LoadingPage";
 
 function EntriesPage() {
   const { user, isSignedIn } = useUser();
@@ -31,8 +31,6 @@ function EntriesPage() {
   }, []);
 
   if (user && isSignedIn) {
-    let username = user.username ? user.username : "User";
-    username = formatName(username);
     return (
       <>
         <div className="grid xl:grid-cols-[2fr_3fr] gap-4 items-stretch pt-2">
@@ -40,7 +38,7 @@ function EntriesPage() {
             <div className="flex flex-col justify-center items-center w-full component-style gap-2 grow">
               <h2 className="heading-style">Quote of the day</h2>
               <p className="text-3xl font-medium tracking-tight text-center">
-                “{quote || "Loading quote..."}”
+                {quote || <LoadingPage />}
               </p>
               <p className="italic text-lg">{author || ""}</p>
             </div>

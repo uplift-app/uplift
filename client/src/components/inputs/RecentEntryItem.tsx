@@ -1,6 +1,4 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import MoodInput from "../cards/MoodInput";
-import ActivityInput from "../cards/ActivityInput";
 import {
   Activity,
   ActivityFromBackend,
@@ -15,6 +13,9 @@ import Smiley2 from "../smileys/Smiley2";
 import Smiley3 from "../smileys/Smiley3";
 import Smiley4 from "../smileys/Smiley4";
 import { Card } from "../ui/card";
+import { useState } from "react";
+import MoodInput from "../cards/MoodInput";
+import ActivityInput from "../cards/ActivityInput";
 
 const smileyArray = [
   <Smiley0 />,
@@ -40,13 +41,7 @@ export function RecentEntryItem({
     };
     return formattedDate.toLocaleDateString(undefined, options);
   };
-
   const formattedDate = formatDate(entry.date);
-  console.log(
-    "moodintensity",
-    (entry as MoodFromBackend).intensity,
-    Math.min(Math.floor((entry as MoodFromBackend).intensity) / 2, 4)
-  );
 
   return (
     <Card className="flex items-center gap-6 w-full p-4">

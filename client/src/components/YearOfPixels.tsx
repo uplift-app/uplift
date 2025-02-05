@@ -1,5 +1,4 @@
 import { getMoods } from "@/lib/ApiService";
-import { useAuth } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
 import {
   Card,
@@ -16,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import LoadingPage from "./pages/LoadingPage";
 
 interface MoodEntry {
   date: string;
@@ -30,7 +30,7 @@ interface AvgMoodEntry {
 const YearOfPixels = () => {
   const [avgMoodPerDate, setAvgMoodPerDate] = useState<AvgMoodEntry[]>([]);
   const [filter, setFilter] = useState<string>("Avg");
-  const { getToken } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
 
   const calculateAverageMoodPastYear = (
     moodData: MoodEntry[]
@@ -92,14 +92,15 @@ const YearOfPixels = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchData = async () => {
       const moods = await fetchMoods();
       if (moods) {
         setAvgMoodPerDate(moods);
       }
     };
-    fetchData();
-  }, [getToken, filter]);
+    fetchData().then(() => setIsLoading(false));
+  }, [filter]);
 
   const groupedByMonth: Record<string, AvgMoodEntry[]> = {};
   const monthOrder: string[] = [];
@@ -126,22 +127,24 @@ const YearOfPixels = () => {
           represents 0 and green represents 10.
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <Select onValueChange={(value) => setFilter(value)}>
-          <SelectTrigger>
-            <SelectValue placeholder="Select a mood." />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="energy">Energy</SelectItem>
-              <SelectItem value="happiness">Happiness</SelectItem>
-              <SelectItem value="stress">Stress</SelectItem>
-              <SelectItem value="Avg">Show Average</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        {monthOrder.length > 0 ? (
-          monthOrder.map((month) => (
+      {isLoading ? (
+        <LoadingPage />
+      ) : (
+        <CardContent>
+          <Select onValueChange={(value) => setFilter(value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select a mood." />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="energy">Energy</SelectItem>
+                <SelectItem value="happiness">Happiness</SelectItem>
+                <SelectItem value="stress">Stress</SelectItem>
+                <SelectItem value="Avg">Show Average</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          {monthOrder.map((month) => (
             <div key={month} className="grid grid-cols-6 mt-3">
               <div className="w-50 text-right mr-3 font-bold">{month}</div>
               <div className="flex items-center flex-wrap gap-1 col-span-5">
@@ -161,13 +164,9 @@ const YearOfPixels = () => {
                 ))}
               </div>
             </div>
-          ))
-        ) : (
-          <p className="mt-2">
-            No data available yet. Please add some mood entries first.
-          </p>
-        )}
-      </CardContent>
+          ))}
+        </CardContent>
+      )}
     </Card>
   );
 };

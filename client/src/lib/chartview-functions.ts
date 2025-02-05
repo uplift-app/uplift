@@ -1,6 +1,12 @@
 //MoodFromBackend is exported for the dummydata.
 
-import { ActivityFromBackend, ActivitySortedByDate, MoodFromBackend, MoodSortedByDate, MoodTypes } from "./interfaces";
+import {
+  ActivityFromBackend,
+  ActivitySortedByDate,
+  MoodFromBackend,
+  MoodSortedByDate,
+  MoodTypes,
+} from "./interfaces";
 const moodTypes: MoodTypes[] = ["happiness", "stress", "energy"];
 
 // DISCLAIMER transformChartData was written with AI
@@ -136,11 +142,10 @@ export const interpolateMoodData = (
   return moodDataSortedByDate;
 };
 
-
 export const transformActivityData = (
   activityDataFromBackend: ActivityFromBackend[],
   timeFrame: string,
-  activityTypes: string[],
+  activityTypes: string[]
 ): any => {
   const groupedData: Record<string, ActivitySortedByDate> =
     activityDataFromBackend.reduce(
@@ -178,9 +183,11 @@ export const transformActivityData = (
       npoints = 0;
   }
   // return groupedData;
-  return interpolateActivityData(Object.values(groupedData), activityTypes).slice(npoints);
+  return interpolateActivityData(
+    Object.values(groupedData),
+    activityTypes
+  ).slice(npoints);
 };
-
 
 export const interpolateActivityData = (
   activityDataSortedByDate: ActivitySortedByDate[],
@@ -198,15 +205,18 @@ export const interpolateActivityData = (
           baseValue = activityDataSortedByDate[i - 1][activityTypes[j]];
         }
         // Call the function to fill the space
-        fillActivitySpace(activityDataSortedByDate, i, activityTypes[j], baseValue);
+        fillActivitySpace(
+          activityDataSortedByDate,
+          i,
+          activityTypes[j],
+          baseValue
+        );
       }
     }
   }
 
   return activityDataSortedByDate;
 };
-
-
 
 export const fillActivitySpace = (
   activityDataSortedByDate: ActivitySortedByDate[],
@@ -226,9 +236,9 @@ export const fillActivitySpace = (
   }
   // If we're at the end of the data, set it to the previous mood value.
   else if (index === activityDataSortedByDate.length - 1) {
-    activityDataSortedByDate[index][activityType] = activityDataSortedByDate[index - 1][
-      activityType
-    ] as never;
+    activityDataSortedByDate[index][activityType] = activityDataSortedByDate[
+      index - 1
+    ][activityType] as never;
   }
 
   let baseIndex = index + 1;
@@ -257,8 +267,8 @@ export const fillActivitySpace = (
   }
   // If we don't find a future value, spread value from behind
   else if (nextValue === undefined) {
-    activityDataSortedByDate[index][activityType] = activityDataSortedByDate[index - 1][
-      activityType
-    ] as never;
+    activityDataSortedByDate[index][activityType] = activityDataSortedByDate[
+      index - 1
+    ][activityType] as never;
   }
 };

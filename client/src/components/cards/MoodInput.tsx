@@ -108,8 +108,8 @@ const MoodInput = ({
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              {timeValues.map((timeValue) => (
-                <SelectItem value={timeValue}>
+              {timeValues.map((timeValue, index) => (
+                <SelectItem key={index} value={timeValue}>
                   {timeValue[0].toUpperCase() + timeValue.slice(1)}
                 </SelectItem>
               ))}
@@ -122,8 +122,8 @@ const MoodInput = ({
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              {moodTypeArray.map((moodType) => (
-                <SelectItem value={moodType.value}>
+              {moodTypeArray.map((moodType, index) => (
+                <SelectItem key={index} value={moodType.value}>
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger>

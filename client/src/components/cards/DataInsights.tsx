@@ -12,7 +12,7 @@ const DataInsights = () => {
 
   if (!analysisData || Object.keys(analysisData).length === 0) {
     return (
-      <Card className='w-[400px]'>
+      <Card className="w-[400px]">
         <CardHeader>
           <CardTitle>Data Insights</CardTitle>
           <CardDescription>
@@ -54,15 +54,15 @@ const DataInsights = () => {
   };
 
   return (
-    <Card className='w-[500px]'>
+    <Card className="w-[500px]">
       <CardHeader>
         <CardTitle>Data Insights</CardTitle>
         <CardDescription>
           Understand your mood patterns and activities.
         </CardDescription>
       </CardHeader>
-      <CardContent className='space-y-4'>
-        <h2 className='text-lg font-semibold'>Insights</h2>
+      <CardContent className="space-y-4">
+        <h2 className="text-lg font-semibold">Insights</h2>
         {formatMoodInsights()}
         <p>{bestMoodTime()}</p>
       </CardContent>

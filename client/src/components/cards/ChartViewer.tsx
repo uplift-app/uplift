@@ -16,11 +16,13 @@ import {
 import { ActivityFromBackend, CustomChart } from "@/lib/interfaces";
 import MoodChart from "../MoodChart";
 import CustomChartsWrapper from "../CustomChartsWrapper";
+import LoadingPage from "../pages/LoadingPage";
 
 const ChartViewer = () => {
   // Fetch this data from the backend
   const [activityData, setActivityData] = useState<ActivityFromBackend[]>([]);
   const [activityTypes, setActivityTypes] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchActivityData = async () => {
     try {
@@ -35,7 +37,8 @@ const ChartViewer = () => {
 
   // Fetch the mood and activity data from backend on first render
   useEffect(() => {
-    fetchActivityData();
+    setIsLoading(true);
+    fetchActivityData().then(() => setIsLoading(false));
   }, []);
 
   // Initialise the chart configuration
@@ -48,18 +51,22 @@ const ChartViewer = () => {
         <CardTitle className="heading-style">Visualise your progress</CardTitle>
         <CardDescription>Plot your moods and activities</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="flex gap-4 items-stretch flex-wrap">
-          <MoodChart />
-          <CustomChartsWrapper
-            activityTypes={activityTypes}
-            customCharts={customCharts}
-            setCustomCharts={setCustomCharts}
-            activityData={activityData}
-          />
-        </div>
-        <AddToChart setCustomCharts={setCustomCharts} />
-      </CardContent>
+      {isLoading ? (
+        <LoadingPage />
+      ) : (
+        <CardContent className="space-y-4">
+          <div className="flex gap-4 items-stretch flex-wrap">
+            <MoodChart />
+            <CustomChartsWrapper
+              activityTypes={activityTypes}
+              customCharts={customCharts}
+              setCustomCharts={setCustomCharts}
+              activityData={activityData}
+            />
+          </div>
+          <AddToChart setCustomCharts={setCustomCharts} />
+        </CardContent>
+      )}
     </Card>
   );
 };

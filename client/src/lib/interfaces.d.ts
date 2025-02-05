@@ -18,7 +18,20 @@ export type MoodFromBackend = {
   intensity: number;
   userId: string;
   moodTime: Time;
-  date: string;
+  date: Date;
+  __v: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ActivityFromBackend = {
+  _id: string;
+  duration: number;
+  activityType: string;
+  userId: string;
+  activityTime: Time;
+  isHabit: boolean;
+  date: Date;
   __v: number;
   createdAt: string;
   updatedAt: string;

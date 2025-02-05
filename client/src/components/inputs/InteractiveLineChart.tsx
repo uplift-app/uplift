@@ -6,7 +6,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 import { AxisInterval } from "recharts/types/util/types";
 
@@ -22,34 +22,40 @@ export function InteractiveLineChart({
   timeFrame,
 }: ChartProps) {
   const [interval, setInterval] = useState<AxisInterval>("preserveStartEnd");
+  useEffect(() => {
+    switch (timeFrame) {
+      case "Last week":
+        setInterval("preserveStartEnd");
+        break;
+      case "Last month":
+        setInterval(6);
+        break;
+      case "Last 3 months":
+        setInterval(26);
+        break;
+      case "Last 6 months":
+        setInterval(26);
+        break;
+      case "All time":
+        setInterval(26);
+        break;
+      default:
+        setInterval("preserveStartEnd");
+        break;
+    }
+  }, [timeFrame]);
+
   const formatDate = (timeFrame: string, dateString: string) => {
     const date = new Date(dateString);
     const dayOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][
       date.getDay()
     ];
     const month = date.toLocaleString("en-US", { month: "short" });
-
-    switch (timeFrame) {
-      case "Last week":
-        setInterval("preserveStartEnd");
-        return dayOfWeek;
-      case "Last month":
-        setInterval(6);
-        return dayOfWeek;
-      case "Last 3 months":
-        setInterval(26);
-        return month;
-      case "Last 6 months":
-        setInterval(26);
-        return month;
-      case "All time":
-        setInterval(26);
-        return month;
-      default:
-        return dayOfWeek;
-    }
+    return ["Last week", "Last month"].includes(timeFrame) ? dayOfWeek : month;
   };
+
   const chartKeys = Object.keys(chartConfig);
+
   return (
     <ChartContainer config={chartConfig} className="w-full bg-white rounded-lg">
       <LineChart

@@ -34,6 +34,11 @@
     --energy: 12 76% 61%;
     --happiness: 173 58% 39%;
     --stress: 197 37% 24%;
+    --morning: 56 100% 58%;
+    --afternoon: 43 100% 58%;
+    --evening: 14 100% 54%;
+    --night: 249 100% 54%;
+    --all-day: 115 100% 66%;
   }
   .dark {
     --background: 20 14.3% 4.1%;
