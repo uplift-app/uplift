@@ -1,8 +1,21 @@
 import { getMoods } from "@/lib/ApiService";
 import { useAuth } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 interface MoodEntry {
   date: string;
@@ -22,8 +35,8 @@ const YearOfPixels = () => {
   const calculateAverageMoodPastYear = (
     moodData: MoodEntry[]
   ): AvgMoodEntry[] => {
-    const moodMap: Record<string, { totalIntensity: number; count: number }> = {};
-
+    const moodMap: Record<string, { totalIntensity: number; count: number }> =
+      {};
 
     moodData.forEach(({ date, intensity }) => {
       const formattedDate = date.split("T")[0];
@@ -57,14 +70,13 @@ const YearOfPixels = () => {
 
   const fetchMoods = async () => {
     try {
-        const data = await getMoods();
-        if (filter === "Avg") {
-          return calculateAverageMoodPastYear(data);
-        } else {
-          const filteredData = data.filter((entry) => entry.moodType === filter)
-          return calculateAverageMoodPastYear(filteredData);
-        }
-      
+      const data = await getMoods();
+      if (filter === "Avg") {
+        return calculateAverageMoodPastYear(data);
+      } else {
+        const filteredData = data.filter((entry) => entry.moodType === filter);
+        return calculateAverageMoodPastYear(filteredData);
+      }
     } catch (error) {
       console.error(
         error instanceof Error
@@ -75,7 +87,7 @@ const YearOfPixels = () => {
   };
 
   const getColorForIntensity = (avgIntensity: number | null): string => {
-    if (avgIntensity === null) return "#E5E7EB"; 
+    if (avgIntensity === null) return "#E5E7EB";
     return `hsl(${avgIntensity * 10}, 100%, 50%)`;
   };
 
@@ -105,52 +117,59 @@ const YearOfPixels = () => {
   });
 
   return (
-    <Card className="component-style">
+    <Card className="component-style !p-0">
       <CardHeader>
-        <CardTitle className="heading-style">
-          Your year in pixels:
-        </CardTitle>
+        <CardTitle className="heading-style">Your year in pixels</CardTitle>
         <CardDescription>
-          See your average mood intensity for each day in the last year! 
-          Each square is one day and the colour ranges from red, to green. Where red represents 0 and green represents 10.
+          See your average mood intensity for each day in the last year! Each
+          square is one day and the colour ranges from red, to green. Where red
+          represents 0 and green represents 10.
         </CardDescription>
       </CardHeader>
       <CardContent>
-      <Select onValueChange={(value) => setFilter(value)}>
-        <SelectTrigger>
-          <SelectValue placeholder="Select a mood." />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectItem value='energy'>Energy</SelectItem>
-            <SelectItem value='happiness'>Happiness</SelectItem>
-            <SelectItem value='stress'>Stress</SelectItem>
-            <SelectItem value='Avg'>Show Average</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-      {monthOrder.map((month) => (
-        <div key={month} className="grid grid-cols-6 mt-3">
-          <div className="w-50 text-right mr-3 font-bold">{month}</div>
-          <div className="flex items-center flex-wrap gap-1 col-span-5">
-            {groupedByMonth[month].map((entry) => (
-              <div
-                key={entry.date}
-                className="w-3 h-3 rounded"
-                style={{ backgroundColor: getColorForIntensity(entry.avgIntensity) }}
-                title={`${entry.date}: ${
-                  entry.avgIntensity === null ? "No data" : entry.avgIntensity
-                }`}
-              ></div>
-            ))}
-          </div>
-        </div>
-      ))}
+        <Select onValueChange={(value) => setFilter(value)}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select a mood." />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="energy">Energy</SelectItem>
+              <SelectItem value="happiness">Happiness</SelectItem>
+              <SelectItem value="stress">Stress</SelectItem>
+              <SelectItem value="Avg">Show Average</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        {monthOrder.length > 0 ? (
+          monthOrder.map((month) => (
+            <div key={month} className="grid grid-cols-6 mt-3">
+              <div className="w-50 text-right mr-3 font-bold">{month}</div>
+              <div className="flex items-center flex-wrap gap-1 col-span-5">
+                {groupedByMonth[month].map((entry) => (
+                  <div
+                    key={entry.date}
+                    className="w-3 h-3 rounded"
+                    style={{
+                      backgroundColor: getColorForIntensity(entry.avgIntensity),
+                    }}
+                    title={`${entry.date}: ${
+                      entry.avgIntensity === null
+                        ? "No data"
+                        : entry.avgIntensity
+                    }`}
+                  ></div>
+                ))}
+              </div>
+            </div>
+          ))
+        ) : (
+          <p className="mt-2">
+            No data available yet. Please add some mood entries first.
+          </p>
+        )}
       </CardContent>
     </Card>
-
   );
 };
 
 export default YearOfPixels;
-

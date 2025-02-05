@@ -19,22 +19,27 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { DatePicker } from "@/components/ui/datepicker";
 import { errorHandler, getActivityTypes, postActivity } from "@/lib/ApiService";
-import { Activity, Time } from "@/lib/interfaces";
+import { Activity, ActivityInputProps, Time } from "@/lib/interfaces";
 
-const ActivityInput = () => {
+const initialFormState: Activity = {
+  activityType: "",
+  activityTime: "",
+  duration: 33,
+  date: new Date(),
+};
+
+const ActivityInput = ({
+  activityProp = initialFormState,
+  edit = false,
+  clickHandler = () => {},
+}: ActivityInputProps) => {
   const customActivityLabel = "Add a custom activity";
-  const initialFormState: Activity = {
-    activityType: "",
-    activityTime: "",
-    duration: 33,
-    date: new Date(),
-  };
-  const [formState, setFormState] = useState<Activity>(initialFormState);
+  const [formState, setFormState] = useState<Activity>(activityProp);
   const [activityTypes, setActivityTypes] = useState<string[]>([
     customActivityLabel,
   ]);
 
-  const [activity, setActivity] = useState("");
+  const [activity, setActivity] = useState(activityProp.activityType);
   const [customActivity, setCustomActivity] = useState("");
 
   useEffect(() => {
@@ -152,7 +157,7 @@ const ActivityInput = () => {
         </Select>
         {activity === customActivityLabel ? (
           <>
-            <h1>{customActivityLabel}</h1>
+            <h3>{customActivityLabel}</h3>
             <Input
               type="text"
               id="custom-activity"
@@ -162,7 +167,7 @@ const ActivityInput = () => {
             />
           </>
         ) : null}
-        <h1 className="font-semibold pb-0">Duration</h1>
+        <h3 className="font-semibold pb-0">Duration</h3>
         <Slider
           defaultValue={[33]}
           max={240}
@@ -170,13 +175,13 @@ const ActivityInput = () => {
           onValueChange={handleChange}
           value={[formState.duration]}
         />
-        <h1>{convertToTimeString(formState.duration)}</h1>
+        <p>{convertToTimeString(formState.duration)}</p>
         <Button
           className="w-full"
-          onClick={uploadActivity}
+          onClick={edit ? () => clickHandler(formState) : uploadActivity}
           disabled={!formState.activityTime || !formState.activityType}
         >
-          Submit
+          {edit ? "Edit" : "Submit"}
         </Button>
       </CardContent>
     </Card>

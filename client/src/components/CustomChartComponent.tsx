@@ -51,7 +51,7 @@ const CustomChartComponent = ({
     .join(" + ");
 
   return (
-    <Card className="p-4 space-y-4">
+    <Card className="p-4 space-y-4 basis-full lg:basis-[calc(50%-0.5rem)]">
       <CardTitle className="flex items-center">
         {description}{" "}
         <Button className="ml-auto" onClick={onRemove}>

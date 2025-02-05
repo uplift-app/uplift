@@ -53,10 +53,7 @@ export function InteractiveAreaChart({
   };
   const chartKeys = Object.keys(chartConfig);
   return (
-    <ChartContainer
-      config={chartConfig}
-      className="min-h-[200px] w-full bg-white rounded-lg"
-    >
+    <ChartContainer config={chartConfig} className="w-full bg-white rounded-lg">
       <AreaChart
         accessibilityLayer
         data={chartData}

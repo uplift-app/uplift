@@ -24,9 +24,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Mood, Time } from "@/lib/interfaces";
+import { Mood, MoodInputProps, MoodTypes, Time } from "@/lib/interfaces";
 import { errorHandler, postMood } from "@/lib/ApiService";
-
 import Smiley0 from "../smileys/Smiley0";
 import Smiley1 from "../smileys/Smiley1";
 import Smiley2 from "../smileys/Smiley2";
@@ -40,14 +39,20 @@ const smileyArray = [
   <Smiley3 />,
   <Smiley4 />,
 ];
-const MoodInput = () => {
-  const initialFormState: Mood = {
-    moodType: "",
-    intensity: 5,
-    moodTime: "",
-    date: new Date(),
-  };
-  const [formState, setFormState] = useState<Mood>(initialFormState);
+
+const initialFormState: Mood = {
+  moodType: "",
+  intensity: 5,
+  moodTime: "",
+  date: new Date(),
+};
+
+const MoodInput = ({
+  mood = initialFormState,
+  edit = false,
+  clickHandler = () => {},
+}: MoodInputProps) => {
+  const [formState, setFormState] = useState<Mood>(mood);
 
   async function uploadMood() {
     try {
@@ -60,6 +65,8 @@ const MoodInput = () => {
 
   const timeValues = ["morning", "afternoon", "evening", "night", "all day"];
 
+  const moodValues = ["", "happiness", "energy", "stress"];
+
   function handleChange(newValue: any) {
     if (newValue instanceof Date) {
       setFormState((prevState) => ({ ...prevState, date: newValue }));
@@ -70,17 +77,20 @@ const MoodInput = () => {
       }));
     } else if (Array.isArray(newValue)) {
       setFormState((prevState) => ({ ...prevState, intensity: newValue[0] }));
-    } else if (typeof newValue === "string") {
-      setFormState((prevState) => ({ ...prevState, moodType: newValue }));
+    } else if (typeof newValue === "string" && moodValues.includes(newValue)) {
+      setFormState((prevState) => ({
+        ...prevState,
+        moodType: newValue as MoodTypes,
+      }));
     }
   }
   const moodTypeArray = [
-    { value: "happiness", tooltip: "0 = Sad, 10 = happy" },
+    { value: "happiness", tooltip: "0 = Sad, 10 = Happy" },
     { value: "stress", tooltip: "0 = Stressed, 10 = Relaxed" },
     { value: "energy", tooltip: "0 = Lazy, 10 = Energetic" },
   ];
   return (
-    <Card className="flex-grow m-1 ">
+    <Card className="flex-grow m-1">
       <CardHeader>
         <CardTitle>Mood</CardTitle>
         <CardDescription>How are you feeling?</CardDescription>
@@ -130,7 +140,7 @@ const MoodInput = () => {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <h1 className="font-semibold pb-0">Intensity</h1>
+        <h3 className="font-semibold pb-0">Intensity</h3>
         <Slider
           defaultValue={[5]}
           min={0}
@@ -146,10 +156,10 @@ const MoodInput = () => {
         </div>
         <Button
           className="w-full mt-auto justify-self-end"
-          onClick={uploadMood}
+          onClick={edit ? () => clickHandler(formState) : uploadMood}
           disabled={!formState.moodTime || !formState.moodType}
         >
-          Submit
+          {edit ? "Edit" : "Submit"}
         </Button>
       </CardContent>
     </Card>

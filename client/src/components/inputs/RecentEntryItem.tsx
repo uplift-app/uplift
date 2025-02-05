@@ -2,7 +2,9 @@ import * as Dialog from "@radix-ui/react-dialog";
 import MoodInput from "../cards/MoodInput";
 import ActivityInput from "../cards/ActivityInput";
 import {
+  Activity,
   ActivityFromBackend,
+  Mood,
   MoodFromBackend,
   RecentEntryItemProps,
 } from "@/lib/interfaces";
@@ -12,6 +14,7 @@ import Smiley1 from "../smileys/Smiley1";
 import Smiley2 from "../smileys/Smiley2";
 import Smiley3 from "../smileys/Smiley3";
 import Smiley4 from "../smileys/Smiley4";
+import { Card } from "../ui/card";
 
 const smileyArray = [
   <Smiley0 />,
@@ -27,12 +30,7 @@ export function RecentEntryItem({
   handleEdit,
   handleDelete,
 }: RecentEntryItemProps) {
-  const moodEmojis: Record<string, string> = {
-    happiness: "icons/faces/laugh-beam.svg", // Replace with appropriate svg file
-    stress: "icons/faces/laugh-beam.svg", // Replace with appropriate svg file
-    energy: "icons/faces/laugh-beam.svg", // Replace with appropriate svg file
-  };
-  const activityEmoji = "icons/faces/laugh-beam.svg"; //Replace with appropriate svg file
+  const activityEmoji = "icons/activity.svg";
   const formatDate = (date: string) => {
     const formattedDate = new Date(date);
     const options: Intl.DateTimeFormatOptions = {
@@ -51,7 +49,7 @@ export function RecentEntryItem({
   );
 
   return (
-    <div className="flex items-center gap-6 w-full p-4 border-[1px] border-gray-300 shadow-md rounded-md">
+    <Card className="flex items-center gap-6 w-full p-4">
       <div className="w-12">
         {type === "mood" &&
           smileyArray[
@@ -100,17 +98,39 @@ export function RecentEntryItem({
         <Dialog.Root>
           <Dialog.Trigger
             className="text-2xl cursor-pointer"
-            // onClick={() => handleEdit(entry._id)}
+            aria-label="edit entry"
           >
             <img src="icons/edit.svg" alt="" className="w-6 cursor-pointer" />
           </Dialog.Trigger>
           <Dialog.Portal>
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
-            <Dialog.Content className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 p-8 bg-white rounded-lg shadow-lg">
+            <Dialog.Content className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 p-8 bg-white rounded-lg shadow-lg text-fontColor font-nunito">
               <Dialog.Title></Dialog.Title>
               <Dialog.Description></Dialog.Description>
-              {type === "mood" && <MoodInput />}
-              {type === "activity" && <ActivityInput />}
+              {type === "mood" && (
+                <MoodInput
+                  mood={entry as unknown as Mood}
+                  edit={true}
+                  clickHandler={(mood: Mood) =>
+                    handleEdit({
+                      _id: entry._id,
+                      ...mood,
+                    } as unknown as MoodFromBackend)
+                  }
+                />
+              )}
+              {type === "activity" && (
+                <ActivityInput
+                  activityProp={entry as unknown as Activity}
+                  edit={true}
+                  clickHandler={(activity: Activity) =>
+                    handleEdit({
+                      _id: entry._id,
+                      ...activity,
+                    } as unknown as ActivityFromBackend)
+                  }
+                />
+              )}
               <Dialog.Close className="mt-4 text-black hover:bg-gray-200 p-2 rounded absolute top-8 right-12">
                 <X />
               </Dialog.Close>
@@ -124,7 +144,7 @@ export function RecentEntryItem({
           <img src="icons/trash.svg" alt="" className="w-5 cursor-pointer" />
         </div>
       </div>
-    </div>
+    </Card>
   );
 }
 
