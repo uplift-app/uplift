@@ -1,10 +1,10 @@
+import { errorHandler, getQuote } from "@/lib/ApiService";
+import { formatName } from "@/lib/utils";
 import { RedirectToSignIn, useUser } from "@clerk/clerk-react";
+import { useEffect, useState } from "react";
 import ActivityInput from "../cards/ActivityInput";
 import MoodInput from "../cards/MoodInput";
 import { RecentEntries } from "../cards/RecentEntries";
-import { formatName } from "@/lib/utils";
-import { useEffect, useState } from "react";
-import { errorHandler, getQuote } from "@/lib/ApiService";
 
 function EntriesPage() {
   const { user, isSignedIn } = useUser();
@@ -38,7 +38,7 @@ function EntriesPage() {
         <div className="grid xl:grid-cols-[2fr_3fr] gap-4 items-stretch pt-2">
           <div className="flex flex-col items-center gap-4">
             <div className="flex flex-col justify-center items-center w-full component-style gap-2 grow">
-              Quote of the day
+              <h2 className="heading-style">Quote of the day</h2>
               <p className="text-3xl font-medium tracking-tight text-center">
                 “{quote || "Loading quote..."}”
               </p>

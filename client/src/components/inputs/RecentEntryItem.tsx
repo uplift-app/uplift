@@ -30,7 +30,7 @@ export function RecentEntryItem({
   handleEdit,
   handleDelete,
 }: RecentEntryItemProps) {
-  const activityEmoji = "icons/faces/laugh-beam.svg"; //Replace with appropriate svg file
+  const activityEmoji = "icons/activity.svg";
   const formatDate = (date: string) => {
     const formattedDate = new Date(date);
     const options: Intl.DateTimeFormatOptions = {
