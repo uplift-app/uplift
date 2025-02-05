@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   CommandDialog,
   CommandEmpty,
@@ -7,14 +7,14 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { Button } from "@/components/ui/button";
-import { Check, Plus } from "lucide-react";
 import { DialogTitle } from "@/components/ui/dialog";
 import { errorHandler, getActivityTypes } from "@/lib/ApiService";
+import { Check, Plus } from "lucide-react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-import ChartTypeSelector from "./ChartTypeSelector";
-import { cn } from "@/lib/utils";
 import { ChartTypes, CustomChart } from "@/lib/interfaces";
+import { cn } from "@/lib/utils";
+import ChartTypeSelector from "./ChartTypeSelector";
 interface AddToChartProps {
   setCustomCharts: Dispatch<SetStateAction<CustomChart[]>>;
 }
@@ -93,8 +93,6 @@ const AddToChart = ({ setCustomCharts }: AddToChartProps) => {
         />
         <CommandList className="font-nunito">
           <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Moods"></CommandGroup>
-
           <CommandGroup heading="Activities">
             {activityTypes.map((activity) => (
               <CommandItem
