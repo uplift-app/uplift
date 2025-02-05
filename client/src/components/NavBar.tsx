@@ -41,7 +41,9 @@ function Navbar() {
             onClick={() => setOpenMenu(false)}
           />
         </div>
-        <div className="font-bold text-xl uppercase mx-auto">Uplift</div>
+        <div className="font-extrabold text-2xl uppercase mx-auto font-comfortaa">
+          Uplift
+        </div>
         <div className="w-[17rem] flex justify-end font-extrabold">
           {isSignedIn ? (
             <UserButton
@@ -50,6 +52,7 @@ function Navbar() {
                 variables: {
                   borderRadius: "0.5rem",
                   fontFamily: "Nunito",
+                  fontSize: "1rem",
                 },
                 elements: {
                   userButtonOuterIdentifier: {
