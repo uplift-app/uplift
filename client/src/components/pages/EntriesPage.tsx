@@ -1,13 +1,9 @@
 import { errorHandler, getQuote } from "@/lib/ApiService";
-import { formatName } from "@/lib/utils";
 import { RedirectToSignIn, useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
 import ActivityInput from "../cards/ActivityInput";
 import MoodInput from "../cards/MoodInput";
 import { RecentEntries } from "../cards/RecentEntries";
-import { formatName } from "@/lib/utils";
-import { useEffect, useState } from "react";
-import { errorHandler, getQuote } from "@/lib/ApiService";
 import LoadingPage from "./LoadingPage";
 
 function EntriesPage() {
@@ -35,8 +31,6 @@ function EntriesPage() {
   }, []);
 
   if (user && isSignedIn) {
-    let username = user.username ? user.username : "User";
-    username = formatName(username);
     return (
       <>
         <div className='grid xl:grid-cols-[2fr_3fr] gap-4 items-stretch pt-2'>
