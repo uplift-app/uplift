@@ -90,21 +90,21 @@ const MoodInput = ({
     { value: "energy", tooltip: "0 = Lazy, 10 = Energetic" },
   ];
   return (
-    <Card className='flex-grow m-1'>
+    <Card className="flex-grow m-1">
       <CardHeader>
         <CardTitle>Mood</CardTitle>
         <CardDescription>How are you feeling?</CardDescription>
       </CardHeader>
 
-      <CardContent className='flex flex-col space-y-4 flex-grow '>
+      <CardContent className="flex flex-col space-y-4 flex-grow ">
         <DatePicker
           date={formState.date}
           setDate={handleChange}
-          data-testid='datepicker'
+          data-testid="datepicker"
         />
         <Select onValueChange={handleChange} value={formState.moodTime}>
           <SelectTrigger>
-            <SelectValue placeholder='Select a time' />
+            <SelectValue placeholder="Select a time" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
@@ -118,7 +118,7 @@ const MoodInput = ({
         </Select>
         <Select onValueChange={handleChange} value={formState.moodType}>
           <SelectTrigger>
-            <SelectValue placeholder='Select a mood' />
+            <SelectValue placeholder="Select a mood" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
@@ -140,7 +140,7 @@ const MoodInput = ({
             </SelectGroup>
           </SelectContent>
         </Select>
-        <h3 className='font-semibold pb-0'>Intensity</h3>
+        <h3 className="font-semibold pb-0">Intensity</h3>
         <Slider
           defaultValue={[5]}
           min={0}
@@ -149,13 +149,13 @@ const MoodInput = ({
           onValueChange={handleChange}
           value={[formState.intensity]}
         />
-        <div className='flex w-full justify-center'>
-          <div className='w-6 h-6'>
+        <div className="flex w-full justify-center">
+          <div className="w-6 h-6">
             {smileyArray[Math.min(Math.floor(formState.intensity / 2), 4)]}
           </div>
         </div>
         <Button
-          className='w-full mt-auto justify-self-end'
+          className="w-full mt-auto justify-self-end"
           onClick={edit ? () => clickHandler(formState) : uploadMood}
           disabled={!formState.moodTime || !formState.moodType}
         >

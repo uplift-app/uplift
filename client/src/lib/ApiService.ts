@@ -201,4 +201,3 @@ export const errorHandler = (error: unknown): never => {
   console.error("Unknown API error occurred");
   throw new Error("Unknown error occurred");
 };
-

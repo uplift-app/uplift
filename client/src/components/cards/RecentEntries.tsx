@@ -103,13 +103,13 @@ export function RecentEntries() {
   };
 
   return (
-    <div className='w-full component-style'>
-      <h2 className='heading-style pb-2'>Your recent entries</h2>
+    <div className="w-full component-style">
+      <h2 className="heading-style pb-2">Your recent entries</h2>
       {isLoading ? (
         <LoadingPage />
       ) : (
-        <div className='flex flex-col gap-4 overflow-y-scroll max-h-[calc(100vh-10.5rem)]'>
-          <div className='flex flex-col gap-4'>
+        <div className="flex flex-col gap-4 overflow-y-scroll max-h-[calc(100vh-10.5rem)]">
+          <div className="flex flex-col gap-4">
             {combinedEntries.length > 0 ? (
               combinedEntries.map((entry) => (
                 <RecentEntryItem

@@ -57,7 +57,7 @@ export function InteractiveLineChart({
   const chartKeys = Object.keys(chartConfig);
 
   return (
-    <ChartContainer config={chartConfig} className='w-full bg-white rounded-lg'>
+    <ChartContainer config={chartConfig} className="w-full bg-white rounded-lg">
       <LineChart
         accessibilityLayer
         data={chartData}
@@ -68,7 +68,7 @@ export function InteractiveLineChart({
       >
         <CartesianGrid vertical={false} />
         <XAxis
-          dataKey='date'
+          dataKey="date"
           tickLine={false}
           axisLine={false}
           tickMargin={8}
@@ -80,7 +80,7 @@ export function InteractiveLineChart({
           <Line
             key={chartKey}
             dataKey={chartKey}
-            type='natural'
+            type="natural"
             stroke={`var(--color-${chartKey})`}
             strokeWidth={2}
             dot={false}

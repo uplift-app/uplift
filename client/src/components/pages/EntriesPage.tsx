@@ -33,20 +33,20 @@ function EntriesPage() {
   if (user && isSignedIn) {
     return (
       <>
-        <div className='grid xl:grid-cols-[2fr_3fr] gap-4 items-stretch pt-2'>
-          <div className='flex flex-col items-center gap-4'>
-            <div className='flex flex-col justify-center items-center w-full component-style gap-2 grow'>
-              <h2 className='heading-style'>Quote of the day</h2>
-              <p className='text-3xl font-medium tracking-tight text-center'>
+        <div className="grid xl:grid-cols-[2fr_3fr] gap-4 items-stretch pt-2">
+          <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col justify-center items-center w-full component-style gap-2 grow">
+              <h2 className="heading-style">Quote of the day</h2>
+              <p className="text-3xl font-medium tracking-tight text-center">
                 {quote || <LoadingPage />}
               </p>
-              <p className='italic text-lg'>{author || ""}</p>
+              <p className="italic text-lg">{author || ""}</p>
             </div>
-            <div className='w-full component-style grow flex flex-col'>
-              <h2 className='heading-style pb-2'>
+            <div className="w-full component-style grow flex flex-col">
+              <h2 className="heading-style pb-2">
                 Track your activity and mood
               </h2>
-              <div className='flex flex-col sm:flex-row gap-2 justify-self-center '>
+              <div className="flex flex-col sm:flex-row gap-2 justify-self-center ">
                 <ActivityInput />
                 <MoodInput />
               </div>
