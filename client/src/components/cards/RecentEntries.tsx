@@ -8,11 +8,13 @@ import {
 } from "@/lib/ApiService";
 import { ActivityFromBackend, MoodFromBackend } from "@/lib/interfaces";
 import { RecentEntryItem } from "../inputs/RecentEntryItem";
+import LoadingPage from "../pages/LoadingPage";
 
 export function RecentEntries() {
   const [combinedEntries, setCombinedEntries] = useState<
     (MoodFromBackend | ActivityFromBackend)[]
   >([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchAndUpdateEntries = async () => {
     try {
@@ -36,7 +38,8 @@ export function RecentEntries() {
   };
 
   useEffect(() => {
-    fetchAndUpdateEntries();
+    setIsLoading(true);
+    fetchAndUpdateEntries().then(() => setIsLoading(false));
   }, []);
 
   const handleDeleteMood = async (id: string) => {
@@ -74,25 +77,29 @@ export function RecentEntries() {
   };
 
   return (
-    <div className="w-full component-style max-h-[80vh]">
-      <h2 className="heading-style pb-2">Your recent entries</h2>
-      <div className="flex flex-col gap-4 overflow-y-scroll max-h-[95%] ">
-        <div className="flex flex-col gap-4">
-          {combinedEntries.map((entry) => (
-            <RecentEntryItem
-              key={entry._id}
-              entry={entry}
-              type={entry.hasOwnProperty("moodType") ? "mood" : "activity"}
-              handleEdit={handleEdit}
-              handleDelete={
-                entry.hasOwnProperty("moodType")
-                  ? handleDeleteMood
-                  : handleDeleteActivity
-              }
-            />
-          ))}
+    <div className='w-full component-style max-h-[80vh]'>
+      <h2 className='heading-style pb-2'>Your recent entries</h2>
+      {isLoading ? (
+        <LoadingPage />
+      ) : (
+        <div className='flex flex-col gap-4 overflow-y-scroll max-h-[95%] '>
+          <div className='flex flex-col gap-4'>
+            {combinedEntries.map((entry) => (
+              <RecentEntryItem
+                key={entry._id}
+                entry={entry}
+                type={entry.hasOwnProperty("moodType") ? "mood" : "activity"}
+                handleEdit={handleEdit}
+                handleDelete={
+                  entry.hasOwnProperty("moodType")
+                    ? handleDeleteMood
+                    : handleDeleteActivity
+                }
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
