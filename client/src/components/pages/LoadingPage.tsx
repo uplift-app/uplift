@@ -4,7 +4,7 @@ function LoadingPage() {
     <div>
       <div className='justify-self-center'>
         <RotatingLines
-          strokeColor='grey'
+          strokeColor='hsl(var(--fontColor)'
           strokeWidth='5'
           animationDuration='0.75'
           width='96'
