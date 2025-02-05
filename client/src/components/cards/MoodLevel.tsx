@@ -3,7 +3,7 @@ import { RadialChart } from "../inputs/RadialChart";
 import { useEffect, useState } from "react";
 import LoadingPage from "../pages/LoadingPage";
 
-const IntensityLevels = () => {
+const MoodLevels = () => {
   const { analysisData } = useAnalysisDataContext();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -45,4 +45,4 @@ const IntensityLevels = () => {
   );
 };
 
-export default IntensityLevels;
+export default MoodLevels;
