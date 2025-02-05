@@ -2,31 +2,28 @@ import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import MoodInput from "../../components/cards/MoodInput";
-import { postMood } from "@/lib/ApiService";
+import { errorHandler, postMood } from "@/lib/ApiService";
 import { beforeEach, describe, expect, it, vi, Mock } from "vitest";
 import { format } from "date-fns";
 
-// Mock Clerk hooks so that useAuth returns a fake token.
 vi.mock("@clerk/clerk-react", () => {
   return {
-    ClerkProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-    useAuth: () => ({
-      getToken: async () => "fake-token",
-    }),
+    ClerkProvider: ({ children }: { children: React.ReactNode }) => (
+      <>{children}</>
+    ),
   };
 });
 
-// Mock the API function for postMood
 vi.mock("@/lib/ApiService", () => ({
   postMood: vi.fn(),
+  errorHandler: vi.fn(),
 }));
 
-const moodSelectLabel = "select a mood";
-const timeSelectLabel = "select a time";
+const moodSelectLabel = "Select a mood";
+const timeSelectLabel = "Select a time";
 
 describe("MoodInput", () => {
   beforeEach(() => {
-    // Reset all mocks before each test
     vi.clearAllMocks();
     vi.spyOn(console, "error").mockImplementation(() => {});
   });
@@ -164,8 +161,7 @@ describe("MoodInput", () => {
           intensity: 7,
           moodTime: "evening",
           date: expect.any(Date),
-        }),
-        "fake-token"
+        })
       );
     });
 
@@ -176,13 +172,13 @@ describe("MoodInput", () => {
   });
 
   it("handles errors during mood submission by logging the error", async () => {
-    const error = new Error("Failed to post mood");
+    const error = "Failed to post mood";
     (postMood as Mock).mockRejectedValue(error);
-  
-    const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
-  
+
+    // const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
     render(<MoodInput />);
-  
+
     // Set moodTime and moodType so that the form can be submitted.
     fireEvent.click(screen.getByText(timeSelectLabel));
     const afternoonOption = await screen.findByText("Afternoon");
@@ -190,28 +186,23 @@ describe("MoodInput", () => {
     await waitFor(() => {
       expect(screen.getByText("Afternoon")).toBeInTheDocument();
     });
-  
+
     fireEvent.click(screen.getByText(moodSelectLabel));
     const happinessOption = await screen.findByText("Happiness");
     fireEvent.click(happinessOption);
     await waitFor(() => {
       expect(screen.getByText("Happiness")).toBeInTheDocument();
     });
-  
+
     const submitButton = screen.getByRole("button", { name: "Submit" });
     expect(submitButton).toBeEnabled();
-  
+
     // Click the submit button. The error is now caught and logged.
     await userEvent.click(submitButton);
-  
+
     // Verify that console.error was called with the expected error message.
     await waitFor(() => {
-      expect(consoleErrorSpy).toHaveBeenCalledWith(
-        "Failed to post mood:",
-        "Failed to post mood"
-      );
+      expect(errorHandler).toHaveBeenCalledWith("Failed to post mood");
     });
   });
-  
 });
-

@@ -26,7 +26,14 @@ beforeEach(() => {
       ok: true,
       json: async () => {
         if (url === `${BASE_URL}/mood` && !options.method) {
-          return [{ moodType: "happy", intensity: 7, moodTime: "morning", date: "2024-02-01" }];
+          return [
+            {
+              moodType: "happy",
+              intensity: 7,
+              moodTime: "morning",
+              date: "2024-02-01",
+            },
+          ];
         }
         if (url === `${BASE_URL}/activity/types`) {
           return ["Running", "Swimming", "Yoga"];
@@ -53,7 +60,14 @@ describe("ApiService", () => {
         headers: expect.any(Headers), // Ensures headers are set properly
       })
     );
-    expect(result).toEqual([{ moodType: "happy", intensity: 7, moodTime: "morning", date: "2024-02-01" }]);
+    expect(result).toEqual([
+      {
+        moodType: "happy",
+        intensity: 7,
+        moodTime: "morning",
+        date: "2024-02-01",
+      },
+    ]);
   });
 
   it("fetches activity types successfully", async () => {
@@ -69,7 +83,7 @@ describe("ApiService", () => {
 
   it("posts a mood successfully", async () => {
     const moodData: Mood = {
-      moodType: "happy",
+      moodType: "happiness",
       intensity: 8,
       moodTime: "evening",
       date: new Date(),
@@ -84,7 +98,7 @@ describe("ApiService", () => {
         headers: expect.any(Headers),
       })
     );
-    expect(result).toEqual({success: true});
+    expect(result).toEqual({ success: true });
   });
 
   it("posts an activity successfully", async () => {

@@ -2,33 +2,28 @@ import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ActivityInput from "../../components/cards/ActivityInput";
-import { getActivityTypes, postActivity } from "@/lib/ApiService";
+import { errorHandler, getActivityTypes, postActivity } from "@/lib/ApiService";
 import { beforeEach, describe, expect, it, vi, Mock } from "vitest";
 import { format } from "date-fns";
 
 //! worth noting that AI has been used for debugging and working out how to test certain aspects (such as clerk) so please review the test files with a pinch of salt.
 
-// Mock Clerk hooks so that useAuth returns a fake token.
-// This prevents the "useAuth can only be used within the <ClerkProvider /> component" error.
 vi.mock("@clerk/clerk-react", () => {
   return {
-    // Provide a dummy ClerkProvider that simply renders children.
-    ClerkProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-    // Mock useAuth to return an object with getToken.
-    useAuth: () => ({
-      getToken: async () => "fake-token",
-    }),
+    ClerkProvider: ({ children }: { children: React.ReactNode }) => (
+      <>{children}</>
+    ),
   };
 });
 
-// Mock the API functions
 vi.mock("@/lib/ApiService", () => ({
   getActivityTypes: vi.fn(),
   postActivity: vi.fn(),
+  errorHandler: vi.fn(),
 }));
 
-const activitySelectLabel = "select an activity";
-const timeSelectLabel = "select a time";
+const activitySelectLabel = "Select an activity";
+const timeSelectLabel = "Select a time";
 const mockActivityTypes = ["Running", "Swimming", "Add a custom activity"];
 
 describe("ActivityInput", () => {
@@ -194,20 +189,17 @@ describe("ActivityInput", () => {
 
     // Verify postActivity is called with the correct form state and the fake token.
     await waitFor(() => {
-      expect(postActivity).toHaveBeenCalledWith(
-        {
-          activityType: "Running",
-          duration: 38,
-          activityTime: "all day",
-          date: expect.any(Date),
-        },
-        "fake-token"
-      );
+      expect(postActivity).toHaveBeenCalledWith({
+        activityType: "Running",
+        duration: 38,
+        activityTime: "all day",
+        date: expect.any(Date),
+      });
     });
   });
 
   it("handles API errors when fetching activity types", async () => {
-    const mockError = new Error("Failed to fetch activity types");
+    const mockError = "Failed to fetch activity types";
     (getActivityTypes as Mock).mockRejectedValue(mockError);
 
     render(<ActivityInput />);
@@ -217,20 +209,13 @@ describe("ActivityInput", () => {
     });
 
     // Check if the error is logged
-    expect(console.error).toHaveBeenCalledWith(
-      "Failed to fetch activity types"
-    );
+    expect(errorHandler).toHaveBeenCalledWith("Failed to fetch activity types");
   });
 
   it("handles API errors when submitting the activity form", async () => {
-    const mockError = new Error("Failed to post activity");
+    const mockError = "Failed to post activity";
     (getActivityTypes as Mock).mockResolvedValue(mockActivityTypes);
     (postActivity as Mock).mockRejectedValue(mockError);
-
-    // Spy on console.error to verify error logging
-    const consoleErrorSpy = vi
-      .spyOn(console, "error")
-      .mockImplementation(() => {});
 
     render(<ActivityInput />);
 
@@ -263,17 +248,8 @@ describe("ActivityInput", () => {
 
     // Wait for the error to be logged
     await waitFor(() => {
-      expect(consoleErrorSpy).toHaveBeenCalled();
+      // expect(consoleErrorSpy).toHaveBeenCalled();
+      expect(errorHandler).toHaveBeenCalledWith("Failed to post activity");
     });
-
-    // Verify that the logged error contains "Failed to post activity"
-    const loggedErrors = consoleErrorSpy.mock.calls.map((call) => call[0]);
-    expect(
-      loggedErrors.some((err) => err.includes("Failed to post activity"))
-    ).toBe(true);
-
-    // Restore console.error after the test
-    consoleErrorSpy.mockRestore();
   });
 });
-

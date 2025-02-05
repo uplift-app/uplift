@@ -1,29 +1,31 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import { RadialChart } from "./../components/RadialChart";
-import { describe, it, expect } from "vitest";
+import { render, screen, waitFor } from "@testing-library/react";
+import { RadialChart } from "./../components/inputs/RadialChart";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import * as utils from "@/lib/utils";
 
-//! basic render test as currently cannot find a way to test the percentage values due to shadcn / recharts
+//! not testing for % values in the charts as this would involve mocking recharts
+
+vi.mock("@/lib/utils", async () => {
+  const actual = await vi.importActual<typeof utils>("@/lib/utils");
+  return {
+    ...actual,
+    formatName: vi.fn(
+      (name: string) => name.charAt(0).toUpperCase() + name.slice(1)
+    ),
+  };
+});
 
 describe("RadialChart Component", () => {
-  it("renders the RadialChart with correct mood type and percentage", () => {
-    const moodType = "happiness";
-    const currentValue = 7;
-
-    render(<RadialChart currentValue={currentValue} moodType={moodType} />);
-
-    expect(screen.getByText("happiness")).toBeInTheDocument();
+  beforeEach(() => {
+    vi.clearAllMocks();
   });
 
-  it("renders 100% when currentValue is at max", () => {
-    render(<RadialChart currentValue={10} moodType="energy" />);
+  it("renders the RadialChart with correct mood type", async () => {
+    render(<RadialChart currentValue={7} moodType="happiness" />);
 
-    expect(screen.getByText("energy")).toBeInTheDocument();
-  });
-
-  it("renders 0% when currentValue is at minimum", () => {
-    render(<RadialChart currentValue={0} moodType="stress" />);
-
-    expect(screen.getByText("stress")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText("Happiness")).toBeInTheDocument();
+    });
   });
 });
