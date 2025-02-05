@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
 import { Card, CardTitle } from "@/components/ui/card";
+import { useEffect, useState } from "react";
 
-import { Checkbox } from "@/components/ui/checkbox";
-import { cn } from "@/lib/utils";
 import { InteractiveLineChart } from "@/components/inputs/InteractiveLineChart";
-import { ChartConfig } from "@/components/ui/chart";
-import { transformMoodData } from "@/lib/chartview-functions";
 import TimeFrameSelector from "@/components/inputs/TimeFrameSelector";
+import { ChartConfig } from "@/components/ui/chart";
+import { Checkbox } from "@/components/ui/checkbox";
 import { errorHandler, getMoods } from "@/lib/ApiService";
+import { transformMoodData } from "@/lib/chartview-functions";
 import { MoodFromBackend, MoodSortedByDate } from "@/lib/interfaces";
+import { cn } from "@/lib/utils";
 
 const MoodChart = () => {
   const [chartData, setChartData] = useState<MoodFromBackend[]>([]);
@@ -98,6 +98,7 @@ const MoodChart = () => {
                 )}
                 defaultChecked
                 onCheckedChange={() => handleCheckChange(chartLabel)}
+                aria-label={chartLabel}
               />
               {chartValue.label}
             </div>
