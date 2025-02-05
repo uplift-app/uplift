@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
 import { spawn } from "child_process";
+import { Request, Response } from "express";
 import * as fs from "fs";
 import path from "path";
 import {
@@ -42,12 +42,10 @@ export const analyseData = async (req: Request, res: Response) => {
 };
 
 function runPython(scriptPath: string, callback: Function) {
-  let pythonExecutable;
-  if (process.platform === "win32") {
-    pythonExecutable = path.join(__dirname, "../../venv/Scripts/python.exe");
-  } else {
-    pythonExecutable = "python";
-  }
+  const pythonExecutable =
+    process.platform === "win32"
+      ? path.join(__dirname, "../../venv/Scripts/python.exe")
+      : "python";
   const pythonProcess = spawn(pythonExecutable, [scriptPath]);
 
   let data = "";
