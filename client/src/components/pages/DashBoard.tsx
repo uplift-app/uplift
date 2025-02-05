@@ -25,8 +25,6 @@ function DashBoard() {
           <ChartViewer />
           <YearOfPixels />
           <PositiveEffects />
-          <YearOfPixels />
-          <ChartViewer />
         </div>
       </>
     );

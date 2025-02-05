@@ -11,7 +11,7 @@ function LoadingPage() {
           visible={true}
         />
       </div>
-      <p className='text-center'>This content is loading, please wait.</p>
+      <div className='text-center'>This content is loading, please wait.</div>
     </div>
   );
 }

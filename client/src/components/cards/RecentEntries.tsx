@@ -105,36 +105,40 @@ export function RecentEntries() {
   return (
     <div className='w-full component-style'>
       <h2 className='heading-style pb-2'>Your recent entries</h2>
-      <div className='flex flex-col gap-4 overflow-y-scroll max-h-[calc(100vh-10.5rem)]'>
-        <div className='flex flex-col gap-4'>
-          {combinedEntries.length > 0 ? (
-            combinedEntries.map((entry) => (
-              <RecentEntryItem
-                key={entry._id}
-                entry={entry}
-                type={entry.hasOwnProperty("moodType") ? "mood" : "activity"}
-                handleEdit={(data: MoodFromBackend | ActivityFromBackend) => {
-                  if ("moodType" in data) {
-                    handleEditMood(data);
-                  } else {
-                    handleEditActivity(data);
+      {isLoading ? (
+        <LoadingPage />
+      ) : (
+        <div className='flex flex-col gap-4 overflow-y-scroll max-h-[calc(100vh-10.5rem)]'>
+          <div className='flex flex-col gap-4'>
+            {combinedEntries.length > 0 ? (
+              combinedEntries.map((entry) => (
+                <RecentEntryItem
+                  key={entry._id}
+                  entry={entry}
+                  type={entry.hasOwnProperty("moodType") ? "mood" : "activity"}
+                  handleEdit={(data: MoodFromBackend | ActivityFromBackend) => {
+                    if ("moodType" in data) {
+                      handleEditMood(data);
+                    } else {
+                      handleEditActivity(data);
+                    }
+                  }}
+                  handleDelete={
+                    entry.hasOwnProperty("moodType")
+                      ? handleDeleteMood
+                      : handleDeleteActivity
                   }
-                }}
-                handleDelete={
-                  entry.hasOwnProperty("moodType")
-                    ? handleDeleteMood
-                    : handleDeleteActivity
-                }
-              />
-            ))
-          ) : (
-            <p>
-              No recent entries yet. Please add some activity and mood entries
-              first.
-            </p>
-          )}
+                />
+              ))
+            ) : (
+              <div>
+                No recent entries yet. Please add some activity and mood entries
+                first.
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
