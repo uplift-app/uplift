@@ -1,15 +1,28 @@
 import { useAnalysisDataContext } from "@/contexts/AnalysisDataContext";
 import { RadialChart } from "../inputs/RadialChart";
+import { useEffect, useState } from "react";
+import LoadingPage from "../pages/LoadingPage";
 
 const IntensityLevels = () => {
   const { analysisData } = useAnalysisDataContext();
+  const [isLoading, setIsLoading] = useState(true);
 
-  if (!analysisData || Object.keys(analysisData).length === 0) {
+  useEffect(() => {
+    if (Object.keys(analysisData).length > 0) {
+      setIsLoading(false);
+    }
+  }, [analysisData]);
+
+  if (Object.keys(analysisData).length === 0 && !isLoading) {
     return (
       <div>
         No data available yet. Track activities and moods to gain insights.
       </div>
     );
+  }
+
+  if (isLoading) {
+    return <LoadingPage />;
   }
 
   const formatMoodTimeInsights = () => {
@@ -36,9 +49,15 @@ const IntensityLevels = () => {
   };
 
   return (
-    <div className='flex flex-col sm:flex-row flex-wrap gap-4'>
-      {formatMoodTimeInsights()}
-    </div>
+    <>
+      {isLoading ? (
+        <LoadingPage />
+      ) : (
+        <div className='flex flex-col sm:flex-row flex-wrap gap-4'>
+          {formatMoodTimeInsights()}
+        </div>
+      )}
+    </>
   );
 };
 
