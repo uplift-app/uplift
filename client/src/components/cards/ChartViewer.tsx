@@ -43,19 +43,21 @@ const ChartViewer = () => {
   const [customCharts, setCustomCharts] = useState<CustomChart[]>([]);
 
   return (
-    <Card className="component-style !p-0">
+    <Card className="component-style !p-0 xl:col-span-2">
       <CardHeader>
         <CardTitle className="heading-style">Visualise your progress</CardTitle>
         <CardDescription>Plot your moods and activities</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <MoodChart />
-        <CustomChartsWrapper
-          activityTypes={activityTypes}
-          customCharts={customCharts}
-          setCustomCharts={setCustomCharts}
-          activityData={activityData}
-        />
+        <div className="flex gap-4 items-stretch flex-wrap">
+          <MoodChart />
+          <CustomChartsWrapper
+            activityTypes={activityTypes}
+            customCharts={customCharts}
+            setCustomCharts={setCustomCharts}
+            activityData={activityData}
+          />
+        </div>
         <AddToChart setCustomCharts={setCustomCharts} />
       </CardContent>
     </Card>

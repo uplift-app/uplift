@@ -49,7 +49,9 @@ const ChartTypeSelector = ({
         >
           <CardHeader>
             <CardTitle>{chartType.title + " Chart"}</CardTitle>
-            <CardDescription>{chartType.description}</CardDescription>
+            <CardDescription className="font-nunito">
+              {chartType.description}
+            </CardDescription>
           </CardHeader>
           <CardContent>{chartType.component}</CardContent>
         </Card>

@@ -74,10 +74,10 @@ const MoodChart = () => {
   };
 
   return (
-    <Card className="flex p-4 flex-col space-y-4 pb-4">
+    <Card className="flex p-4 flex-col space-y-4 pb-4 basis-full lg:basis-[calc(50%-0.5rem)]">
       <CardTitle>Your moods</CardTitle>
       <div className=" gap-2">
-        <div className="flex gap-2 overflow-scroll justify-center p-2">
+        <div className="flex gap-2 overflow-scroll justify-center p-2 flex-wrap">
           {Object.entries(chartConfig).map(([chartLabel, chartValue], idx) => (
             <div
               className={cn(
