@@ -19,7 +19,7 @@ const CustomChartsWrapper = ({
     );
   };
   return (
-    <div className="space-y-4">
+    <>
       {customCharts.map((customChartData) => (
         <CustomChartComponent
           onRemove={() => handleRemoveChart(customChartData)}
@@ -28,7 +28,7 @@ const CustomChartsWrapper = ({
           activityTypes={activityTypes}
         />
       ))}
-    </div>
+    </>
   );
 };
 

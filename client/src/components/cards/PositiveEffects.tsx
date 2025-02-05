@@ -160,7 +160,9 @@ const PositiveEffects = () => {
               {filteredEffects.length > 0 ? (
                 formatFilteredEffects(filteredEffects)
               ) : (
-                <p>No positive effects found for the selected mood and time.</p>
+                <p className='pl-4'>
+                  No positive effects found for the selected mood and time.
+                </p>
               )}
             </CarouselContent>
             <CarouselNext />

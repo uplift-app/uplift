@@ -118,9 +118,9 @@ const YearOfPixels = () => {
   });
 
   return (
-    <Card className='component-style'>
+    <Card className='component-style !p-0'>
       <CardHeader>
-        <CardTitle className='heading-style'>Your year in pixels:</CardTitle>
+        <CardTitle className='heading-style'>Your year in pixels</CardTitle>
         <CardDescription>
           See your average mood intensity for each day in the last year! Each
           square is one day and the colour ranges from red, to green. Where red

@@ -63,7 +63,7 @@ const AddToChart = ({ setCustomCharts }: AddToChartProps) => {
         Add a chart <Plus />
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <DialogTitle className="p-4 ">
+        <DialogTitle className="p-4 heading-style text-fontColor">
           Select a type of chart
           <ChartTypeSelector
             chosenChart={chosenChart}
@@ -71,9 +71,9 @@ const AddToChart = ({ setCustomCharts }: AddToChartProps) => {
           />
         </DialogTitle>
 
-        <DialogTitle className="p-4 gap-4 flex items-center ">
+        <DialogTitle className="p-4 gap-4 flex items-center text-fontColor heading-style">
           Select activities{" "}
-          <div className="font-thin italic flex gap-2">
+          <div className="font-thin italic flex gap-2 font-nunito">
             {selectedActivities.map((activity, idx) => (
               <p>
                 {activity}
@@ -87,8 +87,11 @@ const AddToChart = ({ setCustomCharts }: AddToChartProps) => {
             </Button>
           )}
         </DialogTitle>
-        <CommandInput placeholder="Search for something to add..." />
-        <CommandList>
+        <CommandInput
+          className="font-nunito"
+          placeholder="Search for something to add..."
+        />
+        <CommandList className="font-nunito">
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Moods"></CommandGroup>
 

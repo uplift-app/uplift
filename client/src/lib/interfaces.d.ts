@@ -4,7 +4,7 @@ export interface Mood {
   moodTime: Time;
   date: Date;
 }
-export type MoodTypes = "happiness" | "energy" | "stress";
+export type MoodTypes = "" | "happiness" | "energy" | "stress";
 export interface Activity {
   duration: number;
   activityType: string;
@@ -85,6 +85,18 @@ export interface Quote {
 export interface RecentEntryItemProps {
   entry: MoodFromBackend | ActivityFromBackend;
   type: "mood" | "activity";
-  handleEdit: (updatedEntry: ActivityFromBackend | MoodFromBackend) => void;
+  handleEdit: (data: MoodFromBackend | ActivityFromBackend) => void;
   handleDelete: (id: string) => void;
+}
+
+export interface MoodInputProps {
+  mood?: Mood;
+  edit?: boolean;
+  clickHandler?: (mood: Mood) => void;
+}
+
+export interface ActivityInputProps {
+  activityProp?: Activity;
+  edit?: boolean;
+  clickHandler?: (activity: Activity) => void;
 }

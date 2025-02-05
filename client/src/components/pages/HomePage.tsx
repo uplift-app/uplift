@@ -1,12 +1,10 @@
 import { Link } from "react-router-dom";
+import { UpliftLogo } from "../logo/UpliftLogo";
 
 function HomePage() {
   return (
     <div className="flex flex-col items-center justify-center">
-      <header className="text-4xl font-black my-6 font-comfortaa">
-        Uplift
-      </header>
-
+      <UpliftLogo />
       <section className="p-8 text-center max-w-lg component-style">
         <h1 className="text-2xl font-bold mb-4 font-comfortaa">
           Track Your Moods & Behaviours

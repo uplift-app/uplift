@@ -5,6 +5,8 @@ import {
   deleteMood,
   deleteActivity,
   errorHandler,
+  editMood,
+  editActivity,
 } from "@/lib/ApiService";
 import { ActivityFromBackend, MoodFromBackend } from "@/lib/interfaces";
 import { RecentEntryItem } from "../inputs/RecentEntryItem";
@@ -68,38 +70,71 @@ export function RecentEntries() {
     }
   };
 
-  const handleEdit = (updatedEntry: ActivityFromBackend | MoodFromBackend) => {
-    setCombinedEntries((prevEntries) =>
-      prevEntries.map((entry) =>
-        entry._id === updatedEntry._id ? updatedEntry : entry
-      )
-    );
+  const handleEditMood = async (moodData: MoodFromBackend) => {
+    try {
+      const response = await editMood(moodData);
+      setCombinedEntries((prevEntries) =>
+        prevEntries.map((entry) => {
+          if (entry._id === response._id) {
+            return response;
+          }
+          return entry;
+        })
+      );
+    } catch (error) {
+      errorHandler(error);
+    }
+  };
+
+  const handleEditActivity = async (activityData: ActivityFromBackend) => {
+    try {
+      const response = await editActivity(activityData);
+      setCombinedEntries((prevEntries) =>
+        prevEntries.map((entry) => {
+          if (entry._id === response._id) {
+            return response;
+          }
+          return entry;
+        })
+      );
+    } catch (error) {
+      errorHandler(error);
+    }
   };
 
   return (
-    <div className='w-full component-style max-h-[80vh]'>
+    <div className='w-full component-style'>
       <h2 className='heading-style pb-2'>Your recent entries</h2>
-      {isLoading ? (
-        <LoadingPage />
-      ) : (
-        <div className='flex flex-col gap-4 overflow-y-scroll max-h-[95%] '>
-          <div className='flex flex-col gap-4'>
-            {combinedEntries.map((entry) => (
+      <div className='flex flex-col gap-4 overflow-y-scroll max-h-[calc(100vh-10.5rem)]'>
+        <div className='flex flex-col gap-4'>
+          {combinedEntries.length > 0 ? (
+            combinedEntries.map((entry) => (
               <RecentEntryItem
                 key={entry._id}
                 entry={entry}
                 type={entry.hasOwnProperty("moodType") ? "mood" : "activity"}
-                handleEdit={handleEdit}
+                handleEdit={(data: MoodFromBackend | ActivityFromBackend) => {
+                  if ("moodType" in data) {
+                    handleEditMood(data);
+                  } else {
+                    handleEditActivity(data);
+                  }
+                }}
                 handleDelete={
                   entry.hasOwnProperty("moodType")
                     ? handleDeleteMood
                     : handleDeleteActivity
                 }
               />
-            ))}
-          </div>
+            ))
+          ) : (
+            <p>
+              No recent entries yet. Please add some activity and mood entries
+              first.
+            </p>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }
