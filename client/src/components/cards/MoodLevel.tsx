@@ -1,6 +1,6 @@
 import { useAnalysisDataContext } from "@/contexts/AnalysisDataContext";
-import { RadialChart } from "../inputs/RadialChart";
 import { useEffect, useState } from "react";
+import { RadialChart } from "../inputs/RadialChart";
 import LoadingPage from "../pages/LoadingPage";
 
 const MoodLevels = () => {
@@ -13,7 +13,11 @@ const MoodLevels = () => {
     }
   }, [analysisData]);
 
-  if (Object.keys(analysisData).length === 0 && !isLoading) {
+  if (
+    (Object.keys(analysisData).length === 0 ||
+      analysisData.avgMood.length === 0) &&
+    !isLoading
+  ) {
     return (
       <div>
         No data available yet. Track activities and moods to gain insights.
