@@ -18,7 +18,7 @@ function DashBoard() {
             <h2 className="heading-style pb-2">Average Mood Level</h2>
             <MoodLevels />
           </div>
-          <div className="component-style rounded-lg p-4 xl:col-span-2">
+          <div className="component-style rounded-lg p-4 xl:col-span-2 hidden sm:block">
             <h2 className="heading-style pb-2">Average Mood Intensities</h2>
             <IntensityLevels />
           </div>
