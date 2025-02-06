@@ -1,0 +1,77 @@
+.cls-1 {
+  fill: url(#linear-gradient-2);
+  stroke-width: 1.02px;
+}
+
+.cls-1,
+.cls-2,
+.cls-3,
+.cls-4,
+.cls-5,
+.cls-6,
+.cls-7,
+.cls-8,
+.cls-9 {
+  stroke-miterlimit: 10;
+}
+
+.cls-1,
+.cls-4,
+.cls-8 {
+  stroke: #fff;
+}
+
+.cls-2 {
+  fill: url(#radial-gradient-5);
+}
+
+.cls-2,
+.cls-3,
+.cls-5,
+.cls-6,
+.cls-7,
+.cls-9 {
+  stroke: #f4fbfe;
+  stroke-width: 0.67px;
+}
+
+.cls-3 {
+  fill: url(#radial-gradient-3);
+}
+
+.cls-4 {
+  fill: url(#linear-gradient);
+  stroke-width: 3.78px;
+}
+
+.cls-5 {
+  fill: url(#radial-gradient-2);
+}
+
+.cls-6 {
+  fill: url(#radial-gradient);
+}
+
+.cls-7 {
+  fill: url(#radial-gradient-4);
+}
+
+.cls-8 {
+  fill: #06324b;
+}
+
+.cls-9 {
+  fill: url(#radial-gradient-6);
+}
+
+.logo-shadow {
+  text-shadow:
+    -0.5px -0.5px 0 white,
+    0.5px -0.5px 0 white,
+    -0.5px 0.5px 0 white,
+    0.5px 0.5px 0 white,
+    -0.5px 0px 0 white,
+    0.5px 0px 0 white,
+    0px -0.5px 0 white,
+    0px 0.5px 0 white;
+}

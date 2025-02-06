@@ -1,11 +1,8 @@
-# How To: Seed Database
+# How To: Setup the python virtual environment
 
-Either use the already created data in the mocks folder or create your own data.
+In order for this project to run you need to set up a python environment and install the required packages in it. This is needed for the app to perform the analysis on the mood and activity data.
 
-## 1. Create your own data
-
-If you don't want to create new data, proceed with step 2. Otherwise continue reading.
-To create your own data you need to setup a Python environment where you can execute the data creation scripts. (depending on how you have installed Python you have to use the command python or python3)
+Depending on how you have installed Python you have to use the command python or python3. Open a terminal (eg. in VSCode) and make sure to be in the server folder. Then run the following command
 
 ```bash
 python -m venv venv
@@ -17,7 +14,7 @@ Next you have to activate the environment
 
 ```bash
 # Windows
-venv\Scripts\activate
+source venv/Scripts/activate
 # macOS/Linux
 source venv/bin/activate
 ```
@@ -31,7 +28,13 @@ pip install pandas
 pip3 install pandas
 ```
 
-Navigate into the scripts folder and execute
+With this setup the app should work fine. You can choose to use the app without any mock or proceed with the next step to seed the database.
+
+# How To: Seed the database
+
+## 1. Create your own data
+
+With the activated python environment navigate into the scripts folder and execute
 
 ```bash
 python activity.py # or mood.py

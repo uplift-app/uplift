@@ -39,7 +39,7 @@ describe("User Controller", () => {
         "correctPassword",
         "hashedPassword"
       );
-      expect(jwt.sign).toHaveBeenCalledWith({ id: "123" }, "jsonwebtoken");
+      expect(jwt.sign).toHaveBeenCalledWith({ id: "123" }, "default");
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.send).toHaveBeenCalledWith({ accessToken: "mockAccessToken" });
     });
@@ -154,9 +154,9 @@ describe("User Controller", () => {
       await addUser(req, res);
 
       expect(User.findOne).toHaveBeenCalledWith({ email: "test@example.com" });
-      expect(bcrypt.hash).toHaveBeenCalledWith("password123", "10");
+      expect(bcrypt.hash).toHaveBeenCalledWith("password123", 10);
       expect(User.prototype.save).toHaveBeenCalled();
-      expect(jwt.sign).toHaveBeenCalledWith({ id: "123" }, "jsonwebtoken");
+      expect(jwt.sign).toHaveBeenCalledWith({ id: "123" }, "default");
       expect(res.status).toHaveBeenCalledWith(201);
       expect(res.send).toHaveBeenCalledWith({ accessToken: "mockAccessToken" });
     });

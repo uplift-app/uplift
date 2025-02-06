@@ -1,15 +1,32 @@
 import { useAnalysisDataContext } from "@/contexts/AnalysisDataContext";
-import { RadialChart } from "./RadialChart";
+import { useEffect, useState } from "react";
+import { RadialChart } from "../inputs/RadialChart";
+import LoadingPage from "../pages/LoadingPage";
 
 const MoodLevels = () => {
   const { analysisData } = useAnalysisDataContext();
+  const [isLoading, setIsLoading] = useState(true);
 
-  if (!analysisData || Object.keys(analysisData).length === 0) {
+  useEffect(() => {
+    if (Object.keys(analysisData).length > 0) {
+      setIsLoading(false);
+    }
+  }, [analysisData]);
+
+  if (
+    (Object.keys(analysisData).length === 0 ||
+      analysisData.avgMood.length === 0) &&
+    !isLoading
+  ) {
     return (
       <div>
         No data available yet. Track activities and moods to gain insights.
       </div>
     );
+  }
+
+  if (isLoading) {
+    return <LoadingPage />;
   }
 
   const formatMoodInsights = () => {
@@ -25,7 +42,11 @@ const MoodLevels = () => {
     });
   };
 
-  return <div className="flex gap-4">{formatMoodInsights()}</div>;
+  return (
+    <div className="flex flex-col sm:flex-row flex-wrap gap-4">
+      {formatMoodInsights()}
+    </div>
+  );
 };
 
 export default MoodLevels;

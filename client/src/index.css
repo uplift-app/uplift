@@ -4,18 +4,20 @@
 
 @layer base {
   :root {
+    --fontColor: 202 85% 16%;
     --background: 0 0% 100%;
     --foreground: 20 14.3% 4.1%;
     --card: 0 0% 100%;
-    --card-foreground: 20 14.3% 4.1%;
+    --card-foreground: 202 85% 16%;
     --popover: 0 0% 100%;
     --popover-foreground: 20 14.3% 4.1%;
-    --primary: 24 9.8% 10%;
+    --primary: 199 100% 33%;
     --primary-foreground: 60 9.1% 97.8%;
+    --primary-90: #0071a6e6;
     --secondary: 60 4.8% 95.9%;
     --secondary-foreground: 24 9.8% 10%;
     --muted: 60 4.8% 95.9%;
-    --muted-foreground: 25 5.3% 44.7%;
+    --muted-foreground: #06324bcc;
     --accent: 60 4.8% 95.9%;
     --accent-foreground: 24 9.8% 10%;
     --destructive: 0 84.2% 60.2%;
@@ -32,6 +34,11 @@
     --energy: 12 76% 61%;
     --happiness: 173 58% 39%;
     --stress: 197 37% 24%;
+    --morning: 56 100% 58%;
+    --afternoon: 43 100% 58%;
+    --evening: 14 100% 54%;
+    --night: 249 100% 54%;
+    --all-day: 115 100% 66%;
   }
   .dark {
     --background: 20 14.3% 4.1%;
@@ -68,4 +75,12 @@
   body {
     @apply text-foreground;
   }
+}
+
+.component-style {
+  @apply bg-white bg-opacity-40 backdrop-filter rounded-lg p-4 border border-solid border-[#716912] shadow-md;
+}
+
+.heading-style {
+  @apply font-semibold tracking-tight text-lg leading-none font-comfortaa;
 }

@@ -4,7 +4,7 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-} from "./ui/card";
+} from "../ui/card";
 import { useAnalysisDataContext } from "@/contexts/AnalysisDataContext";
 
 const DataInsights = () => {
@@ -46,7 +46,11 @@ const DataInsights = () => {
       (prev, curr) =>
         Object.values(prev[1])[0] > Object.values(curr[1])[0] ? prev : curr
     );
-    return `You feel best in the ${Object.keys(bestTime[1])[0]} with an average mood score of ${Object.values(bestTime[1])[0].toFixed(1)}.`;
+    return `You feel best in the ${
+      Object.keys(bestTime[1])[0]
+    } with an average mood score of ${Object.values(bestTime[1])[0].toFixed(
+      1
+    )}.`;
   };
 
   return (
