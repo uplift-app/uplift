@@ -1,4 +1,3 @@
-import * as Dialog from "@radix-ui/react-dialog";
 import {
   Activity,
   ActivityFromBackend,
@@ -6,16 +5,16 @@ import {
   MoodFromBackend,
   RecentEntryItemProps,
 } from "@/lib/interfaces";
+import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
+import ActivityInput from "../cards/ActivityInput";
+import MoodInput from "../cards/MoodInput";
 import Smiley0 from "../smileys/Smiley0";
 import Smiley1 from "../smileys/Smiley1";
 import Smiley2 from "../smileys/Smiley2";
 import Smiley3 from "../smileys/Smiley3";
 import Smiley4 from "../smileys/Smiley4";
 import { Card } from "../ui/card";
-import { useState } from "react";
-import MoodInput from "../cards/MoodInput";
-import ActivityInput from "../cards/ActivityInput";
 
 const smileyArray = [
   <Smiley0 />,
