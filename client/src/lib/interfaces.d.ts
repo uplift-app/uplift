@@ -93,10 +93,16 @@ export interface MoodInputProps {
   mood?: Mood;
   edit?: boolean;
   clickHandler?: (mood: Mood) => void;
+  onEntryAdded?: () => void;
 }
 
 export interface ActivityInputProps {
   activityProp?: Activity;
   edit?: boolean;
   clickHandler?: (activity: Activity) => void;
+  onEntryAdded?: () => void;
+}
+
+export interface RecentEntriesProps {
+  updateTrigger: boolean;
 }

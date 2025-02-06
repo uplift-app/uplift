@@ -8,11 +8,15 @@ import {
   editMood,
   editActivity,
 } from "@/lib/ApiService";
-import { ActivityFromBackend, MoodFromBackend } from "@/lib/interfaces";
+import {
+  ActivityFromBackend,
+  MoodFromBackend,
+  RecentEntriesProps,
+} from "@/lib/interfaces";
 import { RecentEntryItem } from "../inputs/RecentEntryItem";
 import LoadingPage from "../pages/LoadingPage";
 
-export function RecentEntries() {
+export function RecentEntries({ updateTrigger }: RecentEntriesProps) {
   const [combinedEntries, setCombinedEntries] = useState<
     (MoodFromBackend | ActivityFromBackend)[]
   >([]);
@@ -42,7 +46,7 @@ export function RecentEntries() {
   useEffect(() => {
     setIsLoading(true);
     fetchAndUpdateEntries().then(() => setIsLoading(false));
-  }, []);
+  }, [updateTrigger]);
 
   const handleDeleteMood = async (id: string) => {
     try {

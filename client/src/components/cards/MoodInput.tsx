@@ -51,12 +51,14 @@ const MoodInput = ({
   mood = initialFormState,
   edit = false,
   clickHandler = () => {},
+  onEntryAdded,
 }: MoodInputProps) => {
   const [formState, setFormState] = useState<Mood>(mood);
 
   async function uploadMood() {
     try {
       await postMood(formState);
+      onEntryAdded?.();
     } catch (error) {
       errorHandler(error);
     }
