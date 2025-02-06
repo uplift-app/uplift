@@ -15,6 +15,7 @@ import Smiley2 from "../smileys/Smiley2";
 import Smiley3 from "../smileys/Smiley3";
 import Smiley4 from "../smileys/Smiley4";
 import { Card } from "../ui/card";
+import { useState } from "react";
 
 const smileyArray = [
   <Smiley0 />,
@@ -30,7 +31,10 @@ export function RecentEntryItem({
   handleEdit,
   handleDelete,
 }: RecentEntryItemProps) {
+  const [Open, setOpen] = useState(false);
+
   const activityEmoji = "icons/activity.svg";
+
   const formatDate = (date: string) => {
     const formattedDate = new Date(date);
     const options: Intl.DateTimeFormatOptions = {
@@ -40,7 +44,7 @@ export function RecentEntryItem({
     };
     return formattedDate.toLocaleDateString(undefined, options);
   };
-  const formattedDate = formatDate(entry.date);
+  const formattedDate = formatDate(entry.date.toString());
 
   return (
     <Card className="flex items-center gap-6 w-full p-4">
@@ -89,7 +93,7 @@ export function RecentEntryItem({
         )}
       </div>
       <div className="ml-auto flex gap-4 mb-auto">
-        <Dialog.Root>
+        <Dialog.Root open={Open} onOpenChange={setOpen}>
           <Dialog.Trigger
             className="text-2xl cursor-pointer"
             aria-label="edit entry"
@@ -105,24 +109,28 @@ export function RecentEntryItem({
                 <MoodInput
                   mood={entry as unknown as Mood}
                   edit={true}
-                  clickHandler={(mood: Mood) =>
+                  clickHandler={(mood) => {
                     handleEdit({
                       _id: entry._id,
                       ...mood,
-                    } as unknown as MoodFromBackend)
-                  }
+                    } as unknown as MoodFromBackend);
+                    setOpen(false);
+                  }}
+                  closeDialog={() => setOpen(false)}
                 />
               )}
               {type === "activity" && (
                 <ActivityInput
                   activityProp={entry as unknown as Activity}
                   edit={true}
-                  clickHandler={(activity: Activity) =>
+                  clickHandler={(activity) => {
                     handleEdit({
                       _id: entry._id,
                       ...activity,
-                    } as unknown as ActivityFromBackend)
-                  }
+                    } as unknown as ActivityFromBackend);
+                    setOpen(false);
+                  }}
+                  closeDialog={() => setOpen(false)}
                 />
               )}
               <Dialog.Close className="mt-4 text-black hover:bg-gray-200 p-2 rounded absolute top-8 right-12">
