@@ -1,5 +1,7 @@
 import { getMoods } from "@/lib/ApiService";
+import { MoodFromBackend } from "@/lib/interfaces";
 import { useEffect, useState } from "react";
+import LoadingPage from "./pages/LoadingPage";
 import {
   Card,
   CardContent,
@@ -15,7 +17,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import LoadingPage from "./pages/LoadingPage";
 
 interface MoodEntry {
   date: string;
@@ -31,6 +32,7 @@ const YearOfPixels = () => {
   const [avgMoodPerDate, setAvgMoodPerDate] = useState<AvgMoodEntry[]>([]);
   const [filter, setFilter] = useState<string>("Avg");
   const [isLoading, setIsLoading] = useState(true);
+  const [moods, setMoods] = useState<MoodFromBackend[]>([]);
 
   const calculateAverageMoodPastYear = (
     moodData: MoodEntry[]
@@ -68,21 +70,14 @@ const YearOfPixels = () => {
     return result;
   };
 
-  const fetchMoods = async () => {
-    try {
-      const data = await getMoods();
-      if (filter === "Avg") {
-        return calculateAverageMoodPastYear(data);
-      } else {
-        const filteredData = data.filter((entry) => entry.moodType === filter);
-        return calculateAverageMoodPastYear(filteredData);
-      }
-    } catch (error) {
-      console.error(
-        error instanceof Error
-          ? error.message
-          : "An error occurred fetching the moods."
+  const filterMoodsAndCalculateAvg = (inputMoods: MoodFromBackend[]) => {
+    if (filter === "Avg") {
+      return calculateAverageMoodPastYear(inputMoods);
+    } else {
+      const filteredData = inputMoods.filter(
+        (entry) => entry.moodType === filter
       );
+      return calculateAverageMoodPastYear(filteredData);
     }
   };
 
@@ -92,14 +87,30 @@ const YearOfPixels = () => {
   };
 
   useEffect(() => {
+    getMoods()
+      .then((data) => {
+        setMoods(data);
+        const moods = filterMoodsAndCalculateAvg(data);
+        if (moods) {
+          setAvgMoodPerDate(moods);
+        }
+      })
+      .catch((error) => {
+        console.error(
+          error instanceof Error
+            ? error.message
+            : "An error occurred fetching the moods."
+        );
+      });
+  }, []);
+
+  useEffect(() => {
     setIsLoading(true);
-    const fetchData = async () => {
-      const moods = await fetchMoods();
-      if (moods) {
-        setAvgMoodPerDate(moods);
-      }
-    };
-    fetchData().then(() => setIsLoading(false));
+    const filtered = filterMoodsAndCalculateAvg(moods);
+    if (filtered) {
+      setAvgMoodPerDate(filtered);
+    }
+    setIsLoading(false);
   }, [filter]);
 
   const groupedByMonth: Record<string, AvgMoodEntry[]> = {};
@@ -133,7 +144,7 @@ const YearOfPixels = () => {
         <CardContent>
           <Select onValueChange={(value) => setFilter(value)}>
             <SelectTrigger>
-              <SelectValue placeholder="Select a mood." />
+              <SelectValue placeholder="Select a mood" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
