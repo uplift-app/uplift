@@ -1,9 +1,9 @@
+import { formatName } from "@/lib/utils";
 import { RedirectToSignIn, useUser } from "@clerk/clerk-react";
 import ChartViewer from "../cards/ChartViewer";
-import { formatName } from "@/lib/utils";
-import PositiveEffects from "../cards/PositiveEffects";
-import MoodLevels from "../cards/MoodLevel";
 import IntensityLevels from "../cards/IntensityLevel";
+import MoodLevels from "../cards/MoodLevel";
+import PositiveEffects from "../cards/PositiveEffects";
 import YearOfPixels from "../YearOfPixels";
 
 function DashBoard() {
@@ -18,13 +18,13 @@ function DashBoard() {
             <h2 className="heading-style pb-2">Average Mood Level</h2>
             <MoodLevels />
           </div>
-          <div className="component-style rounded-lg p-4 xl:col-span-2">
+          <div className="component-style rounded-lg p-4 xl:col-span-2 hidden sm:block">
             <h2 className="heading-style pb-2">Average Mood Intensities</h2>
             <IntensityLevels />
           </div>
-          <ChartViewer />
-          <YearOfPixels />
           <PositiveEffects />
+          <YearOfPixels />
+          <ChartViewer />
         </div>
       </>
     );

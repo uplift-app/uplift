@@ -1,7 +1,7 @@
 import { RotatingLines } from "react-loader-spinner";
 function LoadingPage() {
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <div className="justify-self-center">
         <RotatingLines
           strokeColor="hsl(var(--fontColor)"
