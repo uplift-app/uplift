@@ -40,7 +40,7 @@ export function RecentEntryItem({
     };
     return formattedDate.toLocaleDateString(undefined, options);
   };
-  const formattedDate = formatDate(entry.date);
+  const formattedDate = formatDate(entry.date.toString());
 
   return (
     <Card className="flex items-center gap-6 w-full p-4">

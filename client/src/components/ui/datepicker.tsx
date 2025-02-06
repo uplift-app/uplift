@@ -16,8 +16,10 @@ export function DatePicker({
   date: Date;
   setDate: React.Dispatch<React.SetStateAction<Date>>;
 }) {
+  const [open, setOpen] = React.useState(false);
+
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
@@ -25,9 +27,10 @@ export function DatePicker({
             "w-full justify-start text-left font-normal",
             !date && "text-muted-foreground"
           )}
+          onClick={() => setOpen(true)}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {format(date, "PPP")}
+          {date ? format(date, "PPP") : "Pick a date"}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
@@ -35,7 +38,10 @@ export function DatePicker({
           mode="single"
           selected={date}
           onSelect={(selectedDate) => {
-            setDate(selectedDate as Date);
+            if (selectedDate) {
+              setDate(selectedDate);
+              setOpen(false);
+            }
           }}
           initialFocus
           required
@@ -44,5 +50,3 @@ export function DatePicker({
     </Popover>
   );
 }
-
-//! selectedDate as Date relies on this always being a Date, which it currently is use caution because this can break easily
