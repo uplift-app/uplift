@@ -33,6 +33,7 @@ const ActivityInput = ({
   activityProp = initialFormState,
   edit = false,
   clickHandler = () => {},
+  onEntryAdded,
 }: ActivityInputProps) => {
   const customActivityLabel = "Add a custom activity";
   const [formState, setFormState] = useState<Activity>(activityProp);
@@ -84,6 +85,7 @@ const ActivityInput = ({
     try {
       await postActivity(formState);
       setSuccess(true);
+      onEntryAdded?.();
     } catch (error) {
       errorHandler(error);
     }

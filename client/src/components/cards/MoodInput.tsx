@@ -52,6 +52,7 @@ const MoodInput = ({
   mood = initialFormState,
   edit = false,
   clickHandler = () => {},
+  onEntryAdded,
 }: MoodInputProps) => {
   const [formState, setFormState] = useState<Mood>(mood);
   const [success, setSuccess] = useState(false);
@@ -60,6 +61,7 @@ const MoodInput = ({
     try {
       await postMood(formState);
       setSuccess(true);
+      onEntryAdded?.();
     } catch (error) {
       errorHandler(error);
     }

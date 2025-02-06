@@ -11,6 +11,9 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
+const databaseURL = process.env.DATABASE_URL || "mongodb://127.0.0.1:27017";
+const databaseName = process.env.DATABASE_NAME || "uplift";
+
 const clearDatabase = async () => {
   await Activity.deleteMany();
   await Mood.deleteMany();
@@ -35,9 +38,7 @@ const fillDatabase = async () => {
 };
 
 (async () => {
-  await mongoose.connect(
-    `${process.env.DATABASE_URL}/${process.env.DATABASE_NAME}`
-  );
+  await mongoose.connect(`${databaseURL}/${databaseName}`);
   console.log("Connected to MongoDB!");
   await clearDatabase();
   await fillDatabase();

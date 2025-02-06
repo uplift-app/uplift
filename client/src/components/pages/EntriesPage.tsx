@@ -10,6 +10,7 @@ function EntriesPage() {
   const { user, isSignedIn } = useUser();
   const [quote, setQuote] = useState<String | null>(null);
   const [author, setAuthor] = useState<String | null>(null);
+  const [updateTrigger, setUpdateTrigger] = useState(false);
 
   useEffect(() => {
     async function fetchQuote() {
@@ -30,6 +31,8 @@ function EntriesPage() {
     fetchQuote();
   }, []);
 
+  const triggerUpdate = () => setUpdateTrigger((prev) => !prev);
+
   if (user && isSignedIn) {
     return (
       <>
@@ -47,12 +50,12 @@ function EntriesPage() {
                 Track your activity and mood
               </h2>
               <div className="flex flex-col sm:flex-row gap-2 justify-self-center ">
-                <ActivityInput />
-                <MoodInput />
+                <ActivityInput onEntryAdded={triggerUpdate} />
+                <MoodInput onEntryAdded={triggerUpdate} />
               </div>
             </div>
           </div>
-          <RecentEntries />
+          <RecentEntries updateTrigger={updateTrigger} />
         </div>
       </>
     );
