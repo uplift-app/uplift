@@ -94,6 +94,7 @@ export interface MoodInputProps {
   edit?: boolean;
   clickHandler?: (mood: Mood) => void;
   onEntryAdded?: () => void;
+  closeDialog?: () => void;
 }
 
 export interface ActivityInputProps {
@@ -101,6 +102,7 @@ export interface ActivityInputProps {
   edit?: boolean;
   clickHandler?: (activity: Activity) => void;
   onEntryAdded?: () => void;
+  closeDialog?: () => void;
 }
 
 export interface RecentEntriesProps {
