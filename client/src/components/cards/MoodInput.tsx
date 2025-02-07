@@ -31,7 +31,7 @@ import Smiley1 from "../smileys/Smiley1";
 import Smiley2 from "../smileys/Smiley2";
 import Smiley3 from "../smileys/Smiley3";
 import Smiley4 from "../smileys/Smiley4";
-import { SuccessMessage } from "../SuccessMessage";
+import { SuccessMessage } from "./SuccessMessage";
 
 const smileyArray = [
   <Smiley0 />,

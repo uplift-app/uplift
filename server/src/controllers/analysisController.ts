@@ -29,10 +29,6 @@ export const analyseData = async (req: Request, res: Response) => {
       if (err) {
         res.status(500).send(err);
       } else {
-        // cleanup breaks the code; i think its because react executes every request twice in dev mode
-        // the request are async made and the deleting the files in one request might lead to the error in the second request
-        // fs.unlinkSync(moodPath);
-        // fs.unlinkSync(activityPath);
         res.json(JSON.parse(result.replace(/'/g, '"')));
       }
     });

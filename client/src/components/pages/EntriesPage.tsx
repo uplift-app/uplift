@@ -40,10 +40,10 @@ function EntriesPage() {
           <div className="flex flex-col items-center gap-4">
             <div className="flex flex-col justify-center items-center w-full component-style gap-2 grow">
               <h2 className="heading-style">Quote of the day</h2>
-              <p className="text-3xl font-medium tracking-tight text-center">
+              <div className="text-3xl font-medium tracking-tight text-center">
                 {quote || <LoadingPage />}
-              </p>
-              <p className="italic text-lg">{author || ""}</p>
+              </div>
+              <div className="italic text-lg">{author || ""}</div>
             </div>
             <div className="w-full component-style grow flex flex-col">
               <h2 className="heading-style pb-2">

@@ -14,12 +14,11 @@ import {
   getActivityTypes,
 } from "@/lib/ApiService";
 import { ActivityFromBackend, CustomChart } from "@/lib/interfaces";
-import MoodChart from "../MoodChart";
-import CustomChartsWrapper from "../CustomChartsWrapper";
+import MoodChart from "../inputs/MoodChart";
 import LoadingPage from "../pages/LoadingPage";
+import CustomChartsWrapper from "./CustomChartsWrapper";
 
 const ChartViewer = () => {
-  // Fetch this data from the backend
   const [activityData, setActivityData] = useState<ActivityFromBackend[]>([]);
   const [activityTypes, setActivityTypes] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -35,13 +34,10 @@ const ChartViewer = () => {
     }
   };
 
-  // Fetch the mood and activity data from backend on first render
   useEffect(() => {
     setIsLoading(true);
     fetchActivityData().then(() => setIsLoading(false));
   }, []);
-
-  // Initialise the chart configuration
 
   const [customCharts, setCustomCharts] = useState<CustomChart[]>([]);
 

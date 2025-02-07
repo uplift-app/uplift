@@ -4,7 +4,7 @@ let cachedQuote: Quote | null = null;
 let lastFetchedTime: number | null = null;
 const EXPIRATION_TIME = 24 * 60 * 60 * 1000;
 
-export async function fetchQuoteOfTheDay(): Promise<any> {
+export async function fetchQuoteOfTheDay(): Promise<Quote | { error: string }> {
   const currentTime = Date.now();
 
   if (

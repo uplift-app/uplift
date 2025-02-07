@@ -1,20 +1,14 @@
 import {
-  ChartConfig,
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { ChartProps } from "@/lib/interfaces";
 import { useEffect, useState } from "react";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 import { AxisInterval } from "recharts/types/util/types";
-
-interface ChartProps {
-  chartConfig: ChartConfig;
-  chartData: any;
-  timeFrame: string;
-}
 
 export function InteractiveLineChart({
   chartData,

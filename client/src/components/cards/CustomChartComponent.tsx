@@ -3,15 +3,15 @@ import {
   ActivitySortedByDate,
   CustomChart,
 } from "@/lib/interfaces";
-import { ChartConfig } from "./ui/chart";
-import TimeFrameSelector from "./inputs/TimeFrameSelector";
+import { ChartConfig } from "../ui/chart";
+import TimeFrameSelector from "../inputs/TimeFrameSelector";
 import { useEffect, useState } from "react";
-import { InteractiveAreaChart } from "./InteractiveAreaChart";
-import { InteractiveBarChart } from "./InteractiveBarChart";
+import { InteractiveAreaChart } from "../inputs/InteractiveAreaChart";
+import { InteractiveBarChart } from "../inputs/InteractiveBarChart";
 import { transformActivityData } from "@/lib/chartview-functions";
-import { InteractiveLineChart } from "./inputs/InteractiveLineChart";
-import { Card, CardContent, CardTitle } from "./ui/card";
-import { Button } from "./ui/button";
+import { InteractiveLineChart } from "../inputs/InteractiveLineChart";
+import { Card, CardContent, CardTitle } from "../ui/card";
+import { Button } from "../ui/button";
 import { X } from "lucide-react";
 
 interface CustomChartComponentProps {

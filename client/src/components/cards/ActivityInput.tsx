@@ -20,7 +20,7 @@ import { Slider } from "@/components/ui/slider";
 import { errorHandler, getActivityTypes, postActivity } from "@/lib/ApiService";
 import { Activity, ActivityInputProps, Time } from "@/lib/interfaces";
 import { useEffect, useState } from "react";
-import { SuccessMessage } from "../SuccessMessage";
+import { SuccessMessage } from "./SuccessMessage";
 
 const initialFormState: Activity = {
   activityType: "",
