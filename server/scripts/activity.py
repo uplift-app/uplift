@@ -19,12 +19,12 @@ def generate_activity_data(user_id, start_date, end_date, num_records):
     for _ in range(num_records):
         date = start_date + timedelta(days=random.randint(0, (end_date - start_date).days))
         data.append({
-            "duration": random.randint(10, 180),  # Duration in minutes
+            "duration": random.randint(10, 180),  
             "activityType": random.choice(activity_types),
             "userId": user_id,
             "activityTime": random.choice(activity_times),
             "isHabit": random.choice([True, False]),
-            "date": date.strftime("%Y-%m-%d")  # Adding date for clarity
+            "date": date.strftime("%Y-%m-%d") 
         })
 
     return data

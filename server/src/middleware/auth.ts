@@ -11,7 +11,7 @@ const authMiddleware = async (
     const { userId } = getAuth(req);
     if (userId) {
       req.user = { userId };
-      req.user.userId = "1"; //Hardcoded to replace userId to match database
+      req.user.userId = "1"; //! REMOVE IN PROD - Hardcoded to replace userId to match seeded database
       next();
     } else {
       res.status(401).send("Authentication required");
