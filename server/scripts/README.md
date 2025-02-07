@@ -28,7 +28,7 @@ pip install pandas
 pip3 install pandas
 ```
 
-With this setup the app should work fine. You can choose to use the app without any mock or proceed with the next step to seed the database.
+With this setup the app should work fine. You can choose to use the app without any mock data or proceed with the next step to seed the database.
 
 # How To: Seed the database
 
@@ -42,7 +42,7 @@ python activity.py # or mood.py
 python3 activity.py # or mood.py
 ```
 
-The created data files will be activity_data.csv and mood_data.csv in the mocks filder.
+The created data files will be called activity_data.csv and mood_data.csv in the mocks folder.
 
 ## 2. Seed Database
 
