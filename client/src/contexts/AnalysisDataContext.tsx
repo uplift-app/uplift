@@ -1,9 +1,9 @@
-import { createContext, useContext, useState } from "react";
 import {
+  AnalysisData,
   AnalysisDataContextType,
   AnalysisDataProviderProps,
-  AnalysisData,
-} from "./interfaces";
+} from "@/lib/interfaces";
+import { createContext, useContext, useState } from "react";
 
 export const AnalysisDataContext = createContext<
   AnalysisDataContextType | undefined

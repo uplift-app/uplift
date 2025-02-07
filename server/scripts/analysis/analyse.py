@@ -79,7 +79,7 @@ else:
 
 
   #! 5. Habit Mood Mapping
-  # Example: Mood before and after an activity -> does this really yield valuable info?
+  # Example: Mood before and after an activity : Not used at the moment
   # habitMood = merged.copy()
   # print(habitMood.head(10))
   # habitMood['mood_change'] = habitMood['intensity'].diff()

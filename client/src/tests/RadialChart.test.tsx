@@ -1,9 +1,6 @@
-import React from "react";
+import { RadialChart } from "@/components/inputs/RadialChart";
 import { render, screen } from "@testing-library/react";
-import { RadialChart } from "./../components/RadialChart";
 import { describe, it, expect } from "vitest";
-
-//! basic render test as currently cannot find a way to test the percentage values due to shadcn / recharts
 
 describe("RadialChart Component", () => {
   it("renders the RadialChart with correct mood type and percentage", () => {

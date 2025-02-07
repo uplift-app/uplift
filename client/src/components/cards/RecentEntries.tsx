@@ -10,6 +10,7 @@ import {
 } from "@/lib/ApiService";
 import {
   ActivityFromBackend,
+  Mood,
   MoodFromBackend,
   RecentEntriesProps,
 } from "@/lib/interfaces";
@@ -76,7 +77,7 @@ export function RecentEntries({ updateTrigger }: RecentEntriesProps) {
 
   const handleEditMood = async (moodData: MoodFromBackend) => {
     try {
-      const response = await editMood(moodData);
+      const response: MoodFromBackend = await editMood(moodData);
       setCombinedEntries((prevEntries) =>
         prevEntries.map((entry) => {
           if (entry._id === response._id) {

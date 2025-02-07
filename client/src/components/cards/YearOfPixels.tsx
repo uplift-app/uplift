@@ -1,14 +1,14 @@
 import { getMoods } from "@/lib/ApiService";
-import { MoodFromBackend } from "@/lib/interfaces";
+import { AvgMoodEntry, MoodEntry, MoodFromBackend } from "@/lib/interfaces";
 import { useEffect, useState } from "react";
-import LoadingPage from "./pages/LoadingPage";
+import LoadingPage from "../pages/LoadingPage";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
+} from "../ui/card";
 import {
   Select,
   SelectContent,
@@ -16,17 +16,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
-
-interface MoodEntry {
-  date: string;
-  intensity: number;
-}
-
-interface AvgMoodEntry {
-  date: string;
-  avgIntensity: number | null;
-}
+} from "../ui/select";
 
 const YearOfPixels = () => {
   const [avgMoodPerDate, setAvgMoodPerDate] = useState<AvgMoodEntry[]>([]);
@@ -41,7 +31,7 @@ const YearOfPixels = () => {
       {};
 
     moodData.forEach(({ date, intensity }) => {
-      const formattedDate = date.split("T")[0];
+      const formattedDate = date.toString().split("T")[0];
       if (!moodMap[formattedDate]) {
         moodMap[formattedDate] = { totalIntensity: 0, count: 0 };
       }
