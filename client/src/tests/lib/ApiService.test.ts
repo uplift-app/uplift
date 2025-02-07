@@ -8,7 +8,6 @@ import {
 } from "@/lib/ApiService";
 import { Mood, Activity } from "@/lib/interfaces";
 
-const mockToken = "fake-token";
 const BASE_URL = "http://localhost:3000";
 
 global.fetch = vi.fn();
@@ -20,7 +19,12 @@ beforeEach(() => {
 describe("ApiService", () => {
   it("fetches moods successfully", async () => {
     const mockMoods = [
-      { moodType: "happy", intensity: 7, moodTime: "morning", date: "2024-02-01" },
+      {
+        moodType: "happy",
+        intensity: 7,
+        moodTime: "morning",
+        date: "2024-02-01",
+      },
     ];
 
     (fetch as Mock).mockResolvedValue({
@@ -28,7 +32,7 @@ describe("ApiService", () => {
       json: vi.fn().mockResolvedValue(mockMoods),
     });
 
-    const result = await getMoods(mockToken);
+    const result = await getMoods();
     expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/mood`, expect.any(Object));
     expect(result).toEqual(mockMoods);
   });
@@ -39,7 +43,7 @@ describe("ApiService", () => {
       json: vi.fn(),
     });
 
-    await expect(getMoods(mockToken)).rejects.toThrow("Error fetching data");
+    await expect(getMoods()).rejects.toThrow("Error fetching data");
   });
 
   it("fetches activity types successfully", async () => {
@@ -50,8 +54,11 @@ describe("ApiService", () => {
       json: vi.fn().mockResolvedValue(mockActivities),
     });
 
-    const result = await getActivityTypes(mockToken);
-    expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/activity/types`, expect.any(Object));
+    const result = await getActivityTypes();
+    expect(fetch).toHaveBeenCalledWith(
+      `${BASE_URL}/activity/types`,
+      expect.any(Object)
+    );
     expect(result).toEqual(mockActivities);
   });
 
@@ -68,7 +75,7 @@ describe("ApiService", () => {
       json: vi.fn().mockResolvedValue({ success: true }),
     });
 
-    const result = await postMood(moodData, mockToken);
+    const result = await postMood(moodData);
     expect(fetch).toHaveBeenCalledWith(
       `${BASE_URL}/mood`,
       expect.objectContaining({
@@ -85,8 +92,14 @@ describe("ApiService", () => {
       json: vi.fn(),
     });
 
-    await expect(postMood({ moodType: "sad", intensity: 3, moodTime: "night", date: new Date() }, mockToken))
-      .rejects.toThrow("Error fetching data");
+    await expect(
+      postMood({
+        moodType: "sad",
+        intensity: 3,
+        moodTime: "night",
+        date: new Date(),
+      })
+    ).rejects.toThrow("Error fetching data");
   });
 
   it("posts an activity successfully", async () => {
@@ -102,7 +115,7 @@ describe("ApiService", () => {
       json: vi.fn().mockResolvedValue({ success: true }),
     });
 
-    const result = await postActivity(activityData, mockToken);
+    const result = await postActivity(activityData);
     expect(fetch).toHaveBeenCalledWith(
       `${BASE_URL}/activity`,
       expect.objectContaining({
@@ -121,8 +134,11 @@ describe("ApiService", () => {
       json: vi.fn().mockResolvedValue(mockAnalysis),
     });
 
-    const result = await getAnalysis(mockToken);
-    expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/analysis`, expect.any(Object));
+    const result = await getAnalysis();
+    expect(fetch).toHaveBeenCalledWith(
+      `${BASE_URL}/analysis`,
+      expect.any(Object)
+    );
     expect(result).toEqual(mockAnalysis);
   });
 
@@ -132,10 +148,10 @@ describe("ApiService", () => {
       json: vi.fn(),
     });
 
-    await expect(getAnalysis(mockToken)).rejects.toThrow("Error fetching data");
+    await expect(getAnalysis()).rejects.toThrow("Error fetching data");
   });
 
   it("handles missing authentication token", async () => {
-    await expect(getMoods(undefined)).rejects.toThrow("Authentication token is missing");
+    await expect(getMoods()).rejects.toThrow("Authentication token is missing");
   });
 });

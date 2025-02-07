@@ -4,7 +4,7 @@ import ChartViewer from "../cards/ChartViewer";
 import IntensityLevels from "../cards/IntensityLevel";
 import MoodLevels from "../cards/MoodLevel";
 import PositiveEffects from "../cards/PositiveEffects";
-import YearOfPixels from "../YearOfPixels";
+import YearOfPixels from "../cards/YearOfPixels";
 
 function DashBoard() {
   const { user, isSignedIn } = useUser();

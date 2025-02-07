@@ -1,13 +1,12 @@
-import { AnalysisData } from "@/contexts/interfaces";
 import {
   Mood,
   Activity,
   MoodFromBackend,
   Quote,
   ActivityFromBackend,
+  AnalysisData,
 } from "./interfaces";
 import Cookie from "js-cookie";
-//TODO: remove any types
 
 const BASE_URL = "http://localhost:3000";
 
@@ -63,7 +62,7 @@ export const getRecentMoods = async (): Promise<MoodFromBackend[]> => {
   }
 };
 
-export const postMood = async (moodData: Mood): Promise<any> => {
+export const postMood = async (moodData: Mood): Promise<Mood> => {
   try {
     const options = {
       method: "POST",
@@ -78,7 +77,9 @@ export const postMood = async (moodData: Mood): Promise<any> => {
   }
 };
 
-export const editMood = async (moodData: MoodFromBackend): Promise<any> => {
+export const editMood = async (
+  moodData: MoodFromBackend
+): Promise<MoodFromBackend> => {
   try {
     const options = {
       method: "PUT",
@@ -89,7 +90,7 @@ export const editMood = async (moodData: MoodFromBackend): Promise<any> => {
     };
     return await makeServerRequest(`mood/${moodData._id}`, options);
   } catch (error) {
-    errorHandler(error);
+    return errorHandler(error);
   }
 };
 
@@ -127,7 +128,7 @@ export const getRecentActivities = async (): Promise<ActivityFromBackend[]> => {
   }
 };
 
-export const getActivityTypes = async (): Promise<any> => {
+export const getActivityTypes = async (): Promise<string[]> => {
   try {
     return await makeServerRequest("activity/types");
   } catch (error) {
@@ -135,7 +136,7 @@ export const getActivityTypes = async (): Promise<any> => {
   }
 };
 
-export const postActivity = async (activity: Activity): Promise<any> => {
+export const postActivity = async (activity: Activity): Promise<Activity> => {
   try {
     const options = {
       method: "POST",
@@ -150,7 +151,7 @@ export const postActivity = async (activity: Activity): Promise<any> => {
 
 export const editActivity = async (
   activityData: ActivityFromBackend
-): Promise<any> => {
+): Promise<ActivityFromBackend> => {
   try {
     const options = {
       method: "PUT",
@@ -161,7 +162,7 @@ export const editActivity = async (
     };
     return await makeServerRequest(`activity/${activityData._id}`, options);
   } catch (error) {
-    errorHandler(error);
+    return errorHandler(error);
   }
 };
 
