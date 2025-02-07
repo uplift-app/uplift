@@ -16,7 +16,7 @@ Uplift is a mood and behavior tracking app that allows users to log their emotio
 
 ## Demo
 
-To see the app in action, have a look at this [demo video](https://youtu.be/cIFsfbwOCHA).
+To see the app in action, have a look at this [demo video](https://youtu.be/cIFsfbwOCHA){:target="\_blank"}.
 
 ## Tech Stack
 
@@ -30,15 +30,15 @@ To install and run Uplift locally, follow these steps:
 
 ### Prerequisites
 
-- Ensure you have [Node.js](https://nodejs.org/) installed on your machine
+- Ensure you have [Node.js](https://nodejs.org/){:target="\_blank"} installed on your machine
 
-- [npm](https://www.npmjs.com/) should be available as part of Node.js
+- [npm](https://www.npmjs.com/){:target="\_blank"} should be available as part of Node.js
 
-- Install [MongoDB](https://www.mongodb.com/) and ensure it is running
+- Install [MongoDB](https://www.mongodb.com/){:target="\_blank"} and ensure it is running
 
-- Install [Python](https://www.python.org/) and set up a virtual environment though a separate ReadMe file is provided with instructions on how to achieve this.
+- Install [Python](https://www.python.org/){:target="\_blank"} and set up a virtual environment following the instructions in this [README.md](server/scripts/README.md).
 
-- You will need an account with [Clerk](https://clerk.com/) in order to run this app.
+- You will need an account with [Clerk](https://clerk.com/){:target="\_blank"} in order to run this app.
 
 ### Setup
 
@@ -72,16 +72,16 @@ To install and run Uplift locally, follow these steps:
 
    - Define the necessary environment variables (e.g., database URL, API keys, etc.)
 
-   - You will need to define the `CLERK_PUBLISHABLE_KEY` & `CLERK_SECRET_KEY` in the server `.env `file and `VITE_CLERK_PUBLISHABLE_KEY` in the client .env file. These are obtained from your dashboard on [Clerk](https://clerk.com/) via the `configure` tab under `API keys`.
+   - You will need to define the `CLERK_PUBLISHABLE_KEY` & `CLERK_SECRET_KEY` in the server `.env `file and `VITE_CLERK_PUBLISHABLE_KEY` in the client .env file. These are obtained from your dashboard on [Clerk](https://clerk.com/){:target="\_blank"} via the `configure` tab under `API keys`.
 
-   - Whilst [Clerk](https://clerk.com/) provides built in routes for login and sign up, these can be configured via the dashboard to the app's built in routes.
+   - Whilst [Clerk](https://clerk.com/){:target="\_blank"} provides built in routes for login and sign up, these can be configured via the dashboard to the app's built in routes.
 
    - ```
      /login
      /register
      ```
 
-   - Finally create a new blank JWT template on [Clerk](https://clerk.com/) with the name `default` and the claims of:
+   - Finally create a new blank JWT template on [Clerk](https://clerk.com/){:target="\_blank"} with the name `default` and the claims of:
 
      ```
      {
